@@ -1,0 +1,121 @@
+decimalPoint_format: ','
+
+## maste anpassa configen lite mera. 20x breadth, insert size och bases on target. Fold80?
+# extra_fn_clean_exts: ##from this until end
+#     - '.duplication_metrics'
+#     - type: regex
+#       pattern: '_fastq[12]'
+
+custom content:
+  order:
+    - fastqc
+    - mosdepth
+    - fastp
+    - peddy
+    - samtools
+    - picard
+
+mosdepth_config:
+  include_contigs:
+    - "chr1"
+    - "chr2"
+    - "chr3"
+    - "chr5"
+    - "chr7"
+    - "chr8"
+    - "chr9"
+    - "chr10"
+    - "chr11"
+    - "chr12"
+    - "chr13"
+    - "chr16"
+    - "chr17"
+    - "chr18"
+    - "chr19"
+    - "chr22"
+
+read_count_multiplier: 0.001
+read_count_prefix: "K"
+read_count_desc: "thousands"
+
+
+table_columns_visible:
+  FastQC:
+    percent_duplicates: False
+    percent_gc: False
+    avg_sequence_length: False
+    percent_fails: False
+    total_sequences: False
+  fastp:
+    pct_adapter: True
+    pct_surviving: False
+    after_filtering_gc_content: False
+    filtering_result_passed_filter_reads: False
+    after_filtering_q30_bases: False
+    after_filtering_q30_rate: False
+    pct_duplication: False
+  mosdepth:
+    median_coverage: True
+    mean_coverage: False
+    1_x_pc: False
+    5_x_pc: False
+    10_x_pc: False
+    20_x_pc: False
+    30_x_pc: True
+    50_x_pc: True
+  Picard:
+    PCT_PF_READS_ALIGNED: False
+    summed_median: False
+    summed_mean: True
+    PERCENT_DUPLICATION: True
+    MEDIAN_COVERAGE: False
+    MEAN_COVERAGE: False
+    SD_COVERAGE: False
+    PCT_30X: False
+    PCT_TARGET_BASES_30X: False
+    FOLD_ENRICHMENT: False
+  Samtools:
+    error_rate: False
+    non-primary_alignments: False
+    reads_mapped: True
+    reads_mapped_percent: True
+    reads_properly_paired_percent: True
+    reads_MQ0_percent: False
+    raw_total_sequences: True #only on bedfile not total of fastq
+
+# Patriks plug in, addera egna columner till general stats
+multiqc_cgs:
+  Picard:
+    FOLD_80_BASE_PENALTY:
+      title: "Fold80"
+      description: "Fold80 penalty from picard hs metrics"
+      min: 1
+      max: 3
+      scale: "RdYlGn-rev"
+      format: "{:.1f}"
+    PCT_SELECTED_BASES:
+      title: "Bases on Target"
+      description: "On+Near Bait Bases / PF Bases Aligned from Picard HsMetrics"
+      format: "{:.2%}"
+    ZERO_CVG_TARGETS_PCT:
+      title: "Target bases with zero coverage [%]"
+      description: "Target bases with zero coverage [%] from Picard"
+      min: 0
+      max: 100
+      scale: "RdYlGn-rev"
+      format: "{:.2%}"
+  Samtools:
+    average_quality:
+      title: "Average Quality"
+      description: "Ratio between the sum of base qualities and total length from Samtools stats"
+      min: 0
+      max: 60
+      scale: "RdYlGn"
+  mosdepth:
+     20_x_pc: #Cant get it to work
+        title: "20x percent"
+        description: "Fraction of genome with at least 20X coverage"
+        max: 100
+        min: 0
+        suffix: "%"
+        scale: "RdYlGn"

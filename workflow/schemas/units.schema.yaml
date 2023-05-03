@@ -6,16 +6,25 @@ properties:
     description: sample id
   type:
     type: string
-    description: type of sample (N|T|R)
+    description: type of sample data Tumor, Normal, RNA (N|T|R)
+    pattern: "^(N|T|R)$"
   platform:
     type: string
-    description: sequence platform that have been used to generate data, ex NextSeq
+    description: sequence platform that have been used to generate data, e.g. NextSeq
+  machine:
+    type: string
+    description: machine id
   flowcell:
     type: string
     description: flowcell id
+  barcode:
+    type: string
+    description: flowcell barcode
+    pattern: "^[A-Z+-]+$"
   lane:
     type: string
     description: lane number
+    pattern: "^L[0-9]+$"
   fastq1:
     type: string
     description: absolute path to R1 fastq file
@@ -26,11 +35,13 @@ properties:
     type: string
     description: one or more sequence, separated by ","
 required:
-  - adapter
-  - fastq1
-  - fastq2
-  - flowcell
-  - lane
-  - platform
   - sample
   - type
+  - platform
+  - machine
+  - flowcell
+  - lane
+  - fastq1
+  - fastq2
+  - adapter
+  - barcode
