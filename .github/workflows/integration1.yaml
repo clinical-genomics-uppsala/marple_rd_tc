@@ -6,7 +6,7 @@ on:
   push:
     branches:
      - develop
-     - master
+     - main
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -38,7 +38,7 @@ jobs:
         working-directory: .tests/integration
         run: |
           mamba install -c conda-forge -c bioconda snakemake
-          snakemake -s ../../workflow/Snakefile -j 1 --use-conda --configfile config.yaml
+          snakemake -s ../../workflow/Snakefile -j 1 --use-conda --configfile config.yaml --config sequenceid="test"
   integration-small-singularity:
     name: integration small data set singularity
     runs-on: ubuntu-latest
@@ -67,4 +67,4 @@ jobs:
       - name: Integration test - small dataset
         working-directory: .tests/integration
         run: |
-          snakemake -s ../../workflow/Snakefile -j 1 --show-failed-logs --configfile config.yaml  --use-singularity --singularity-args  " --cleanenv --bind /home/runner "
+          snakemake -s ../../workflow/Snakefile -j 1 --show-failed-logs --configfile config.yaml  --use-singularity --singularity-args  " --cleanenv --bind /home/runner " --config sequenceid="test"

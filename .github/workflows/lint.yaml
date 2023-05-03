@@ -6,11 +6,11 @@ on:
   push:
     branches:
      - develop
-     - master
+     - main
   pull_request:
     branches:
      - develop
-     - master
+     - main
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -27,5 +27,5 @@ jobs:
         with:
           directory: ".tests/integration"
           snakefile: "workflow/Snakefile"
-          args: "--lint --configfiles .tests/integration/config.yaml"
+          args: "--lint --configfiles .tests/integration/config.yaml --config sequenceid='test' "
           stagein: "pip install -r requirements.txt"
