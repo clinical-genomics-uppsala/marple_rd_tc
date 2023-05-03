@@ -1,7 +1,28 @@
----
 default_resources:
   threads: 1
   time: "12:00:00"
   mem_mb: 6144
   mem_per_cpu: 6144
-  partition: "core"
+  partition: "low"
+  
+bwa_mem:
+  mem_mb: 61440
+  mem_per_cpu: 6144
+  threads: 10
+  time: "8:00:00"
+
+fastp_pe:
+  threads: 5
+  mem_mb: 30720
+  mem_per_cpu: 6144
+  
+vep:
+  threads: 5
+  time: "6:00:00"
+  mem_mb: 30720
+  mem_per_cpu: 6144
+
+fastqc:
+  threads: 2
+  mem_mb: 12288
+  mem_per_cpu: 6144

@@ -9,7 +9,7 @@ modules:
   cnv_sv: "78f270c"
   prealignment: "v1.0.0"
   snv_indels: "v0.3.0"
-  qc: "v0.4.0"
+  qc: "ca947b1"
 
 default_container: "docker://hydragenetics/common:0.1.9"
 
@@ -46,6 +46,9 @@ bwa_mem:
 fastp_pe:
   container: "docker://hydragenetics/fastp:0.20.1"
 
+fastqc:
+  container: "docker://hydragenetics/fastqc:0.11.9"
+
 haplotypecaller:
   container: "docker://hydragenetics/gatk4:4.2.2.0"
 
@@ -59,7 +62,7 @@ exomedepth_call:
 
 mosdepth_bed:
   container: "docker://hydragenetics/mosdepth:0.3.2"
-  extra: "--thresholds 10,20,50"
+  thresholds: "10,20,50"
 
 multiqc:
   container: "docker://hydragenetics/multiqc:1.11"
@@ -82,6 +85,21 @@ multiqc:
         - "qc/mosdepth_bed/{sample}_{type}.mosdepth.region.dist.txt"
         - "qc/mosdepth_bed/{sample}_{type}.mosdepth.global.dist.txt"
 
+picard_collect_alignment_summary_metrics:
+  container: "docker://hydragenetics/picard:2.25.4"
+
+picard_collect_duplication_metrics:
+  container: "docker://hydragenetics/picard:2.25.4"
+
+picard_collect_gc_bias_metrics:
+  container: "docker://hydragenetics/picard:2.25.4"
+
+picard_collect_hs_metrics:
+  container: "docker://hydragenetics/picard:2.25.4"
+
+picard_collect_insert_size_metrics:
+  container: "docker://hydragenetics/picard:2.25.4"
+
 picard_collect_multiple_metrics:
   container: "docker://hydragenetics/picard:2.25.4"
   output_ext:
@@ -100,12 +118,6 @@ picard_collect_multiple_metrics:
     - "quality_distribution.pdf"
     - "quality_yield_metrics" # quality yield metrics
 
-picard_collect_duplication_metrics:
-  container: "docker://hydragenetics/picard:2.25.4"
-
-picard_collect_hs_metrics:
-  container: "docker://hydragenetics/picard:2.25.4"
-
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.4"
 
@@ -115,7 +127,7 @@ sample_order_multiqc:
 vep:
   container: "docker://hydragenetics/vep:109"
   vep_cache: "reference/vep_cache"
-  extra: "--check_existing --pick --sift b --polyphen b --ccds --uniprot --hgvs --symbol --numbers --domains --regulatory --canonical --protein --biotype --uniprot --tsl --appris --gene_phenotype --af --af_1kg --af_gnomad --max_af --pubmed --variant_class "
+  extra: "--assembly GRCh38 --check_existing --pick --sift b --polyphen b --ccds --uniprot --hgvs --symbol --numbers --domains --regulatory --canonical --protein --biotype --uniprot --tsl --appris --gene_phenotype --af --af_1kg --af_gnomad --max_af --pubmed --variant_class "
 
 vt_decompose:
   container: "docker://hydragenetics/vt:2015.11.10"

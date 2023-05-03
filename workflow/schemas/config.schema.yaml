@@ -128,8 +128,17 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
-    required:
-      - container
+
+  fastqc:
+    type: object
+    description: configuration for fastqc
+    properties:
+      container:
+        type: string
+        description: path or name to container
+      extra:
+        type: string
+        description: extra configuration for fastqc
 
   haplotypecaller:
     type: object
@@ -187,11 +196,14 @@ properties:
       container:
         type: string
         description: name or path to docker&singularity container
+      thresholds:
+        type: string
+        description: three thresholds values to use, comma-separated
       extra:
         type: string
-        description: extra parameters, --thresholds need to be set
+        description: extra parameters
     required:
-      - extra
+      - thresholds
 
   multiqc:
     type: object
@@ -233,6 +245,28 @@ properties:
     required:
       - reports
 
+picard_collect_alignment_summary_metrics:
+  type: object
+  description: configuration for collect alignment metrics
+  properties: 
+    container: 
+      type: string
+      description: name or path to container
+    extra:
+      type: string
+      description: extra parameters for collect alignment metrics 
+
+picard_collect_insert_size_metrics:
+  type: object
+  description: configuration for collect insert size metrics
+  properties: 
+    container: 
+      type: string
+      description: name or path to container
+    extra:
+      type: string
+      description: extra parameters for collect insert size metrics 
+
   picard_collect_multiple_metrics:
     type: object
     description: configuration for picard collect multiple metrics
@@ -258,6 +292,17 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra commands if needed
+
+  picard_collect_gc_bias_metrics:
+    type: object
+    description: configuration for picard collect gc bias metrics
+    properties:
+      container:
+        type: string
+        description: name or path to container
       extra:
         type: string
         description: extra commands if needed
@@ -351,12 +396,16 @@ required:
   - trimmer_software
   - bwa_mem
   - fastp_pe
+  - fastqc
   - haplotypecaller
   - mosdepth_bed
   - multiqc
-  - picard_collect_multiple_metrics
+  - picard_collect_alignment_metrics
   - picard_collect_duplication_metrics
+  - picard_collect_gc_bias_metrics
   - picard_collect_hs_metrics
+  - picard_collect_insert_size_metrics
+  - picard_collect_multiple_metrics
   - picard_mark_duplicates
   - sample_order_multiqc
   - vep

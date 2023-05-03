@@ -83,7 +83,7 @@ def compile_output_file_list(wildcards):
 
     wc_df = pd.DataFrame(np.repeat(units.values, 1, axis=0))
     wc_df.columns = units.columns
-    print(wc_df.shape[0])
+    # print(wc_df.shape[0])
     # caller_gen = itertools.cycle(["haplotypecaller"])
     wc_df = wc_df.assign(sequenceid=[config["sequenceid"] for i in range(wc_df.shape[0])])
     print(wc_df)
