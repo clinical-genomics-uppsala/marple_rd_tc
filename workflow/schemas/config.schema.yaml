@@ -66,6 +66,12 @@ properties:
       design_intervals:
         type: string
         description: same as bed_design but intervals format
+      exon_bed:
+        type: string
+        description: bedfile over just exons
+      exon_intervals:
+        type: string
+        description: intervals file over just exons
       skip_chrs:
         type: array
         items:
@@ -77,6 +83,8 @@ properties:
       - sites
       - design_bed
       - design_intervals
+      - exon_bed
+      - exon_intervals
       - skip_chrs
 
   trimmer_software:

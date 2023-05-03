@@ -19,6 +19,8 @@ reference:
   sites: "reference/design.bed"
   design_bed: "reference/design.bed"
   design_intervals: "reference/design.intervals"
+  exon_bed: "reference/design.bed"
+  exon_intervals: "reference/design.intervals"
   skip_chrs:
     - "chr4"
     - "chr6"
