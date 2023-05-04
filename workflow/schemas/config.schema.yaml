@@ -400,7 +400,7 @@ required:
   - haplotypecaller
   - mosdepth_bed
   - multiqc
-  - picard_collect_alignment_metrics
+  - picard_collect_alignment_summary_metrics
   - picard_collect_duplication_metrics
   - picard_collect_gc_bias_metrics
   - picard_collect_hs_metrics

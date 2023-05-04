@@ -8,7 +8,7 @@ import xlsxwriter
 
 sample = snakemake.input.mosdepth_summary.split("/")[-1].split(".mosdepth.summary.txt")[0]
 
-min_cov = int(snakemake.params.coverage_thresholds.strip().split(",")[0].split(" ")[-1])
+min_cov = int(snakemake.params.coverage_thresholds.strip().split(",")[0])
 med_cov = int(snakemake.params.coverage_thresholds.strip().split(",")[1])
 max_cov = int(snakemake.params.coverage_thresholds.strip().split(",")[2])
 

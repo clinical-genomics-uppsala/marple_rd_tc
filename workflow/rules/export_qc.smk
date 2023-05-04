@@ -47,9 +47,8 @@ rule export_qc_xlsx_report:
     output:
         temp("qc/xlsx_report/{sample}_{type}.xlsx"),
     params:
-        coverage_thresholds=config["mosdepth_bed"]["extra"],
+        coverage_thresholds=config["mosdepth_bed"]["thresholds"],
         sequenceid=config["sequenceid"],
-        extra=config.get("export_qc_xlsx_report", {}).get("extra", ""),
     log:
         "qc/xlsx_report/{sample}_{type}.xlsx.log",
     benchmark:
