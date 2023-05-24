@@ -9,9 +9,9 @@ properties:
   resources:
     type: string
     description: Path to resources.yaml file
-  output_files:
+  output:
     type: string
-    description: Path to output-yaml that defines which files to cp to a results folder
+    description: Path to output-yaml or json that defines which files to cp to a results folder
 
   modules:
     type: object
@@ -151,6 +151,18 @@ properties:
         type: string
         description: extra parameters other than -A AlleleFraction
   
+    haplotypecaller_gcvf:
+    type: object
+    description: configuration for running haplotypecaller in gvcf mode
+    properties:
+      container:
+        type: string
+        description: name or path to docker&singularity container
+      extra:
+        type: string
+        description: extra parameters other than -A AlleleFraction
+        default: "-ERC GVCF"
+
   exomedepth_call:
     type: object
     description: configuration for exomedepth
@@ -389,7 +401,7 @@ required:
   - samples
   - units
   - resources
-  - output_files
+  - output
   - modules
   - default_container
   - reference

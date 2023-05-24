@@ -1,9 +1,8 @@
 ---
-
 resources: "resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
-output_files: "config/output_files.yaml"
+output: "config/output_files.yaml"
 
 modules:
   alignment: "v0.4.0"
@@ -54,6 +53,9 @@ fastqc:
 haplotypecaller:
   container: "docker://hydragenetics/gatk4:4.2.2.0"
   extra: ""
+
+haplotypecaller_gvcf:
+  extra: "-ERC GVCF"
 
 exomedepth_call:
   container: "docker://hydragenetics/exomedepth:1.1.15"
