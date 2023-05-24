@@ -91,8 +91,8 @@ The following output files are located in `Results/`-folder:
 |`{sample}_{sequenceid}/{sample}_{sequenceid}.bam.bai`| Index for `.bam` file|
 |`{sample}_{sequenceid}/{sample}_{sequenceid}.vcf.gz`| `.vcf` file normalized and annotated with vep|
 |`{sample}_{sequenceid}/{sample}_{sequenceid}.vcf.gz.tbi`| Index for `.vcf` file|
-|`{sample}_{sequenceid}/{sample}_{sequenceid}.genome.vcf.gz`| A `genome.vcf` file for all variation|
-|`{sample}_{sequenceid}/{sample}_{sequenceid}.genome.vcf.gz.tbi`| Index for `genome.vcf` |
+|`{sample}_{sequenceid}/{sample}_{sequenceid}.merged.genome.vcf.gz`| A `genome.vcf` file for all variation|
+|`{sample}_{sequenceid}/{sample}_{sequenceid}.merged.genome.vcf.gz.tbi`| Index for `genome.vcf` |
 |`{sample}_{sequenceid}/{sample}_{sequenceid}_exomedepth_SV.txt`| `.txt` file with structural variants|
 |`{sample}_{sequenceid}/{sample}_{sequenceid}_exomedepth.aed`| `.aed` file with structural variants|
 
