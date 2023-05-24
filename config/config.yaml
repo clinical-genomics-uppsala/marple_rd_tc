@@ -1,9 +1,8 @@
 ---
-
 resources: "resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
-output_files: "config/output_files.yaml"
+output: "config/output_files.yaml"
 
 modules:
   alignment: "v0.4.0"

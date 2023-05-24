@@ -9,9 +9,9 @@ properties:
   resources:
     type: string
     description: Path to resources.yaml file
-  output_files:
+  output:
     type: string
-    description: Path to output-yaml that defines which files to cp to a results folder
+    description: Path to output-yaml or json that defines which files to cp to a results folder
 
   modules:
     type: object
@@ -389,7 +389,7 @@ required:
   - samples
   - units
   - resources
-  - output_files
+  - output
   - modules
   - default_container
   - reference
