@@ -151,6 +151,18 @@ properties:
         type: string
         description: extra parameters other than -A AlleleFraction
   
+    haplotypecaller_gcvf:
+    type: object
+    description: configuration for running haplotypecaller in gvcf mode
+    properties:
+      container:
+        type: string
+        description: name or path to docker&singularity container
+      extra:
+        type: string
+        description: extra parameters other than -A AlleleFraction
+        default: "-ERC GVCF"
+
   exomedepth_call:
     type: object
     description: configuration for exomedepth

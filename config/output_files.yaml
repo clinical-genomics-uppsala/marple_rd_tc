@@ -18,6 +18,12 @@ files:
   - name: Annotated vcf tbi file
     input: snv_indels/haplotypecaller/{sample}_N.normalized.sorted.vep_annotated.vcf.gz.tbi
     output: "{sample}_{sequenceid}/{sample}_{sequenceid}.vcf.gz.tbi"
+  - name: Genome vcf file no normalize
+    input: snv_indels/haplotypecaller_gvcf/{sample}_N.merged.g.vcf.gz
+    output: "{sample}_{sequenceid}/{sample}_{sequenceid}.merged.genome.vcf.gz"
+  - name: Genome vcf index file no normalize
+    input: snv_indels/haplotypecaller_gvcf/{sample}_N.merged.g.vcf.gz.tbi
+    output: "{sample}_{sequenceid}/{sample}_{sequenceid}.merged.genome.vcf.gz.tbi"
   - name: exomedepth nexus
     input: cnv_sv/exomedepth_call/{sample}_N_SV.txt
     output: "{sample}_{sequenceid}/{sample}_{sequenceid}_exomedepth_SV.txt"

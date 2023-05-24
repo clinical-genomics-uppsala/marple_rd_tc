@@ -54,6 +54,9 @@ haplotypecaller:
   container: "docker://hydragenetics/gatk4:4.2.2.0"
   extra: ""
 
+haplotypecaller_gvcf:
+  extra: "-ERC GVCF"
+
 exomedepth_call:
   container: "docker://hydragenetics/exomedepth:1.1.15"
   bedfile: ""

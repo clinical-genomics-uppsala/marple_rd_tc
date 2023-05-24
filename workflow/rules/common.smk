@@ -5,59 +5,74 @@ __license__ = "GPL-3"
 
 import itertools
 import numpy as np
-import pandas as pd
 import pathlib
-import re
+import pandas as pd
+import yaml
 from snakemake.utils import validate
 from snakemake.utils import min_version
-import yaml
 
 from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
-from hydra_genetics import min_version as hydra_min_version
 
-hydra_min_version("0.14.1")
+min_version("6.8.0")
 
-min_version("7.13.0")
-
-### Set and validate config file
+## Set and validate config file
 
 if not workflow.overwrite_configfiles:
-    sys.exit("At least one config file must be passed using --configfile/" "--configfiles, by command line or a profile!")
+    sys.exit("At least one config file must be passed using --configfile/--configfiles, by command line or a profile!")
+
 
 try:
     validate(config, schema="../schemas/config.schema.yaml")
 except WorkflowError as we:
-    # Probably a validation error, but the original exception in lost in
+    # Probably a validation error, but the original exsception in lost in
     # snakemake. Pull out the most relevant information instead of a potentially
     # *very* long error message.
     if not we.args[0].lower().startswith("error validating config file"):
         raise
     error_msg = "\n".join(we.args[0].splitlines()[:2])
-    parent_rule = we.args[0].splitlines()[3].split()[-1]
-    if parent_rule == "schema:":
+    parent_rule_ = we.args[0].splitlines()[3].split()[-1]
+    if parent_rule_ == "schema:":
         sys.exit(error_msg)
     else:
-        schema_hiearachy = parent_rule.split()[-1]
+        schema_hiearachy = parent_rule_.split()[-1]
         schema_section = ".".join(re.findall(r"\['([^']+)'\]", schema_hiearachy)[1::2])
         sys.exit(f"{error_msg} in {schema_section}")
+
+
+## Load and validate resources
 config = load_resources(config, config["resources"])
 validate(config, schema="../schemas/resources.schema.yaml")
 
 
 ### Read and validate samples file
 
-samples = pd.read_table(config["samples"], dtype=str, comment="#").set_index("sample", drop=False)
+samples = pd.read_table(config["samples"], dtype=str).set_index("sample", drop=False)
 validate(samples, schema="../schemas/samples.schema.yaml")
 
+
 ### Read and validate units file
+
 units = (
-    pandas.read_table(config["units"], dtype=str, comment="#")
-    .set_index(["sample", "type", "flowcell", "lane"], drop=False)
+    pandas.read_table(config["units"], dtype=str)
+    .set_index(["sample", "type", "flowcell", "lane", "barcode"], drop=False)
     .sort_index()
 )
+
 validate(units, schema="../schemas/units.schema.yaml")
+
+
+### Read and validate output file
+with open(config["output"]) as output:
+    if config["output"].endswith("json"):
+        output_spec = json.load(output)
+    elif config["output"].endswith("yaml") or config["output"].endswith("yml"):
+        output_spec = yaml.safe_load(output.read())
+
+validate(output_spec, schema="../schemas/output_files.schema.yaml")
+
+
 # Check that fastq files actually exist. If not, this might result in other
 # errors that can be hard to interpret
 for fq1, fq2 in zip(units["fastq1"].values, units["fastq2"].values):
@@ -66,10 +81,6 @@ for fq1, fq2 in zip(units["fastq1"].values, units["fastq2"].values):
     if not pathlib.Path(fq2).exists():
         sys.exit(f"fastq file not found: {fq2}\ncontrol the paths in {config['units']}")
 
-with open(config["output_files"], "r") as f:
-    output_spec = yaml.safe_load(f.read())
-    validate(output_spec, schema="../schemas/output_files.schema.yaml", set_default=True)
-
 
 ### Set wildcard constraints
 wildcard_constraints:
@@ -77,16 +88,24 @@ wildcard_constraints:
     type="N|T|R",
 
 
+def get_java_opts(wildcards: snakemake.io.Wildcards):
+    java_opts = config.get("haplotypecaller", {}).get("java_opts", "")
+    if "-Xmx" in java_opts:
+        raise WorkflowError("You are not allowed to use -Xmx in java_opts. Set mem_mb in resources instead.")
+    java_opts += "-Xmx{}m".format(config.get("haplotypecaller", {}).get("mem_mb", config["default_resources"]["mem_mb"]))
+    return java_opts
+
+
 def compile_output_file_list(wildcards):
-    outdir = pathlib.Path(output_spec["directory"])
+    outdir = pathlib.Path(output_spec.get("directory", "./"))
     output_files = []
 
-    wc_df = pd.DataFrame(np.repeat(units.values, 1, axis=0))
+    callers = ["haplotypecaller"]
+    wc_df = pd.DataFrame(np.repeat(units.values, len(callers), axis=0))
     wc_df.columns = units.columns
-    # print(wc_df.shape[0])
-    # caller_gen = itertools.cycle(["haplotypecaller"])
+    caller_gen = itertools.cycle(callers)
     wc_df = wc_df.assign(sequenceid=[config["sequenceid"] for i in range(wc_df.shape[0])])
-    print(wc_df)
+    wc_df = wc_df.assign(caller=[next(caller_gen) for i in range(wc_df.shape[0])])
 
     for f in output_spec["files"]:
         outputpaths = set(expand(f["output"], zip, **wc_df.to_dict("list")))
@@ -101,14 +120,14 @@ def compile_output_file_list(wildcards):
 
 
 def generate_copy_rules(output_spec):
-    output_directory = pathlib.Path(output_spec["directory"])
+    output_directory = pathlib.Path(output_spec.get("directory", "./"))
     rulestrings = []
 
     for f in output_spec["files"]:
         if f["input"] is None:
             continue
 
-        rule_name = "copy_{}".format("_".join(re.split(r"\W+", f["name"].strip().lower())))
+        rule_name = "_copy_{}".format("_".join(re.sub(r"[\"'-.,]", "", f["name"].strip().lower()).split()))
         input_file = pathlib.Path(f["input"])
         output_file = output_directory / pathlib.Path(f["output"])
 
