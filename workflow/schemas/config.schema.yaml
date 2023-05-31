@@ -151,7 +151,7 @@ properties:
         type: string
         description: extra parameters other than -A AlleleFraction
   
-    haplotypecaller_gcvf:
+  haplotypecaller_gcvf:
     type: object
     description: configuration for running haplotypecaller in gvcf mode
     properties:
@@ -182,6 +182,18 @@ properties:
       type: object
       description: configuration of bedtools intersect to extract coverage
   
+  exomedepth_export:
+    type: object
+    description: configuration for exomedepth export R script
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  export_qc_thresholds:
+    type: object
+    description: configuration of bedtools intersect to extract coverage
+
   export_qc_bedtools_intersect:
     type: object
     description: configuration for bedtools intersect
@@ -257,27 +269,27 @@ properties:
     required:
       - reports
 
-picard_collect_alignment_summary_metrics:
-  type: object
-  description: configuration for collect alignment metrics
-  properties: 
-    container: 
-      type: string
-      description: name or path to container
-    extra:
-      type: string
-      description: extra parameters for collect alignment metrics 
+  picard_collect_alignment_summary_metrics:
+    type: object
+    description: configuration for collect alignment metrics
+    properties: 
+      container: 
+        type: string
+        description: name or path to container
+      extra:
+        type: string
+        description: extra parameters for collect alignment metrics 
 
-picard_collect_insert_size_metrics:
-  type: object
-  description: configuration for collect insert size metrics
-  properties: 
-    container: 
-      type: string
-      description: name or path to container
-    extra:
-      type: string
-      description: extra parameters for collect insert size metrics 
+  picard_collect_insert_size_metrics:
+    type: object
+    description: configuration for collect insert size metrics
+    properties: 
+      container: 
+        type: string
+        description: name or path to container
+      extra:
+        type: string
+        description: extra parameters for collect insert size metrics 
 
   picard_collect_multiple_metrics:
     type: object
@@ -341,18 +353,18 @@ picard_collect_insert_size_metrics:
         type: string
         description: any extra parameters
 
-sample_order_multiqc:
-  type: object
-  description: configuration for sample order of multiqc
-  properties:
-    container:
-      type: string
-      description: path to container
-    sample_sheet:
-      type: string
-      description: path to SampleSheet used to order samples
-  required:
-    - sample_sheet
+  sample_order_multiqc:
+    type: object
+    description: configuration for sample order of multiqc
+    properties:
+      container:
+        type: string
+        description: path to container
+      sample_sheet:
+        type: string
+        description: path to SampleSheet used to order samples
+    required:
+      - sample_sheet
 
   vep:
     type: object

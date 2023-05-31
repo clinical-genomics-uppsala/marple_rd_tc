@@ -10,7 +10,7 @@ rule export_qc_bedtools_intersect:
         coverage_csi="qc/mosdepth_bed/{sample}_{type}.per-base.bed.gz.csi",
         b=config["reference"]["design_bed"],
     output:
-        temp("qc/mosdepth_bed/{sample}_{type}.mosdepth.per-base.design_bed.txt"),
+        results=temp("qc/mosdepth_bed/{sample}_{type}.mosdepth.per-base.design_bed.txt"),
     params:
         extra=config.get("export_qc_bedtools_intersect", {}).get("extra", ""),
     log:
@@ -45,7 +45,7 @@ rule export_qc_xlsx_report:
         design_bed=config["reference"]["design_bed"],
         pgrs_bed=config["reference"]["design_bed"],
     output:
-        temp("qc/xlsx_report/{sample}_{type}.xlsx"),
+        results=temp("qc/xlsx_report/{sample}_{type}.xlsx"),
     params:
         coverage_thresholds=config["mosdepth_bed"]["thresholds"],
         sequenceid=config["sequenceid"],
