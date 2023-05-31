@@ -16,7 +16,7 @@ Marple :woman_detective: uses the following hydra genetics modules:
 
 
 ## :judge: Rulegraph 
-![dag plot](images/rulegraph.svg){: style="height:100%;width:100%"}
+![dag plot](includes/rulegraph.svg){: style="height:100%;width:100%"}
 
 ---
 # Hydra-genetics
