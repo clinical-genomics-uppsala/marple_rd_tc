@@ -8,16 +8,16 @@ rule export_qc_bedtools_intersect:
     input:
         a="qc/mosdepth_bed/{sample}_{type}.per-base.bed.gz",
         coverage_csi="qc/mosdepth_bed/{sample}_{type}.per-base.bed.gz.csi",
-        b=config["reference"]["design_bed"],
+        b=config["reference"]["exon_bed"],
     output:
-        results=temp("qc/mosdepth_bed/{sample}_{type}.mosdepth.per-base.design_bed.txt"),
+        results=temp("qc/mosdepth_bed/{sample}_{type}.mosdepth.per-base.exon_bed.txt"),
     params:
         extra=config.get("export_qc_bedtools_intersect", {}).get("extra", ""),
     log:
-        "qc/mosdepth_bed/{sample}_{type}.mosdepth.per-base.design_bed.log",
+        "qc/mosdepth_bed/{sample}_{type}.mosdepth.per-base.exon_bed.log",
     benchmark:
         repeat(
-            "qc/mosdepth_bed/{sample}_{type}.mosdepth.per-base.design_bed.benchmark.tsv",
+            "qc/mosdepth_bed/{sample}_{type}.mosdepth.per-base.exon_bed.benchmark.tsv",
             config.get("export_qc_bedtools_intersect", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("export_qc_bedtools_intersect", {}).get("threads", config["default_resources"]["threads"])
@@ -40,10 +40,10 @@ rule export_qc_xlsx_report:
         mosdepth_summary="qc/mosdepth_bed/{sample}_{type}.mosdepth.summary.txt",
         mosdepth_thresholds="qc/mosdepth_bed/{sample}_{type}.thresholds.bed.gz",
         mosdepth_regions="qc/mosdepth_bed/{sample}_{type}.regions.bed.gz",
-        mosdepth_perbase="qc/mosdepth_bed/{sample}_{type}.mosdepth.per-base.design_bed.txt",
+        mosdepth_perbase="qc/mosdepth_bed/{sample}_{type}.mosdepth.per-base.exon_bed.txt",
         picard_dup="qc/picard_collect_duplication_metrics/{sample}_{type}.duplication_metrics.txt",
         design_bed=config["reference"]["design_bed"],
-        pgrs_bed=config["reference"]["design_bed"],
+        pgrs_bed=config["reference"]["prgs_bed"],
     output:
         results=temp("qc/xlsx_report/{sample}_{type}.xlsx"),
     params:

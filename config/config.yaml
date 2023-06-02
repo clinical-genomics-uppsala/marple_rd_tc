@@ -22,6 +22,7 @@ reference:
   design_intervals: ""
   exon_bed: ""
   exon_intervals: ""
+  pgrs_bed: ""
   skip_chrs:
     - "chr4"
     - "chr6"
