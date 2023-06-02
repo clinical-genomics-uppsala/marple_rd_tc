@@ -43,7 +43,7 @@ rule export_qc_xlsx_report:
         mosdepth_perbase="qc/mosdepth_bed/{sample}_{type}.mosdepth.per-base.exon_bed.txt",
         picard_dup="qc/picard_collect_duplication_metrics/{sample}_{type}.duplication_metrics.txt",
         design_bed=config["reference"]["design_bed"],
-        pgrs_bed=config["reference"]["prgs_bed"],
+        pgrs_bed=config["reference"]["pgrs_bed"],
     output:
         results=temp("qc/xlsx_report/{sample}_{type}.xlsx"),
     params:
