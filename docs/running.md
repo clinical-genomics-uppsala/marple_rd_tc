@@ -69,7 +69,7 @@ The bare-bone version of the config file can be found in the `config/config.yaml
 ///
 
 ### Resources
-An `resources.yaml` file can also be found in the `config/`-folder. This is adapted to the Uppsala Compute cluster but can be used as an indication of resources needed for the different programs. 
+An `resources.yaml` file can also be found in the `config/`-folder. This is adapted to the Uppsala Clinical Genomics' compute cluster but can be used as an indication of resources needed for the different programs. 
 
 /// details | Expand to view current resources.yaml
 ```yaml

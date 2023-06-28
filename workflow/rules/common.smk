@@ -65,6 +65,7 @@ validate(units, schema="../schemas/units.schema.yaml")
 
 
 ### Read and validate output file
+
 with open(config["output"]) as output:
     if config["output"].endswith("json"):
         output_spec = json.load(output)
@@ -72,6 +73,12 @@ with open(config["output"]) as output:
         output_spec = yaml.safe_load(output.read())
 
 validate(output_spec, schema="../schemas/output_files.schema.yaml")
+
+
+### Set wildcard constraints
+wildcard_constraints:
+    sample="|".join(samples.index),
+    type="N|T|R",
 
 
 # Check that fastq files actually exist. If not, this might result in other
@@ -101,19 +108,17 @@ def compile_output_file_list(wildcards):
     outdir = pathlib.Path(output_spec.get("directory", "./"))
     output_files = []
 
-    callers = ["haplotypecaller"]
-    wc_df = pd.DataFrame(np.repeat(units.values, len(callers), axis=0))
-    wc_df.columns = units.columns
-    caller_gen = itertools.cycle(callers)
-    wc_df = wc_df.assign(sequenceid=[config["sequenceid"] for i in range(wc_df.shape[0])])
-    wc_df = wc_df.assign(caller=[next(caller_gen) for i in range(wc_df.shape[0])])
-
     for f in output_spec["files"]:
-        outputpaths = set(expand(f["output"], zip, **wc_df.to_dict("list")))
-        if len(outputpaths) == 0:
-            # Using expand with zip on a pattern without any wildcards results
-            # in an empty list. Then just add the output filename as it is.
-            outputpaths = [f["output"]]
+        # Please remember to add any additional values down below
+        # that the output strings should be formatted with.
+        outputpaths = set(
+            [
+                f["output"].format(sample=sample, type=unit_type, sequenceid=config["sequenceid"])
+                for sample in get_samples(samples)
+                for unit_type in get_unit_types(units, sample)
+            ]
+        )
+
         for op in outputpaths:
             output_files.append(outdir / Path(op))
 
@@ -128,7 +133,7 @@ def generate_copy_rules(output_spec):
         if f["input"] is None:
             continue
 
-        rule_name = "_copy_{}".format("_".join(re.sub(r"[\"'-.,]", "", f["name"].strip().lower()).split()))
+        rule_name = "_copy_{}".format("_".join(re.split(r"\W{1,}", f["name"].strip().lower())))
         input_file = pathlib.Path(f["input"])
         output_file = output_directory / pathlib.Path(f["output"])
 
@@ -146,7 +151,6 @@ def generate_copy_rules(output_spec):
                 f'@workflow.output("{output_file}")',
                 f'@workflow.log("logs/{rule_name}_{output_file.name}.log")',
                 f'@workflow.container("{copy_container}")',
-                '@workflow.conda("../envs/copy_results_files.yaml")',
                 f'@workflow.resources(time="{time}", threads={threads}, mem_mb="{mem_mb}", '
                 f'mem_per_cpu={mem_per_cpu}, partition="{partition}")',
                 f'@workflow.shellcmd("{copy_container}")',
@@ -156,7 +160,7 @@ def generate_copy_rules(output_spec):
                 "env_modules, bench_record, jobid, is_shell, bench_iteration, cleanup_scripts, "
                 "shadow_dir, edit_notebook, conda_base_path, basedir, runtime_sourcecache_path, "
                 "__is_snakemake_rule_func=True):",
-                '\tshell("(cp {input[0]} {output[0]}) &> {log}", bench_record=bench_record, '
+                '\tshell("(cp --preserve=timestamps {input[0]} {output[0]}) &> {log}", bench_record=bench_record, '
                 "bench_iteration=bench_iteration)\n\n",
             ]
         )

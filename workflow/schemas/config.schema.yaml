@@ -72,6 +72,9 @@ properties:
       exon_intervals:
         type: string
         description: intervals file over just exons
+      pgrs_bed:
+        type: string
+        description: bedfile for PGRS position
       skip_chrs:
         type: array
         items:
@@ -85,6 +88,7 @@ properties:
       - design_intervals
       - exon_bed
       - exon_intervals
+      - pgrs_bed
       - skip_chrs
 
   trimmer_software:

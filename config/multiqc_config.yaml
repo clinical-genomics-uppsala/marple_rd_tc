@@ -1,10 +1,21 @@
+title: "Clinical Genomics MultiQC Report"
+subtitle: "Twist Cancer"
+intro_text: "The MultiQC report summarize analysis results from Twist Cancer data that been analyzed by the pipeline marple_rd_tc (https://github.com/clinical-genomics-uppsala/marple-rd-tc). Reference used: GRCh38."
+
+
+report_header_info:
+  - Contact E-mail: "igp-klinsek-bioinfo@lists.uu.se"
+  - Application Type: "Twist Cancer Panel"
+  - Project Type: "Clinical Samples"
+  # - Sequencing Platform: "HiSeq 2500 High Output V4"
+  # - Sequencing Setup: "2x150"
+
 decimalPoint_format: ','
 
 ## maste anpassa configen lite mera. 20x breadth, insert size och bases on target. Fold80?
-# extra_fn_clean_exts: ##from this until end
-#     - '.duplication_metrics'
-#     - type: regex
-#       pattern: '_fastq[12]'
+extra_fn_clean_exts: ##from this until end
+    - '.duplication_metrics'
+    - '_N'
 
 custom content:
   order:
@@ -20,7 +31,9 @@ mosdepth_config:
     - "chr1"
     - "chr2"
     - "chr3"
+    - "chr4"
     - "chr5"
+    - "chr6"
     - "chr7"
     - "chr8"
     - "chr9"
@@ -28,10 +41,14 @@ mosdepth_config:
     - "chr11"
     - "chr12"
     - "chr13"
+    - "chr14"
+    - "chr15"
     - "chr16"
     - "chr17"
     - "chr18"
     - "chr19"
+    - "chr20"
+    - "chr21"
     - "chr22"
 
 read_count_multiplier: 0.001
@@ -119,3 +136,38 @@ multiqc_cgs:
         min: 0
         suffix: "%"
         scale: "RdYlGn"
+
+# Galler alla kolumner oberoende pa module!
+table_columns_placement:
+  mosdepth:
+    median_coverage: 601
+    1_x_pc: 666
+    5_x_pc: 666
+    10_x_pc: 602
+    20_x_pc: 603
+    30_x_pc: 604
+    50_x_pc: 605
+  Samtools:
+    raw_total_sequences: 500
+    reads_mapped: 501
+    reads_mapped_percent: 502
+    reads_properly_paired_percent: 503
+    average_quality: 504
+    error_rate: 555
+    reads_MQ0_percent: 555
+    non-primary_alignments: 555
+  Picard:
+    PCT_SELECTED_BASES: 801
+    FOLD_80_BASE_PENALTY: 802
+    PCT_PF_READS_ALIGNED: 888
+    summed_median: 888
+    PERCENT_DUPLICATION: 803
+    summed_mean: 804
+    STANDARD_DEVIATION: 805
+    ZERO_CVG_TARGETS_PCT: 888
+    MEDIAN_COVERAGE: 888
+    MEAN_COVERAGE: 888
+    SD_COVERAGE: 888
+    PCT_30X: 888
+    PCT_TARGET_BASES_30X: 888
+    FOLD_ENRICHMENT: 888

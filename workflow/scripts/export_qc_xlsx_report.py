@@ -12,7 +12,7 @@ min_cov = int(snakemake.params.coverage_thresholds.strip().split(",")[0])
 med_cov = int(snakemake.params.coverage_thresholds.strip().split(",")[1])
 max_cov = int(snakemake.params.coverage_thresholds.strip().split(",")[2])
 
-cmd_avg_cov = "grep total_region" + snakemake.input.mosdepth_summary + " | grep '{print $4}'"
+cmd_avg_cov = "grep total_region " + snakemake.input.mosdepth_summary + " | awk '{print $4}'"
 avg_coverage = subprocess.run(cmd_avg_cov, stdout=subprocess.PIPE, shell='TRUE').stdout.decode('utf-8').strip()
 
 cmd_duplication = "grep -A1 PERCENT " + snakemake.input.picard_dup + " |tail -1 | cut -f9"
@@ -25,15 +25,15 @@ with gzip.open(snakemake.input.mosdepth_regions, 'rt') as regions_file:
     for lline in regions_file:
         line = lline.strip().split('\t')
         gene = line[3].split("_")[0]
-        exon = line[3].split("_")[1]
-        transcript = line[3].split("transcript")[1]
+        transcript = "_".join(line[3].split("_")[1:3])
+        exon = str(line[3].split("_")[3])
         coverage_row = [line[0], line[1], line[2], gene, exon, transcript, line[4]]
         region_cov_table.append(coverage_row)
-        bed_table.append(line[0:4])
+        bed_table.append(line[0:5])
 
 # Thresholds file
 threshold_table = []
-region_breadth = []
+region_breadth = [0, 0, 0]
 total_breadth = [0, 0, 0]
 total_length = 0
 with gzip.open(snakemake.input.mosdepth_thresholds, 'rt') as threshold_file:
@@ -57,7 +57,7 @@ with open(snakemake.input.mosdepth_perbase, 'r') as mosdepth_perbase:
     for lline in mosdepth_perbase:
         line = lline.strip().split("\t")
         if int(line[3]) <= int(min_cov):
-            low_cov_lines.append(line)
+            low_cov_lines.append(line[0:5]+[line[7]])
 low_cov_lines.sort(key=lambda x: x[3])  # Sort based on coverage
 
 low_cov_table = []
@@ -65,10 +65,18 @@ num_low_regions = 0
 for line in low_cov_lines:
     for bed_line in bed_table:
         if line[0] == bed_line[0] and int(line[1]) >= int(bed_line[1]) and int(line[2]) <= int(bed_line[2]):
-            low_cov_table.append([bed_line[3]]+line)
+            low_cov_table.append([bed_line[3]]+line[0:4])
             num_low_regions += 1
             break
 
+
+# PGRS coverage
+pgrs_cov_table = []
+with open(snakemake.input.pgrs_coverage) as pgrs_file:
+    for lline in pgrs_file:
+        line = lline.strip().split("\t")
+        print(line)
+        pgrs_cov_table.append(line[0:4]+[line[7]])
 
 # Create xlsx file and sheets
 empty_list = ['', '', '', '', '', '']
@@ -100,9 +108,9 @@ worksheet_overview.write_row(6, 0, empty_list, format_line)
 
 worksheet_overview.write(7, 0, "Sheets:", format_table_heading)
 worksheet_overview.write_url(8, 0, "internal:'Low Coverage'!A1", string='Positions with coverage lower than '+str(min_cov)+'x')
-worksheet_overview.write_url(9, 0, "internal: 'Coverage'!A1", string='Average coverage of all regions in bed')
+worksheet_overview.write_url(9, 0, "internal:'Coverage'!A1", string='Average coverage of all regions in bed')
 worksheet_overview.write_url(10, 0, "internal:'Thresholds'!A1", string='Coverage Thresholds')
-worksheet_overview.write_url(11, 0, "internal: 'PGRS Coverage'!A1", string='PGRS Coverage')
+worksheet_overview.write_url(11, 0, "internal:'PGRS Coverage'!A1", string='PGRS Coverage')
 worksheet_overview.write_row(12, 0, empty_list, format_line)
 
 worksheet_overview.write_row(15, 0, ['RunID', 'DNAnr', 'Avg. coverage [x]', 'Duplicationlevel [%]', str(min_cov) + 'x',
@@ -118,8 +126,8 @@ worksheet_overview.write(22, 0, "Bedfile used: " + snakemake.input.design_bed)
 worksheet_overview.write(23, 0, "PGRS-bedfile used: " + snakemake.input.pgrs_bed)
 
 # low cov
-worksheet_low_cov.set_column(1, 3, 10)
-worksheet_low_cov.set_column(1, 4, 10)
+worksheet_low_cov.set_column(0, 0, 10)
+worksheet_low_cov.set_column(2, 3, 10)
 
 worksheet_low_cov.write(0, 0, 'Mosdepth coverage analysis', format_heading)
 worksheet_low_cov.write_row(1, 0, empty_list, format_line)
@@ -134,7 +142,9 @@ for line in low_cov_table:
     worksheet_low_cov.write_row(row, 0, line)
     row += 1
 # cov
-worksheet_cov.write(0, 0), 'Average Coverage per Exon', format_heading
+worksheet_cov.set_column(1, 2, 10)
+worksheet_cov.set_column(5, 5, 10)
+worksheet_cov.write(0, 0, 'Average Coverage per Exon', format_heading)
 worksheet_cov.write_row(1, 0, empty_list, format_line)
 worksheet_cov.write(2, 0, 'Sample: '+str(sample))
 worksheet_cov.write(3, 0, 'Average coverage of each region in exon-bedfile')
@@ -145,8 +155,8 @@ header_dict = [{'header': 'Chr'}, {'header': 'Start'}, {'header': 'Stop'}, {'hea
 worksheet_cov.add_table(table_area, {'data': region_cov_table, 'columns': header_dict, 'style': 'Table Style Light 1'})
 
 # threshold
-worksheet_threshold.set_column(1, 3, 10)
-worksheet_threshold.set_column(1, 4, 10)
+worksheet_threshold.set_column(1, 1, 10)
+worksheet_threshold.set_column(2, 3, 10)
 
 worksheet_threshold.write(0, 0, 'Coverage breadth per exon', format_heading)
 worksheet_threshold.write_row(1, 0, empty_list, format_line)
@@ -159,9 +169,15 @@ header_dict = [{'header': 'Region'}, {'header': 'Chr'}, {'header': 'Start'}, {'h
 worksheet_threshold.add_table(table_area, {'data': threshold_table, 'columns': header_dict, 'style': 'Table Style Light 1'})
 
 # pgrs
+worksheet_pgrs_cov.set_column(2, 3, 10)
 worksheet_pgrs_cov.write(0, 0, 'Coverage of PGRS positions', format_heading)
 worksheet_pgrs_cov.write_row(1, 0, empty_list, format_line)
 worksheet_pgrs_cov.write(2, 0, 'Sample: '+str(sample))
 worksheet_pgrs_cov.write(3, 0, 'Average coverage of pgrs-bedfile')
+
+table_area = 'A6:E'+str(len(pgrs_cov_table))
+header_dict = [{'header': 'Chr'}, {'header': 'Start'}, {'header': 'End'}, {'header': 'Coverage'},
+               {'header': 'Hg19 coord/Comment'}]
+worksheet_pgrs_cov.add_table(table_area, {'data': pgrs_cov_table, 'columns': header_dict, 'style': 'Table Style Light 1'})
 
 workbook.close()
