@@ -9,6 +9,7 @@ reference:
   design_intervals: "reference/design.intervals"
   exon_bed: "reference/design.bed"
   exon_intervals: "reference/design.intervals"
+  pgrs_bed: "reference/design.pgrs.bed"
   skip_chrs:
     - "chr3"
     - "chr4"

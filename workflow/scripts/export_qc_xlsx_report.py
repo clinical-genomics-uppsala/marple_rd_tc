@@ -71,7 +71,7 @@ for line in low_cov_lines:
 
 
 # PGRS coverage
-pgrs_cov_table=[]
+pgrs_cov_table = []
 with open(snakemake.input.pgrs_coverage) as pgrs_file:
     for lline in pgrs_file:
         line = lline.strip().split("\t")
@@ -176,7 +176,8 @@ worksheet_pgrs_cov.write(2, 0, 'Sample: '+str(sample))
 worksheet_pgrs_cov.write(3, 0, 'Average coverage of pgrs-bedfile')
 
 table_area = 'A6:E'+str(len(pgrs_cov_table))
-header_dict = [{'header': 'Chr'}, {'header': 'Start'}, {'header': 'End'}, {'header': 'Coverage'}, {'header': 'Hg19 coord/Comment        '}]
+header_dict = [{'header': 'Chr'}, {'header': 'Start'}, {'header': 'End'}, {'header': 'Coverage'},
+               {'header': 'Hg19 coord/Comment'}]
 worksheet_pgrs_cov.add_table(table_area, {'data': pgrs_cov_table, 'columns': header_dict, 'style': 'Table Style Light 1'})
 
 workbook.close()

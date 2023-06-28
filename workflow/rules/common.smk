@@ -113,7 +113,7 @@ def compile_output_file_list(wildcards):
         # that the output strings should be formatted with.
         outputpaths = set(
             [
-                f["output"].format(sample=sample, type=unit_type, sequenceid=config['sequenceid'])
+                f["output"].format(sample=sample, type=unit_type, sequenceid=config["sequenceid"])
                 for sample in get_samples(samples)
                 for unit_type in get_unit_types(units, sample)
             ]
@@ -123,6 +123,7 @@ def compile_output_file_list(wildcards):
             output_files.append(outdir / Path(op))
 
     return output_files
+
 
 def generate_copy_rules(output_spec):
     output_directory = pathlib.Path(output_spec.get("directory", "./"))
