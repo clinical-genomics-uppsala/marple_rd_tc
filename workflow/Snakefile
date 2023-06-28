@@ -187,3 +187,5 @@ use rule multiqc from qc as qc_multiqc with:
         + input.sample_order
         + " -c "
         + input.config,
+        # + " --cl-config 'extra_fn_clean_exts: {[\"_"
+        # + wildcards.flowcell + "_" + wildcards.lane + "_" + wildcards.barcode + "_fastp\"]} ' ",
