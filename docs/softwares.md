@@ -24,7 +24,7 @@ A Rscript to create output files from exomedepth results.
 
 ---
 ## export_qc.smk
-Rules that creates a `.xlsx` file per sample with aggregated coverage information
+Rules that creates a `.xlsx` file per sample with aggregated coverage information.
 
 ### :snake: Rule
 

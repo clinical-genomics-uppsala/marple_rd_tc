@@ -47,7 +47,7 @@ pip install -r requirements.txt
 This will install all required softwares needed to run the pipeline in an virtual environment which you will have to remember to activate before running the pipeline each time. 
 
 ## Input files :books:
-Four different files need to be adapted to you compute enviorment and sequence data, `samples.tsv`, `units.tsv`, `config.yaml` and `resources.yaml`.
+Four different files need to be adapted to you compute environment and sequence data, `samples.tsv`, `units.tsv`, `config.yaml` and `resources.yaml`.
 ### Samples and units
 A `samples.tsv` and a `units.tsv` file which contain sample information, sequencing meta information and location of fastq-files are needed. Specification of what columns are needed can be found at [Marple schemas](https://github.com/clinical-genomics-uppsala/marple/tree/develop/workflow/schemas). The `.tsv`-files can also be generated with the help of `hydra-genetics create-input-files`.
 

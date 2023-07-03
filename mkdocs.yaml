@@ -6,6 +6,8 @@ nav:
     - Running the pipeline: running.md
   - Pipeline specific rules:
     - Rule list: softwares.md
+  - References pipeline:
+    - Running and output: running_ref.md
   - Project Info:
     - Changelog: changelog.md
     - Contributing: development.md
