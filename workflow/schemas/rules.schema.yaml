@@ -34,13 +34,13 @@ properties:
         type: object
         description: list of inputs
         properties:
-          a:
+          left:
             type: string
             description: per-base coverage file from mosdepth
           coverage_csi:
             type: string
             description: Index file for per-base.bed.gz file
-          b:
+          right:
             type: string
             description: Design bed used to only look at coverage based on design
       output:
