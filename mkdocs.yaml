@@ -6,11 +6,10 @@ nav:
     - Running the pipeline: running.md
   - Pipeline specific rules:
     - Rule list: softwares.md
-  - References pipeline:
+  - References workflow:
     - Running and output: running_ref.md
   - Project Info:
     - Changelog: changelog.md
-    - Contributing: development.md
     - Credits: credits.md
     - Frequently Asked Questions: faq.md
     - License: license.md

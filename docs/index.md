@@ -29,7 +29,7 @@ Marple - references pipeline :woman_detective: only uses one [Hydra Genetics](ht
 
 ### :judge: Rulegraph
 
-![dag plot](includes/images/rulegraph_ref.png){: style="height:100%;width:50%"}
+![dag plot](includes/images/rulegraph_ref.png){: style="height:50%;width:50%"}
 
 ---
 # Hydra-genetics
