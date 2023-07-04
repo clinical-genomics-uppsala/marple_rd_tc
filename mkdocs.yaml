@@ -4,6 +4,7 @@ nav:
     - Introduction: index.md
     - Result files: result_files.md
     - Running the pipeline: running.md
+    - Step by step: steps.md
   - Pipeline specific rules:
     - Rule list: softwares.md
   - References workflow:

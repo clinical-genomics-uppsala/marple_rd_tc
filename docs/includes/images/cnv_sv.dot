@@ -1,0 +1,18 @@
+digraph snakemake_dag {
+	rankdir=LR;
+    graph[bgcolor=white, margin=0];
+    node[shape=box, style=rounded, fontname=sans,                 fontsize=10, penwidth=2];
+    edge[penwidth=2, color=grey];
+	0[label = "bam: merged", color = "0.66 0.6 0.85", style="dotted"];
+	1[label = "RData: normal pool", color = "0.66 0.6 0.85", style="dotted"];
+	2[label = "exomedepth: nexus sv", color = "0.0 0.0 0.0", style="dotted"];
+	3[label = "exomedepth: aes", color = "0.0 0.0 0.0", style="dotted"];
+	4[label = "exomedepth_export", color = "0.31 0.6 0.85", style="rounded"];
+	5[label = "cnv_sv_exomedepth_call", color = "0.47 0.6 0.85", style="rounded"];
+
+	0 -> 5
+	1 -> 5
+	5 -> 4
+	4 -> 3
+	4 -> 2
+}            
