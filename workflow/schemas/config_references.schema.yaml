@@ -1,0 +1,45 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+description: snakemake configuration file
+type: object
+properties:
+  samples:
+    type: string
+  units:
+    type: string
+  resources:
+    type: string
+    description: Path to resources.yaml file
+
+  default_container:
+    type: string
+    description: name or path to a default docker/singularity container
+
+  reference:
+    type: object
+    properties:
+      design_bed:
+        type: string
+        description: bedfile of design
+    required:
+      - design_bed
+
+  exomedepth_references:
+    type: object
+    description: configuration for exomedepth_references
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra configuration for exomedepth reference
+    required:
+      - container
+
+
+required:
+  - samples
+  - units
+  - resources
+  - reference
+  - exomedepth_references

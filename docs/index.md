@@ -2,7 +2,7 @@
 
 This pipeline is created to run on short-read Illumina data from a custom Twist Inherited Cancer panel, designed at [Clinical Genomics Uppsala](https://www.scilifelab.se/units/clinical-genomics-uppsala/#https://www.cgu.igp.uu.se).
 
-This snakemake pipeline uses the module system from [Hydra Genetics](https://github.com/hydra-genetics/) to process `.fastq.gz` files. The pipeline produces a MultiQC `.html` report with QC-data, `.bam` alignment files, annotated `.vcf.gz` for SNVs and smaller indels, as well as `.txt` and `.aed` files for structural variants from Exomedepth. 
+This snakemake pipeline uses the module system from [Hydra Genetics](https://github.com/hydra-genetics/) to process `.fastq.gz` files. The pipeline produces a MultiQC `.html` report with QC-data, `.bam` alignment files, annotated `.vcf.gz` for SNVs and smaller indels, as well as `.txt` and `.aed` files for structural variants from Exomedepth. A `genome.vcf.gz` is also produced, but this is not normalized.
 
 <br />
 Marple :woman_detective: uses the following hydra genetics modules:
@@ -15,13 +15,26 @@ Marple :woman_detective: uses the following hydra genetics modules:
 - [QC](https://github.com/hydra-genetics/qc/tree/ca947b1)
 
 
-## :judge: Rulegraph 
-![dag plot](includes/rulegraph.svg){: style="height:100%;width:100%"}
+### :judge: Rulegraph 
+![dag plot](includes/images/rulegraph.svg){: style="height:100%;width:100%"}
+
+---
+## :snake: Marple - references pipeline :woman_detective:
+The repository also includes a workflow to create the normalpool needed for Exomedepth. The references pipeline is located in `workflow/Snakefile_references` and uses a specific units files `units_references.tsv` which need to include the path to a `bam`-file, preferably produced by Marple.
+
+<br />
+Marple - references pipeline :woman_detective: only uses one [Hydra Genetics](https://github.com/hydra-genetics/) module:
+
+- [References](https://github.com/hydra-genetics/references/tree/907d302)
+
+### :judge: Rulegraph
+
+![dag plot](includes/images/rulegraph_ref.png){: style="height:50%;width:50%"}
 
 ---
 # Hydra-genetics
 
-We are an organization/community with the goal of making [snakemake](https://snakemake.readthedocs.io/en/stable/index.html) pipeline development easier, faster, a bit more structured and of higher quality.
+[Hydra Genetics](https://github.com/hydra-genetics/) is an organization/community with the goal of making [snakemake](https://snakemake.readthedocs.io/en/stable/index.html) pipeline development easier, faster, a bit more structured and of higher quality.
 
 We do this by providing [snakemake modules](https://snakemake.readthedocs.io/en/stable/snakefiles/modularization.html#modules) that can be combined to create a complete analysis or included in already existing pipelines. All modules are subjected to extensive testing to make sure that new releases doesn't unexpectedly break existing pipeline or deviate from guidelines and best practices on how to write code.
 

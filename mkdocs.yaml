@@ -4,11 +4,13 @@ nav:
     - Introduction: index.md
     - Result files: result_files.md
     - Running the pipeline: running.md
+    - Step by step: steps.md
   - Pipeline specific rules:
     - Rule list: softwares.md
+  - References workflow:
+    - Running and output: running_ref.md
   - Project Info:
     - Changelog: changelog.md
-    - Contributing: development.md
     - Credits: credits.md
     - Frequently Asked Questions: faq.md
     - License: license.md
