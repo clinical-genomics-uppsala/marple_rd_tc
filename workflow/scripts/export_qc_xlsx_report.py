@@ -34,7 +34,7 @@ with gzip.open(snakemake.input.mosdepth_regions, 'rt') as regions_file:
         gene = line[3].split("_")[0]
         transcript = "_".join(line[3].split("_")[1:3])
         exon = str(line[3].split("_")[3])
-        coverage_row = [line[0], line[1], line[2], gene, exon, transcript, line[4]]
+        coverage_row = [line[0], line[1], line[2], gene, exon, transcript, float(line[4])]
         if coverage_row not in region_cov_table:
             region_cov_table.append(coverage_row)
         if line[0:5] not in bed_table:
@@ -78,6 +78,7 @@ low_cov_lines = sorted(low_cov_lines, key=itemgetter(0, 1))  # Sort based on chr
 low_cov_table = []
 num_low_regions = 0
 for line in low_cov_lines:
+    line[3] = int(line[3])
     exons = []
     for bed_line in bed_table:
         # get all exons that cover that low cov line
@@ -97,6 +98,7 @@ pgrs_cov_table = []
 with open(snakemake.input.pgrs_coverage) as pgrs_file:
     for lline in pgrs_file:
         line = lline.strip().split("\t")
+        line[3]=int(line[3])
         pgrs_cov_table.append(line[0:4]+[line[7]])
 
 
