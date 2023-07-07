@@ -54,3 +54,6 @@ multiqc:
 
 vep:
   vep_cache: "reference/vep_cache"
+
+xlsx_report:
+  wanted_transcripts: "reference/wanted_transcripts.txt"
