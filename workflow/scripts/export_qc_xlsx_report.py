@@ -98,7 +98,7 @@ pgrs_cov_table = []
 with open(snakemake.input.pgrs_coverage) as pgrs_file:
     for lline in pgrs_file:
         line = lline.strip().split("\t")
-        line[3]=int(line[3])
+        line[3] = int(line[3])
         pgrs_cov_table.append(line[0:4]+[line[7]])
 
 
