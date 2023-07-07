@@ -5,7 +5,7 @@ resources: "resources.yaml"
 default_container: "docker://hydragenetics/common:0.3.0"
 
 reference:
-  design_bed: "/projects/wp4/nobackup/workspace/arielle_test/wp3_tc/hg38_new_design_2306/bedfiles/Twist_Cancer_230608_hg38_TE-98982205-wPGRS.merged.bed"
+  design_bed: "/projects/wp3/nobackup/TwistCancer/Bedfiles/Twist_Cancer_230706_hg38_TE-98982205-wPGRS.merged_200bpwindows.bed"
 
-exomedepth_references:
+exomedepth_reference:
   container: "docker://hydragenetics/exomedepth:1.1.15"
