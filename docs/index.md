@@ -1,5 +1,9 @@
 # :snake: Welcome to Marple - Inherited Cancer pipeline :woman_detective:
 
+<p align="center">
+<a href="https://github.com/clinical-genomics-uppsala/marple-rd-tc/">https://github.com/clinical-genomics-uppsala/marple-rd-tc/</a>
+</p>
+
 This pipeline is created to run on short-read Illumina data from a custom Twist Inherited Cancer panel, designed at [Clinical Genomics Uppsala](https://www.scilifelab.se/units/clinical-genomics-uppsala/#https://www.cgu.igp.uu.se).
 
 This snakemake pipeline uses the module system from [Hydra Genetics](https://github.com/hydra-genetics/) to process `.fastq.gz` files. The pipeline produces a MultiQC `.html` report with QC-data, `.bam` alignment files, annotated `.vcf.gz` for SNVs and smaller indels, as well as `.txt` and `.aed` files for structural variants from Exomedepth. A `genome.vcf.gz` is also produced, but this is not normalized.
