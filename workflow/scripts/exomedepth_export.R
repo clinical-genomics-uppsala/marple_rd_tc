@@ -7,7 +7,10 @@ cnv_call_df <- data.frame(
   )
 
 if (length(all.exons@CNV.calls) > 0) {
-
+  
+  # for compatability with alissa remove rows where there is no-change (reads.ratio == 1)
+  cnv_call_df <- cnv_call_df[cnv_call_df$reads.ratio != 1, ] 
+  
   # Create Nexus SV format text file
   nexus <- c("id", "reads.ratio")
   nexus_df <- cnv_call_df[nexus]
