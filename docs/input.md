@@ -17,11 +17,11 @@ The following information need to be added to these files:
 | type | data type identifier (one letter), can be one of **T**umor, **N**ormal, **R**NA |
 | platform | type of sequencing platform, e.g. `NovaSeq` |
 | machine | specific machine id, e.g. NovaSeq instruments have `@Axxxxx` |
-| flowcell | identifer of flowcell used |
+| flowcell | identifier of flowcell used |
 | lane | flowcell lane number |
 | barcode | sequence library barcode/index, connect forward and reverse indices by `+`, e.g. `ATGC+ATGC` |
 | fastq1/2 | absolute path to forward and reverse reads |
 | adapter | adapter sequences to be trimmed, separated by comma |
 
 #### Configuration
-A [`resources.yaml`](https://github.com/clinical-genomics-uppsala/marple/blob/develop/config/resources.yaml) and [`config.yaml`](https://github.com/clinical-genomics-uppsala/marple/blob/develop/config/config.yaml) need to be adapted to work with your computing enviorment.
+A [`resources.yaml`](https://github.com/clinical-genomics-uppsala/marple/blob/develop/config/resources.yaml) and [`config.yaml`](https://github.com/clinical-genomics-uppsala/marple/blob/develop/config/config.yaml) need to be adapted to work with your computing environment.

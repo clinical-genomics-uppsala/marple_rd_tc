@@ -3,7 +3,7 @@ To go into details of the pipeline we dived the pipeline into modules similar to
 
 ---
 ## Prealignment
-See the [prealignment hydra-genetics module](https://prealignment.readthedocs.io/en/latest/) documentation for more details on the softwares. Default hydra-genetics settings/resources are used if no configuration is specified.
+See the **Prealignment** hydra-genetics module documentation on [ReadTheDoc](https://hydra-genetics-prealignment.readthedocs.io/en/latest/) or [github]() documentation for more details on the softwares. Default hydra-genetics settings/resources are used if no configuration is specified.
 
 ![dag plot](includes/images/prealignment.png){: style="height:30%;width:30%"}
 
@@ -18,7 +18,7 @@ Merging of fastq files belonging to the same sample are performed by simply conc
 
 ---
 ## Alignment
-See [Alignment hydra-genetics module](https://alignment.readthedocs.io/en/latest/)/[github](https://github.com/hydra-genetics/alignment/tree/v0.4.0) for more information and documentation on the softwares used in the alignment steps. 
+See **Alignment** hydra-genetics module on [ReadTheDocs](https://hydra-genetics-alignment.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/alignment/tree/v0.4.0) for more information and documentation on the softwares used in the alignment steps. 
 
 ![dag plot](includes/images/alignment.png){: style="height:100%;width:100%"}
 
@@ -28,7 +28,7 @@ See [Alignment hydra-genetics module](https://alignment.readthedocs.io/en/latest
 * `Results/{sample}_{sequenceid}/{sample}_{sequenceid}.bam.bai`
 
 ### Alignment with BWA-mem
-Alignment of fastq files into bam files is performed by **[bwa-mem](https://github.com/lh3/bwa)** v0.7.17 using the trimmed fastq files. This make it possible to speed up alignent by utlizing parallization and also make it possible to analyze qc for lanes separately. Bamfile are then directly sorted by **[samtools sort](http://www.htslib.org/doc/samtools-sort.html)** v1.15.
+Alignment of fastq files into bam files is performed by **[bwa-mem](https://github.com/lh3/bwa)** v0.7.17 using the trimmed fastq files. This make it possible to speed up alignment by utilizing parallelization and also make it possible to analyze qc for lanes separately. Bamfiles are then directly sorted by **[samtools sort](http://www.htslib.org/doc/samtools-sort.html)** v1.15.
 
 #### Read groups
 Bam file read groups are set according to sequencing information in the `units.tsv` file.
@@ -63,7 +63,7 @@ Bamfile indexing is performed by **[samtools index](http://www.htslib.org/doc/sa
 
 ---
 ## SNV indels
-SNV and indels are called using the [SNV_indels module](https://github.com/hydra-genetics/snv_indels/tree/v0.3.0) and is annotated using the [Annotation module](https://github.com/hydra-genetics/annotation/tree/v0.3.0).
+SNV and indels are called using the **SNV_indels** module ([ReadTheDoc](https://hydra-genetics-snv-indels.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/snv_indels/tree/v0.3.0)) and is annotated using the **Annotation** module ([ReadTheDocs](https://hydra-genetics-annotation.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/annotation/tree/v0.3.0).
 
 ![dag plot](includes/images/snv_indels.png){: style="height:100%;width:100%"}
 
@@ -76,16 +76,16 @@ SNV and indels are called using the [SNV_indels module](https://github.com/hydra
 Variants are called using [**GATKs Haplotypecaller** v4.2.2.0](https://gatk.broadinstitute.org/hc/en-us/articles/360037225632-HaplotypeCaller) per chromosome to speed up the analysis. Haplotypecaller runs twice, once for standard `vcf` and once for `genome.vcf` with the extra parameter `-ERC GVCF`. Both files are then merged using **[bcftools concat](https://samtools.github.io/bcftools/bcftools.html#concat)** v1.15, the AF field is also added to the `INFO` column in the vcf:s using the `fix_af.py` from the snv_indel module.
 
 ### Normalizing
-The standard vcf files is then decomposed with **[vt decompose**](https://genome.sph.umich.edu/wiki/Vt#Decompose) followed by [**vt decompose_blocksub**](https://genome.sph.umich.edu/wiki/Vt#Decompose_biallelic_block_substitutions) v2015.11.10. The vcf files are then normalized by [**vt normalize**](https://genome.sph.umich.edu/wiki/Vt#Normalization) v2015.11.10.
+The standard vcf files is then decomposed with [**vt decompose**](https://genome.sph.umich.edu/wiki/Vt#Decompose) followed by [**vt decompose_blocksub**](https://genome.sph.umich.edu/wiki/Vt#Decompose_biallelic_block_substitutions) v2015.11.10. The vcf files are then normalized by [**vt normalize**](https://genome.sph.umich.edu/wiki/Vt#Normalization) v2015.11.10.
 
 ### Annotation
 Both the normalized standard VCF files and the genome vcf files are then annotated using **[VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)** v109. Vep is run with the extra parameters `--assembly GRCh38 --check_existing --pick --variant_class --everything`.
 
-See the [annotation hydra-genetics module](https://annotation.readthedocs.io/en/latest/) for additional information.
+See the [annotation hydra-genetics module](https://hydra-genetics-annotation.readthedocs.io/en/latest/) for additional information.
 
 ---
 ## CNV
-CNVs are called using the [Hydra-Genetics CNV_SV module](https://github.com/hydra-genetics/cnv_sv/tree/78f270c).
+CNVs are called using the Hydra-Genetics **CNV_SV** module ([ReadTheDocs](https://hydra-genetics-cnv-sv.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/cnv_sv/tree/78f270c)).
 <br />
 
 ![dag plot](includes/images/cnv_sv.png){: style="height:60%;width:60%"}
@@ -100,7 +100,7 @@ To call larger structural variants **[Exomedepth](https://cran.r-project.org/web
 
 ---
 ## QC
-For quality control several the [QC-module](https://github.com/hydra-genetics/qc/tree/ca947b1) is used and the results are then summarized/aggregated into a MultiQC-report.
+For quality control several the **QC** module ([ReadTheDocs](https://hydra-genetics-qc.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/qc/tree/ca947b1)) is used and the results are then summarized/aggregated into a MultiQC-report.
 
 <br />
 
@@ -125,7 +125,7 @@ The report is configured based on a MultiQC config file.
 
 
 ### FastQC
-**[FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)** v0.11.9 is run on the raw fastq-files.
+**[FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)** v0.11.9 is run on the raw fastq-files before trimming.
 
 ### Mosdepth
 **[Mosdepth](https://github.com/brentp/mosdepth)** v0.3.2 is used together with a bedfile covering all coding exons (`config[reference][exon_bed]`) and thresholds (`10,20,50`) to calculate coverage.
