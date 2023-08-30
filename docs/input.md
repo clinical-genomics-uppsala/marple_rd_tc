@@ -2,8 +2,8 @@
 
 
 #### Samples and units
-Input data should be added to a [`samples.tsv`](https://github.com/clinical-genomics-uppsala/marple/blob/develop/config/samples.tsv)
-and an [`units.tsv`](https://github.com/clinical-genomics-uppsala/marple/blob/develop/config/units.tsv).
+Input data should be added to a [`samples.tsv`](https://github.com/clinical-genomics-uppsala/marple_rd_tc/blob/develop/config/samples.tsv)
+and an [`units.tsv`](https://github.com/clinical-genomics-uppsala/marple_rd_tc/blob/develop/config/units.tsv).
 
 The following information need to be added to these files:
 
@@ -24,4 +24,4 @@ The following information need to be added to these files:
 | adapter | adapter sequences to be trimmed, separated by comma |
 
 #### Configuration
-A [`resources.yaml`](https://github.com/clinical-genomics-uppsala/marple/blob/develop/config/resources.yaml) and [`config.yaml`](https://github.com/clinical-genomics-uppsala/marple/blob/develop/config/config.yaml) need to be adapted to work with your computing environment.
+A [`resources.yaml`](https://github.com/clinical-genomics-uppsala/marple_rd_tc/blob/develop/config/resources.yaml) and [`config.yaml`](https://github.com/clinical-genomics-uppsala/marple_rd_tc/blob/develop/config/config.yaml) need to be adapted to work with your computing environment.

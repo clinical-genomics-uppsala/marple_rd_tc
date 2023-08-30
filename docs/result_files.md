@@ -1,5 +1,5 @@
 # Result files
-Marple produces a lot of intermediate and result files but only files defined in [`output_files.yaml`](https://github.com/clinical-genomics-uppsala/marple/blob/develop/config/output_files.yaml) are kept, the rest are temporary and will be deleted when not needed anymore. If other files are wanted you need to edit `output_files.yaml` or add `--no-temp` to the running command.
+Marple produces a lot of intermediate and result files but only files defined in [`output_files.yaml`](https://github.com/clinical-genomics-uppsala/marple_rd_tc/blob/develop/config/output_files.yaml) are kept, the rest are temporary and will be deleted when not needed anymore. If other files are wanted you need to edit `output_files.yaml` or add `--no-temp` to the running command.
 
 ## Files
 The following output files are located in `Results/`-folder:
