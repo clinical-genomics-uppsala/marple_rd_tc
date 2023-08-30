@@ -2,6 +2,28 @@ $schema: "http://json-schema.org/draft-04/schema#"
 description: snakemake rule input and output files description file
 type: object
 properties:
+  add_ref_to_vcf:
+    type: object
+    description: input and output parameters for add_ref_to_vcf
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcf:
+            type: string
+            description: final vcf that reference should be added to vcf header to
+          ref:
+            type: string
+            description: fasta reference used
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: final vcf with reference genome in vcf header
+
   exomedepth_export:
     type: object
     description: input and output files for exomedepth export

@@ -95,6 +95,20 @@ properties:
     type: string
     description: name of rule to be used for trimming
 
+  add_ref_to_vcf:
+    type: object
+    description: parameters for add_ref_to_vcf
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
   bwa_mem:
     type: object
     description: configuration for bwa mem
