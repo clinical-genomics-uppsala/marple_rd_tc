@@ -1,7 +1,7 @@
 # :snake: Welcome to Marple - Inherited Cancer pipeline :woman_detective:
 
 <p align="center">
-<a href="https://github.com/clinical-genomics-uppsala/marple-rd-tc/">https://github.com/clinical-genomics-uppsala/marple-rd-tc/</a>
+<a href="https://github.com/clinical-genomics-uppsala/marple_rd_tc/">https://github.com/clinical-genomics-uppsala/marple_rd_tc/</a>
 </p>
 
 This pipeline is created to run on short-read Illumina data from a custom Twist Inherited Cancer panel, designed at [Clinical Genomics Uppsala](https://www.scilifelab.se/units/clinical-genomics-uppsala/#https://www.cgu.igp.uu.se).

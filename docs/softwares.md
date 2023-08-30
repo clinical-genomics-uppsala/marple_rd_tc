@@ -1,8 +1,8 @@
 # Pipeline specific rules/softwares used in Marple
 Rules created specifically for Marple pipeline are listed here.
 
-## add_ref__to_vcf.smk
-A pythonscript to add a line to vcf-files with reference path for Alissa to know which genome build used. The `##reference=`-line need to contain either hg38 or GRCh38.
+## add_ref_to_vcf.smk
+A pythonscript to add a line to vcf-files with reference path for Alissa to know which genome build used. The `##reference=`-line need to contain either hg38 or GRCh38 for Alissa to understand that the reference is not hg19.
 
 ### :snake: Rule
 

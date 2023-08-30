@@ -15,6 +15,3 @@ vcf_out = VariantFile(snakemake.output.vcf, 'w', header=new_header)
 
 for record in vcf_in.fetch():
     vcf_out.write(record)
-
-
-# import pdb; pdb.set_trace()

@@ -12,7 +12,7 @@ properties:
         properties:
           vcf:
             type: string
-            description: final vcf that reference should be added to vcf header to
+            description: final vcf where reference should be added to vcf-header
           ref:
             type: string
             description: fasta reference used
@@ -22,7 +22,7 @@ properties:
         properties:
           vcf:
             type: string
-            description: final vcf with reference genome in vcf header
+            description: final vcf with reference genome in vcf-header
 
   exomedepth_export:
     type: object
@@ -35,7 +35,7 @@ properties:
           exon:
             type: string
             description: Rdata from exomedepth call
-            #value: set to override value in table, else remove
+
       output:
         type: object
         description: list of outputs
