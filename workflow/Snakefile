@@ -157,14 +157,6 @@ use rule picard_collect_multiple_metrics from qc as qc_picard_collect_multiple_m
         extra=lambda wildcards, input: f" INTERVALS={input.intervals}",
 
 
-use rule picard_collect_hs_metrics from qc as qc_picard_collect_hs_metrics with:
-    input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bait_intervals=config.get("reference", {}).get("exon_intervals", ""),
-        reference=config.get("reference", {}).get("fasta", ""),
-        target_intervals=config.get("reference", {}).get("exon_intervals", ""),
-
-
 use rule multiqc from qc as qc_multiqc with:
     input:
         files=lambda wildcards: set(
