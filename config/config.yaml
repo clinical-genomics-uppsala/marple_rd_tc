@@ -8,8 +8,9 @@ modules:
   alignment: "v0.4.0"
   annotation: "v0.3.0"
   cnv_sv: "78f270c"
+  parabricks: "v1.1.0"
   prealignment: "v1.0.0"
-  snv_indels: "v0.3.0"
+  snv_indels: "v0.5.0"
   qc: "ca947b1"
 
 default_container: "docker://hydragenetics/common:0.4.0"
@@ -44,12 +45,6 @@ fastp_pe:
 
 fastqc:
   container: "docker://hydragenetics/fastqc:0.11.9"
-
-haplotypecaller:
-  container: "docker://hydragenetics/gatk4:4.2.2.0"
-
-haplotypecaller_gvcf:
-  extra: "-ERC GVCF"
 
 export_qc_bedtools_intersect:
   extra: " -wb "
@@ -89,6 +84,10 @@ multiqc:
         - "qc/mosdepth_bed/{sample}_{type}.per-base.bed.gz"
         - "qc/mosdepth_bed/{sample}_{type}.mosdepth.region.dist.txt"
         - "qc/mosdepth_bed/{sample}_{type}.mosdepth.global.dist.txt"
+
+pbrun_deepvariant:
+  container: "docker://nvcr.io/nvidia/clara/clara-parabricks:4.0.0-1"
+  extra: "--use-wes-model --disable-use-window-selector-model --gvcf "
 
 picard_collect_alignment_summary_metrics:
   container: "docker://hydragenetics/picard:2.25.4"

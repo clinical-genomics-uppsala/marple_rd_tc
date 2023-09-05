@@ -96,14 +96,6 @@ wildcard_constraints:
     type="N|T|R",
 
 
-def get_java_opts(wildcards: snakemake.io.Wildcards):
-    java_opts = config.get("haplotypecaller", {}).get("java_opts", "")
-    if "-Xmx" in java_opts:
-        raise WorkflowError("You are not allowed to use -Xmx in java_opts. Set mem_mb in resources instead.")
-    java_opts += "-Xmx{}m".format(config.get("haplotypecaller", {}).get("mem_mb", config["default_resources"]["mem_mb"]))
-    return java_opts
-
-
 def compile_output_file_list(wildcards):
     outdir = pathlib.Path(output_spec.get("directory", "./"))
     output_files = []

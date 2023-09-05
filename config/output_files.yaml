@@ -13,17 +13,17 @@ files:
     input: alignment/samtools_merge_bam/{sample}_N.bam.bai
     output: "{sample}_{sequenceid}/{sample}_{sequenceid}.bam.bai"
   - name: Annotated vcf file
-    input: snv_indels/haplotypecaller/{sample}_N.normalized.sorted.vep_annotated.ref.vcf.gz
-    output: "{sample}_{sequenceid}/{sample}_{sequenceid}.vcf.gz"
+    input: parabricks/pbrun_deepvariant/{sample}_N.normalized.sorted.vep_annotated.ref.vcf.gz
+    output: "{sample}_{sequenceid}/{sample}_{sequenceid}.deepvariant.vcf.gz"
   - name: Annotated vcf tbi file
-    input: snv_indels/haplotypecaller/{sample}_N.normalized.sorted.vep_annotated.ref.vcf.gz.tbi
-    output: "{sample}_{sequenceid}/{sample}_{sequenceid}.vcf.gz.tbi"
+    input: parabricks/pbrun_deepvariant/{sample}_N.normalized.sorted.vep_annotated.ref.vcf.gz.tbi
+    output: "{sample}_{sequenceid}/{sample}_{sequenceid}.deepvariant.vcf.gz.tbi"
   - name: Genome vcf file no normalize
-    input: snv_indels/haplotypecaller_gvcf/{sample}_N.merged.g.vcf.gz
-    output: "{sample}_{sequenceid}/{sample}_{sequenceid}.merged.genome.vcf.gz"
+    input: parabricks/pbrun_deepvariant/{sample}_N.g.fix_af.vcf.gz
+    output: "{sample}_{sequenceid}/{sample}_{sequenceid}.deepvariant.genome.vcf.gz"
   - name: Genome vcf index file no normalize
-    input: snv_indels/haplotypecaller_gvcf/{sample}_N.merged.g.vcf.gz.tbi
-    output: "{sample}_{sequenceid}/{sample}_{sequenceid}.merged.genome.vcf.gz.tbi"
+    input: parabricks/pbrun_deepvariant/{sample}_N.g.fix_af.vcf.gz.tbi
+    output: "{sample}_{sequenceid}/{sample}_{sequenceid}.deepvariant.genome.vcf.gz.tbi"
   - name: Exomedepth nexus
     input: cnv_sv/exomedepth_call/{sample}_N_SV.txt
     output: "{sample}_{sequenceid}/{sample}_{sequenceid}_exomedepth_SV.txt"

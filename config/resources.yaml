@@ -15,14 +15,23 @@ fastp_pe:
   threads: 5
   mem_mb: 30720
   mem_per_cpu: 6144
-  
+
+fastqc:
+  threads: 2
+  mem_mb: 12288
+  mem_per_cpu: 6144
+
+pbrun_deepvariant:
+  gres: "--gres=gres:gpu:4"
+  mem_mb: 655360
+  mem_per_cpu: 16384
+  partition: "GPU_hi"
+  threads: 40
+
 vep:
   threads: 5
   time: "6:00:00"
   mem_mb: 30720
   mem_per_cpu: 6144
 
-fastqc:
-  threads: 2
-  mem_mb: 12288
-  mem_per_cpu: 6144
+
