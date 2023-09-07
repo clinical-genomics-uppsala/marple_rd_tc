@@ -89,6 +89,24 @@ for fq1, fq2 in zip(units["fastq1"].values, units["fastq2"].values):
     if not pathlib.Path(fq2).exists():
         sys.exit(f"fastq file not found: {fq2}\ncontrol the paths in {config['units']}")
 
+### get cuda devices for deepvariant
+def get_cuda_devices(wildcards):
+    if os.getenv("CUDA_VISIBLE_DEVICES") is not None:
+        cuda_devices = "CUDA_VISIBLE_DEVICES={}".format(os.getenv("CUDA_VISIBLE_DEVICES"))
+    else:
+        cuda_devices = ""
+    return cuda_devices
+
+
+### Get num gpu for deepvariant
+def get_num_gpus(rule, wildcards):
+    gres = config.get(rule, {"gres": "--gres=gres:gpu:1"}).get("gres", "--gres=gres:gpu:1")[len("--gres=") :]
+    gres_dict = dict()
+    for item in gres.split(","):
+        items = item.split(":")
+        gres_dict[items[1]] = items[2]
+    return gres_dict["gpu"]
+
 
 ### Set wildcard constraints
 wildcard_constraints:
