@@ -42,11 +42,11 @@ properties:
         properties:
           aed:
             type: string
-            description: Calls from exomedepth in aed format
+            description: calls from exomedepth in aed format
             #value: set to override value in table, else remove
           nexus_sv:
             type: string
-            description: Nexus SV txt file with exomedepth calls
+            description: nexus SV txt file with exomedepth calls
   
   export_qc_bedtools_intersect:
     type: object
@@ -61,13 +61,13 @@ properties:
             description: per-base coverage file from mosdepth
           coverage_csi:
             type: string
-            description: Index file for per-base.bed.gz file
+            description: index file for per-base.bed.gz file
           right:
             type: string
-            description: Design bed used to only look at coverage based on design
+            description: design bed used to only look at coverage based on design
       output:
         type: object
-        description: List of output files
+        description: list of output files
         properties:
           results:
             type: string
@@ -75,7 +75,7 @@ properties:
   
   export_qc_xlsx_report:
     type: object
-    description: Input and output files for export_qc_xlsx_report
+    description: input and output files for export_qc_xlsx_report
     properties:
       input:
         type: object
@@ -83,28 +83,28 @@ properties:
         properties:
           mosdepth_summary:
             type: string
-            description: Mosdepth bed summary file
+            description: mosdepth bed summary file
           mosdepth_thresholds:
             type: string
             description: Mosdepth bed thresholds file
           mosdepth_regions:
             type: string
-            description: Mosdepth bed coverage per region file
+            description: mosdepth bed coverage per region file
           mosdepth_perbase: 
             type: string
-            description: Mosdepth bed per-base result file
+            description: mosdepth bed per-base result file
           picard_dup:
             type: string
-            description: Picard collect duplication metrics results file
+            description: picard collect duplication metrics results file
           design_bed:
             type: string
-            description: Design bed defined in config-file 
+            description: design bed defined in config-file 
           pgrs_bed:
             type: string
-            description: Bedfile with PGRS score SNPs
+            description: bedfile with PGRS score SNPs
       output:
         type: object
-        description: List of output files
+        description: list of output files
         properties:
           results:
             type: string
@@ -120,7 +120,7 @@ properties:
         properties:
           sample_sheet:
             type: string
-            description: SampleSheet from demultiplexing on Illumina machine. *Double check header, it changes often*
+            description: samplesheet from demultiplexing on Illumina machine. *Double check header, it changes often*
       output: 
         type: object
         description: list of output files

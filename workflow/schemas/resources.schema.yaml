@@ -98,6 +98,28 @@ properties:
         type: string
         description: partition to use on the cluster for export_qc_xlsx_report
 
+  pbrun_deepvariant:
+    type: object
+    properties:
+      gres:
+        type: string
+        description: generic resource scheduling
+      threads:
+        type: integer
+        description: number of threads that will be used by pbrun_deepvariant
+      time:
+        type: string
+        description: max execution time for pbrun_deepvariant
+      mem_mb:
+        type: integer
+        description: memory used for pbrun_deepvariant
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for pbrun_deepvariant
+      partition:
+        type: string
+        description: partition to use on the cluster for pbrun_deepvariant
+
   sample_order_multiqc:
     type: object
     properties:
