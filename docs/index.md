@@ -14,9 +14,13 @@ Marple :woman_detective: uses the following hydra genetics modules:
 - [Alignment](https://github.com/hydra-genetics/alignment/tree/v0.4.0)
 - [Annotation](https://github.com/hydra-genetics/annotation/tree/v0.3.0)
 - [CNV](https://github.com/hydra-genetics/cnv_sv/tree/78f270c)
+- [Parabricks](https://github.com/hydra-genetics/parabricks/tree/v1.1.0)
 - [Prealignment](https://github.com/hydra-genetics/prealignment/tree/v1.0.0)
-- [SNV indels](https://github.com/hydra-genetics/snv_indels/tree/v0.3.0)
+- [SNV indels](https://github.com/hydra-genetics/snv_indels/tree/v0.5.0)
 - [QC](https://github.com/hydra-genetics/qc/tree/ca947b1)
+
+!!! warning
+    As of now a GPU with licensed Parabricks is needed ro run SNV calling in Marple. A non-licensed CPU alternative will be added at a later stage.
 
 
 ### :judge: Rulegraph 

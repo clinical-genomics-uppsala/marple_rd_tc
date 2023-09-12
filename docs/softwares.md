@@ -46,6 +46,7 @@ A Rscript to create output files from exomedepth results.
 #RESOURCESSCHEMA__exomedepth_export#
 
 ---
+
 ## export_qc.smk
 Rules that creates a `.xlsx` file per sample with aggregated coverage information.
 

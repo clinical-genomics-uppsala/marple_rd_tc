@@ -3,30 +3,24 @@ digraph snakemake_dag {
     graph[bgcolor=white, margin=0];
     node[shape=box, style=rounded, fontname=sans,                 fontsize=10, penwidth=2];
     edge[penwidth=2, color=grey];
-	0[label = "bam: per chr", color = "0.0 0.0 0.0", style="dotted"];
+	0[label = "bam", color = "0.0 0.0 0.0", style="dotted"];
 	1[label = "vcf: annotated normalized", color = "0.0 0.0 0.0", style="dotted"];
 	2[label = "vcf: genome", color = "0.0 0.0 0.0", style="dotted"];
 	3[label = "annotation_vep", color = "0.06 0.6 0.85", style="rounded"];
-	4[label = "snv_indels_bcftools_sort", color = "0.36 0.6 0.85", style="rounded"];
-	6[label = "snv_indels_vt_normalize", color = "0.38 0.6 0.85", style="rounded"];
-	7[label = "snv_indels_vt_decompose", color = "0.52 0.6 0.85", style="rounded"];
-	8[label = "snv_indels_fix_af", color = "0.10 0.6 0.85", style="rounded"];
-	9[label = "snv_indels_bcftools_concat", color = "0.08 0.6 0.85", style="rounded"];
-	10[label = "snv_indels_haplotypecaller", color = "0.41 0.6 0.85", style="rounded"];
-	12[label = "snv_indels_bed_split", color = "0.53 0.6 0.85", style="rounded"];
-	11[label = "snv_indels_haplotypecaller_gvcf", color = "0.27 0.6 0.85", style="rounded"];
-
-	0 -> 12
-	12 -> 10
-	10 -> 9
-	9 -> 8
+	4[label = "add_ref_to_vcf", color = "0.52 0.6 0.85", style="rounded"];
+	5[label = "snv_indels_bcftools_sort", color = "0.36 0.6 0.85", style="rounded"];
+	6[label = "snv_indels_vt_normalize", color = "0.52 0.6 0.85", style="rounded"];
+	7[label = "snv_indels_vt_decompose", color = "0.10 0.6 0.85", style="rounded"];
+	8[label = "snv_indels_fix_af", color = "0.36 0.6 0.85", style="rounded"];
+	9[label = "parabricks_pbrun_deepvariant", color = "0.53 0.6 0.85", style="rounded"];
+	
+	0 -> 9
 	8 -> 7
 	7 -> 6
-	6 -> 4
-	4 -> 3
-	3 -> 1
-	12 -> 11
-	11 -> 9
+	6 -> 5
+	5 -> 3
+	3 -> 4
+	4 -> 1
 	9 -> 8
 	8 -> 3
 	3 -> 2
