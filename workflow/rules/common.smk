@@ -89,7 +89,8 @@ for fq1, fq2 in zip(units["fastq1"].values, units["fastq2"].values):
     if not pathlib.Path(fq2).exists():
         sys.exit(f"fastq file not found: {fq2}\ncontrol the paths in {config['units']}")
 
-### get cuda devices for deepvariant
+
+### Get cuda devices for deepvariant
 def get_cuda_devices(wildcards):
     if os.getenv("CUDA_VISIBLE_DEVICES") is not None:
         cuda_devices = "CUDA_VISIBLE_DEVICES={}".format(os.getenv("CUDA_VISIBLE_DEVICES"))
