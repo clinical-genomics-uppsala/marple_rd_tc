@@ -106,7 +106,7 @@ properties:
         description: generic resource scheduling
       threads:
         type: integer
-        description: number of thereads that will be used by pbrun_deepvariant
+        description: number of threads that will be used by pbrun_deepvariant
       time:
         type: string
         description: max execution time for pbrun_deepvariant

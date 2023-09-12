@@ -8,10 +8,10 @@ properties:
     type: string
   resources:
     type: string
-    description: Path to resources.yaml file
+    description: path to resources.yaml file
   output:
     type: string
-    description: Path to output-yaml or json that defines which files to cp to a results folder
+    description: path to output-yaml or json that defines which files to cp to a results folder
 
   modules:
     type: object
