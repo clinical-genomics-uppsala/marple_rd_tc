@@ -1,5 +1,9 @@
 # :snake: Welcome to Marple - Inherited Cancer pipeline :woman_detective:
 
+<p align="center">
+<a href="https://github.com/clinical-genomics-uppsala/marple_rd_tc/">https://github.com/clinical-genomics-uppsala/marple_rd_tc/</a>
+</p>
+
 This pipeline is created to run on short-read Illumina data from a custom Twist Inherited Cancer panel, designed at [Clinical Genomics Uppsala](https://www.scilifelab.se/units/clinical-genomics-uppsala/#https://www.cgu.igp.uu.se).
 
 This snakemake pipeline uses the module system from [Hydra Genetics](https://github.com/hydra-genetics/) to process `.fastq.gz` files. The pipeline produces a MultiQC `.html` report with QC-data, `.bam` alignment files, annotated `.vcf.gz` for SNVs and smaller indels, as well as `.txt` and `.aed` files for structural variants from Exomedepth. A `genome.vcf.gz` is also produced, but this is not normalized.
@@ -10,9 +14,13 @@ Marple :woman_detective: uses the following hydra genetics modules:
 - [Alignment](https://github.com/hydra-genetics/alignment/tree/v0.4.0)
 - [Annotation](https://github.com/hydra-genetics/annotation/tree/v0.3.0)
 - [CNV](https://github.com/hydra-genetics/cnv_sv/tree/78f270c)
+- [Parabricks](https://github.com/hydra-genetics/parabricks/tree/v1.1.0)
 - [Prealignment](https://github.com/hydra-genetics/prealignment/tree/v1.0.0)
-- [SNV indels](https://github.com/hydra-genetics/snv_indels/tree/v0.3.0)
+- [SNV indels](https://github.com/hydra-genetics/snv_indels/tree/v0.5.0)
 - [QC](https://github.com/hydra-genetics/qc/tree/ca947b1)
+
+!!! warning
+    As of now a GPU with licensed Parabricks is needed ro run SNV calling in Marple. A non-licensed CPU alternative will be added at a later stage.
 
 
 ### :judge: Rulegraph 

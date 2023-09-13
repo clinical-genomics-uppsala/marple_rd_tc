@@ -23,7 +23,7 @@ properties:
     required:
       - design_bed
 
-  exomedepth_references:
+  exomedepth_reference:
     type: object
     description: configuration for exomedepth_references
     properties:
@@ -42,4 +42,4 @@ required:
   - units
   - resources
   - reference
-  - exomedepth_references
+  - exomedepth_reference

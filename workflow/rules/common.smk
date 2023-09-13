@@ -90,18 +90,29 @@ for fq1, fq2 in zip(units["fastq1"].values, units["fastq2"].values):
         sys.exit(f"fastq file not found: {fq2}\ncontrol the paths in {config['units']}")
 
 
+### Get cuda devices for deepvariant
+def get_cuda_devices(wildcards):
+    if os.getenv("CUDA_VISIBLE_DEVICES") is not None:
+        cuda_devices = "CUDA_VISIBLE_DEVICES={}".format(os.getenv("CUDA_VISIBLE_DEVICES"))
+    else:
+        cuda_devices = ""
+    return cuda_devices
+
+
+### Get num gpu for deepvariant
+def get_num_gpus(rule, wildcards):
+    gres = config.get(rule, {"gres": "--gres=gres:gpu:1"}).get("gres", "--gres=gres:gpu:1")[len("--gres=") :]
+    gres_dict = dict()
+    for item in gres.split(","):
+        items = item.split(":")
+        gres_dict[items[1]] = items[2]
+    return gres_dict["gpu"]
+
+
 ### Set wildcard constraints
 wildcard_constraints:
     sample="|".join(samples.index),
     type="N|T|R",
-
-
-def get_java_opts(wildcards: snakemake.io.Wildcards):
-    java_opts = config.get("haplotypecaller", {}).get("java_opts", "")
-    if "-Xmx" in java_opts:
-        raise WorkflowError("You are not allowed to use -Xmx in java_opts. Set mem_mb in resources instead.")
-    java_opts += "-Xmx{}m".format(config.get("haplotypecaller", {}).get("mem_mb", config["default_resources"]["mem_mb"]))
-    return java_opts
 
 
 def compile_output_file_list(wildcards):

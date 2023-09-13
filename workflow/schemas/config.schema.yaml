@@ -8,10 +8,10 @@ properties:
     type: string
   resources:
     type: string
-    description: Path to resources.yaml file
+    description: path to resources.yaml file
   output:
     type: string
-    description: Path to output-yaml or json that defines which files to cp to a results folder
+    description: path to output-yaml or json that defines which files to cp to a results folder
 
   modules:
     type: object
@@ -24,6 +24,9 @@ properties:
         type: string
         description: version/branch/tag
       cnv_sv:
+        type: string
+        description: version/branch/tag
+      parabricks:
         type: string
         description: version/branch/tag
       prealignment:
@@ -39,6 +42,7 @@ properties:
       - alignment
       - annotation
       - cnv_sv
+      - parabricks
       - prealignment
       - snv_indels
       - qc
@@ -95,6 +99,20 @@ properties:
     type: string
     description: name of rule to be used for trimming
 
+  add_ref_to_vcf:
+    type: object
+    description: parameters for add_ref_to_vcf
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
   bwa_mem:
     type: object
     description: configuration for bwa mem
@@ -143,29 +161,6 @@ properties:
       extra:
         type: string
         description: extra configuration for fastqc
-
-  haplotypecaller:
-    type: object
-    description: configuration for haplotypecaller
-    properties:
-      container:
-        type: string
-        description: name or path to docker&singularity container
-      extra:
-        type: string
-        description: extra parameters other than -A AlleleFraction
-  
-  haplotypecaller_gcvf:
-    type: object
-    description: configuration for running haplotypecaller in gvcf mode
-    properties:
-      container:
-        type: string
-        description: name or path to docker&singularity container
-      extra:
-        type: string
-        description: extra parameters other than -A AlleleFraction
-        default: "-ERC GVCF"
 
   exomedepth_call:
     type: object
@@ -272,6 +267,17 @@ properties:
             - included_unit_types
     required:
       - reports
+
+  pbrun_deepvariant:
+    type: object
+    description: configuration for parabricks deepvaraiant
+    properties:
+      container:
+        type: string
+        description: name or path to container
+      extra:
+        type: string
+        description: extra parameters for deepvaraiant such as ...
 
   picard_collect_alignment_summary_metrics:
     type: object
@@ -425,9 +431,9 @@ required:
   - bwa_mem
   - fastp_pe
   - fastqc
-  - haplotypecaller
   - mosdepth_bed
   - multiqc
+  - pbrun_deepvariant
   - picard_collect_alignment_summary_metrics
   - picard_collect_duplication_metrics
   - picard_collect_gc_bias_metrics

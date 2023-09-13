@@ -1,7 +1,15 @@
 # :snake: clinical-genomics-uppsala/marple :female_detective:
 
 #### Twist Cancer inherited hg38 hydra pipelines
+---
 
+<p align="center">
+<a href="https://marple-rd-tc.readthedocs.io/en/latest/">https://marple-rd-tc.readthedocs.io/en/latest/</a>
+</p>
+
+This ReadMe is only a brief introduction, please refer to ReadTheDocs for the latest documentation. 
+
+---
 ![Lint](https://github.com/clinical-genomics-uppsala/marple/actions/workflows/lint.yaml/badge.svg?branch=develop)
 ![Snakefmt](https://github.com/clinical-genomics-uppsala/marple/actions/workflows/snakefmt.yaml/badge.svg?branch=develop)
 ![snakemake dry run](https://github.com/clinical-genomics-uppsala/marple/actions/workflows/snakemake-dry-run.yaml/badge.svg?branch=develop)
@@ -13,7 +21,6 @@
 [![License: GPL-3](https://img.shields.io/badge/License-GPL3-yellow.svg)](https://opensource.org/licenses/gpl-3.0.html)
 
 ## :speech_balloon: Introduction
-
 This pipeline is created to run on Illumina data from a custom Twist Inherited Cancer panel, designed at Clinical Genomics Uppsala.
 
 This snakemake pipeline uses the module system from [Hydra Genetics](https://github.com/hydra-genetics/) to process `.fastq.gz` files. The pipeline produces a MultiQC `html` report with qc-data, `.bam` alignment files, annotated `.vcf.gz` for SNVs and smaller indels, as well as `.txt` and `.aed` files for structural variants from Exomedepth. 

@@ -5,6 +5,7 @@ import subprocess
 import gzip
 from datetime import date
 import xlsxwriter
+from operator import itemgetter
 
 sample = snakemake.input.mosdepth_summary.split("/")[-1].split(".mosdepth.summary.txt")[0]
 
@@ -18,6 +19,12 @@ avg_coverage = subprocess.run(cmd_avg_cov, stdout=subprocess.PIPE, shell='TRUE')
 cmd_duplication = "grep -A1 PERCENT " + snakemake.input.picard_dup + " |tail -1 | cut -f9"
 duplication = float(subprocess.run(cmd_duplication, stdout=subprocess.PIPE, shell='TRUE').stdout.decode('utf-8').strip())*100
 
+wanted_transcripts = []
+with open(snakemake.input.wanted_transcripts) as wanted_file:
+    for line in wanted_file:
+        wanted_transcripts.append(line.split()[3])
+
+
 # Avg cov per regions file
 region_cov_table = []
 bed_table = []
@@ -27,9 +34,11 @@ with gzip.open(snakemake.input.mosdepth_regions, 'rt') as regions_file:
         gene = line[3].split("_")[0]
         transcript = "_".join(line[3].split("_")[1:3])
         exon = str(line[3].split("_")[3])
-        coverage_row = [line[0], line[1], line[2], gene, exon, transcript, line[4]]
-        region_cov_table.append(coverage_row)
-        bed_table.append(line[0:5])
+        coverage_row = [line[0], line[1], line[2], gene, exon, transcript, float(line[4])]
+        if coverage_row not in region_cov_table:
+            region_cov_table.append(coverage_row)
+        if line[0:5] not in bed_table:
+            bed_table.append(line[0:5])
 
 # Thresholds file
 threshold_table = []
@@ -40,6 +49,10 @@ with gzip.open(snakemake.input.mosdepth_thresholds, 'rt') as threshold_file:
     next(threshold_file)
     for lline in threshold_file:
         line = lline.strip().split("\t")
+        gene = line[3].split("_")[0]
+        transcript = "_".join(line[3].split("_")[1:3])
+        exon = str(line[3].split("_")[3])
+
         length = int(line[2])-int(line[1])
         total_length += length
         total_breadth[0] += int(line[4])
@@ -49,25 +62,35 @@ with gzip.open(snakemake.input.mosdepth_thresholds, 'rt') as threshold_file:
         region_breadth[0] = round(int(line[4])/length, 4)
         region_breadth[1] = round(int(line[5])/length, 4)
         region_breadth[2] = round(int(line[6])/length, 4)
-        threshold_table.append([line[3]]+line[0:3]+region_breadth)
+        outline = line[0:3]+region_breadth+[gene, exon, transcript]
+        if outline not in threshold_table:
+            threshold_table.append(outline)
 
-# Per base in bedfile file
+# Per base in bedfile file, only low coverage in any coding exon.
 low_cov_lines = []
 with open(snakemake.input.mosdepth_perbase, 'r') as mosdepth_perbase:
     for lline in mosdepth_perbase:
         line = lline.strip().split("\t")
-        if int(line[3]) <= int(min_cov):
-            low_cov_lines.append(line[0:5]+[line[7]])
-low_cov_lines.sort(key=lambda x: x[3])  # Sort based on coverage
+        if int(line[3]) <= int(min_cov) and line[0:4] not in low_cov_lines:
+            low_cov_lines.append(line[0:4])
+low_cov_lines = sorted(low_cov_lines, key=itemgetter(0, 1))  # Sort based on chr and start pos
 
 low_cov_table = []
 num_low_regions = 0
 for line in low_cov_lines:
+    line[3] = int(line[3])
+    exons = []
     for bed_line in bed_table:
+        # get all exons that cover that low cov line
         if line[0] == bed_line[0] and int(line[1]) >= int(bed_line[1]) and int(line[2]) <= int(bed_line[2]):
-            low_cov_table.append([bed_line[3]]+line[0:4])
+            exons.append(bed_line[3])
+
+    if len(exons) > 0:
+        if any(exon in wanted_transcripts for exon in exons):
+            low_cov_table.append(line + list(set(exons) & set(wanted_transcripts)) + [";".join(exons)])
             num_low_regions += 1
-            break
+        else:
+            low_cov_table.append(line + [""] + [";".join(exons)])
 
 
 # PGRS coverage
@@ -75,8 +98,9 @@ pgrs_cov_table = []
 with open(snakemake.input.pgrs_coverage) as pgrs_file:
     for lline in pgrs_file:
         line = lline.strip().split("\t")
-        print(line)
+        line[3] = int(line[3])
         pgrs_cov_table.append(line[0:4]+[line[7]])
+
 
 # Create xlsx file and sheets
 empty_list = ['', '', '', '', '', '']
@@ -126,24 +150,22 @@ worksheet_overview.write(22, 0, "Bedfile used: " + snakemake.input.design_bed)
 worksheet_overview.write(23, 0, "PGRS-bedfile used: " + snakemake.input.pgrs_bed)
 
 # low cov
-worksheet_low_cov.set_column(0, 0, 10)
-worksheet_low_cov.set_column(2, 3, 10)
+worksheet_low_cov.set_column(1, 2, 10)
+worksheet_low_cov.set_column(4, 5, 25)
 
-worksheet_low_cov.write(0, 0, 'Mosdepth coverage analysis', format_heading)
+worksheet_low_cov.write(0, 0, 'Mosdepth low coverage analysis', format_heading)
 worksheet_low_cov.write_row(1, 0, empty_list, format_line)
 worksheet_low_cov.write(2, 0, "Sample: " + str(sample))
-worksheet_low_cov.write(3, 0, "Gene regions with coverage lower than " + str(min_cov) + "x,")
+worksheet_low_cov.write(3, 0, "Gene regions with coverage lower than " + str(min_cov) + "x.")
 
-low_cov_heading = ['Region Name', 'Chr', 'Start', 'Stop', 'Mean Coverage']
-worksheet_low_cov.write_row(5, 0, low_cov_heading, format_table_heading)
+table_area = 'A6:F'+str(len(low_cov_table)+6)
+header_dict = [{'header': 'Chr'}, {'header': 'Start'}, {'header': 'Stop'}, {'header': 'Mean Coverage'},
+               {'header': 'Preferred transcript'}, {'header': 'All transcripts'}, ]
+worksheet_low_cov.add_table(table_area, {'data': low_cov_table, 'columns': header_dict, 'style': 'Table Style Light 1'})
 
-row = 6
-for line in low_cov_table:
-    worksheet_low_cov.write_row(row, 0, line)
-    row += 1
 # cov
 worksheet_cov.set_column(1, 2, 10)
-worksheet_cov.set_column(5, 5, 10)
+worksheet_cov.set_column(5, 5, 15)
 worksheet_cov.write(0, 0, 'Average Coverage per Exon', format_heading)
 worksheet_cov.write_row(1, 0, empty_list, format_line)
 worksheet_cov.write(2, 0, 'Sample: '+str(sample))
@@ -155,21 +177,23 @@ header_dict = [{'header': 'Chr'}, {'header': 'Start'}, {'header': 'Stop'}, {'hea
 worksheet_cov.add_table(table_area, {'data': region_cov_table, 'columns': header_dict, 'style': 'Table Style Light 1'})
 
 # threshold
-worksheet_threshold.set_column(1, 1, 10)
-worksheet_threshold.set_column(2, 3, 10)
+worksheet_threshold.set_column(1, 2, 10)
+worksheet_threshold.set_column(8, 8, 15)
 
 worksheet_threshold.write(0, 0, 'Coverage breadth per exon', format_heading)
 worksheet_threshold.write_row(1, 0, empty_list, format_line)
 worksheet_threshold.write(2, 0, 'Sample: '+str(sample))
 worksheet_threshold.write(3, 0, 'Coverage breath of each region in exon-bedfile')
 
-table_area = 'A6:G' + str(len(threshold_table)+6)
-header_dict = [{'header': 'Region'}, {'header': 'Chr'}, {'header': 'Start'}, {'header': 'Stop'}, {'header': str(min_cov)+'x'},
-               {'header': str(med_cov)+'x'}, {'header': str(max_cov)+'x'}, ]
+table_area = 'A6:I' + str(len(threshold_table)+6)
+header_dict = [{'header': 'Chr'}, {'header': 'Start'}, {'header': 'Stop'}, {'header': str(min_cov)+'x'},
+               {'header': str(med_cov)+'x'}, {'header': str(max_cov)+'x'}, {'header': 'Gene'}, {'header': 'Exon'},
+               {'header': 'Transcript'}, ]
 worksheet_threshold.add_table(table_area, {'data': threshold_table, 'columns': header_dict, 'style': 'Table Style Light 1'})
 
 # pgrs
-worksheet_pgrs_cov.set_column(2, 3, 10)
+worksheet_pgrs_cov.set_column(1, 2, 10)
+worksheet_pgrs_cov.set_column(4, 4, 15)
 worksheet_pgrs_cov.write(0, 0, 'Coverage of PGRS positions', format_heading)
 worksheet_pgrs_cov.write_row(1, 0, empty_list, format_line)
 worksheet_pgrs_cov.write(2, 0, 'Sample: '+str(sample))
