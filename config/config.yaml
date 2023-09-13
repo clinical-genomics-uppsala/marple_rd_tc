@@ -86,7 +86,7 @@ multiqc:
         - "qc/mosdepth_bed/{sample}_{type}.mosdepth.global.dist.txt"
 
 pbrun_deepvariant:
-  container: "docker://nvcr.io/nvidia/clara/clara-parabricks:4.0.0-1"
+  container: "docker://nvcr.io/nvidia/clara/clara-parabricks:4.1.1-1"
   extra: "--use-wes-model --disable-use-window-selector-model --gvcf "
 
 picard_collect_alignment_summary_metrics:
