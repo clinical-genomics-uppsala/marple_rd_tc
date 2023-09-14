@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.1](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.1.0...v0.1.1) (2023-09-14)
+
+
+### Bug Fixes
+
+* remove workflow/rules from mkdocs.yaml ([65c1308](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/65c13084ec63feaef8c867b2c2bb075298f83120))
+
 ## 0.1.0 (2023-09-14)
 
 
