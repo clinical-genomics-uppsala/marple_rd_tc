@@ -1,0 +1,27 @@
+digraph snakemake_dag {
+	rankdir=LR;
+    graph[bgcolor=white, margin=0];
+    node[shape=box, style=rounded, fontname=sans,                 fontsize=10, penwidth=2];
+    edge[penwidth=2, color=grey];
+	0[label = "bam", color = "0.0 0.0 0.0", style="dotted"];
+	1[label = "vcf: annotated normalized", color = "0.0 0.0 0.0", style="dotted"];
+	2[label = "vcf: genome", color = "0.0 0.0 0.0", style="dotted"];
+	3[label = "annotation_vep", color = "0.06 0.6 0.85", style="rounded"];
+	4[label = "add_ref_to_vcf", color = "0.52 0.6 0.85", style="rounded"];
+	5[label = "snv_indels_bcftools_sort", color = "0.36 0.6 0.85", style="rounded"];
+	6[label = "snv_indels_vt_normalize", color = "0.52 0.6 0.85", style="rounded"];
+	7[label = "snv_indels_vt_decompose", color = "0.10 0.6 0.85", style="rounded"];
+	8[label = "snv_indels_fix_af", color = "0.36 0.6 0.85", style="rounded"];
+	9[label = "parabricks_pbrun_deepvariant", color = "0.53 0.6 0.85", style="rounded"];
+	
+	0 -> 9
+	8 -> 7
+	7 -> 6
+	6 -> 5
+	5 -> 3
+	3 -> 4
+	4 -> 1
+	9 -> 8
+	8 -> 3
+	3 -> 2
+}            

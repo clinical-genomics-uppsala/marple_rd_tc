@@ -1,0 +1,11 @@
+digraph snakemake_dag {
+	rankdir=LR;
+    graph[bgcolor=white, margin=0];
+    node[shape=box, style=rounded, fontname=sans, fontsize=10, penwidth=2];
+    edge[penwidth=2, color=grey];
+	0[label = "all", color = "0.44 0.6 0.85", style="rounded"];
+	1[label = "references_exomedepth_reference", color = "0.53 0.6 0.85", style="rounded"];
+	2[label = "Normal bams (Marple)", color = "0.0 0.0 0.0", style="dotted"];
+	1 -> 0
+	2 -> 1
+}            

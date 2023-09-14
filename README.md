@@ -1,43 +1,61 @@
-# :snake: hydra-genetics/miss_lemon
+# :snake: clinical-genomics-uppsala/marple :female_detective:
 
-#### Twist Cancer inherited hg38 hydra pipeline
+#### Twist Cancer inherited hg38 hydra pipelines
+---
 
-![Lint](https://github.com/hydra-genetics/miss_lemon/actions/workflows/lint.yaml/badge.svg?branch=develop)
-![Snakefmt](https://github.com/hydra-genetics/miss_lemon/actions/workflows/snakefmt.yaml/badge.svg?branch=develop)
-![snakemake dry run](https://github.com/hydra-genetics/miss_lemon/actions/workflows/snakemake-dry-run.yaml/badge.svg?branch=develop)
-![integration test](https://github.com/hydra-genetics/miss_lemon/actions/workflows/integration1.yaml/badge.svg?branch=develop)
+<p align="center">
+<a href="https://marple-rd-tc.readthedocs.io/en/latest/">https://marple-rd-tc.readthedocs.io/en/latest/</a>
+</p>
 
-![pycodestyle](https://github.com/hydra-genetics/miss_lemon/actions/workflows/pycodestyl.yaml/badge.svg?branch=develop)
-![pytest](https://github.com/hydra-genetics/miss_lemon/actions/workflows/pytest.yaml/badge.svg?branch=develop)
+This ReadMe is only a brief introduction, please refer to ReadTheDocs for the latest documentation. 
+
+---
+![Lint](https://github.com/clinical-genomics-uppsala/marple/actions/workflows/lint.yaml/badge.svg?branch=develop)
+![Snakefmt](https://github.com/clinical-genomics-uppsala/marple/actions/workflows/snakefmt.yaml/badge.svg?branch=develop)
+![snakemake dry run](https://github.com/clinical-genomics-uppsala/marple/actions/workflows/snakemake-dry-run.yaml/badge.svg?branch=develop)
+![integration test](https://github.com/clinical-genomics-uppsala/marple/actions/workflows/integration1.yaml/badge.svg?branch=develop)
+
+![pycodestyle](https://github.com/clinical-genomics-uppsala/marple/actions/workflows/pycodestyle.yaml/badge.svg?branch=develop)
+![pytest](https://github.com/clinical-genomics-uppsala/marple/actions/workflows/pytest.yaml/badge.svg?branch=develop)
 
 [![License: GPL-3](https://img.shields.io/badge/License-GPL3-yellow.svg)](https://opensource.org/licenses/gpl-3.0.html)
 
 ## :speech_balloon: Introduction
+This pipeline is created to run on Illumina data from a custom Twist Inherited Cancer panel, designed at Clinical Genomics Uppsala.
 
-The module consists of alignment  ....
+This snakemake pipeline uses the module system from [Hydra Genetics](https://github.com/hydra-genetics/) to process `.fastq.gz` files. The pipeline produces a MultiQC `html` report with qc-data, `.bam` alignment files, annotated `.vcf.gz` for SNVs and smaller indels, as well as `.txt` and `.aed` files for structural variants from Exomedepth. 
+
+Marple :female_detective: uses the following hydra genetics modules:
+- [Alignment](https://github.com/hydra-genetics/alignment/tree/v0.4.0)
+- [Annotation](https://github.com/hydra-genetics/annotation/tree/v0.3.0)
+- [CNV](https://github.com/hydra-genetics/cnv_sv/tree/78f270c)
+- [Prealignment](https://github.com/hydra-genetics/prealignment/tree/v1.0.0)
+- [SNV indels](https://github.com/hydra-genetics/snv_indels/tree/v0.3.0)
+- [QC](https://github.com/hydra-genetics/qc/tree/ca947b1)
 
 ## :heavy_exclamation_mark: Dependencies
 
 In order to use this module, the following dependencies are required:
 
-[![hydra-genetics](https://img.shields.io/badge/hydragenetics-v0.9.1-blue)](https://github.com/hydra-genetics/)
-[![pandas](https://img.shields.io/badge/pandas-1.3.1-blue)](https://pandas.pydata.org/)
+[![hydra-genetics](https://img.shields.io/badge/hydragenetics-v1.3.0-blue)](https://github.com/hydra-genetics/)
+[![pandas](https://img.shields.io/badge/pandas-2.0.1-blue)](https://pandas.pydata.org/)
 [![python](https://img.shields.io/badge/python-3.8-blue)
-[![snakemake](https://img.shields.io/badge/snakemake-6.8.0-blue)](https://snakemake.readthedocs.io/en/stable/)
+[![snakemake](https://img.shields.io/badge/snakemake-7.25.3-blue)](https://snakemake.readthedocs.io/en/stable/)
 [![singularity](https://img.shields.io/badge/singularity-3.0.0-blue)](https://sylabs.io/docs/)
 
 ## :school_satchel: Preparations
 
 ### Sample data
 
-Input data should be added to [`samples.tsv`](https://github.com/hydra-genetics/miss_lemon/blob/develop/config/samples.tsv)
-and [`units.tsv`](https://github.com/hydra-genetics/miss_lemon/blob/develop/config/units.tsv).
+Input data should be added to a [`samples.tsv`](https://github.com/clinical-genomics-uppsala/marple/blob/develop/config/samples.tsv)
+and an [`units.tsv`](https://github.com/clinical-genomics-uppsala/marple/blob/develop/config/units.tsv).
 The following information need to be added to these files:
 
 | Column Id | Description |
 | --- | --- |
 | **`samples.tsv`** |
 | sample | unique sample/patient id, one per row |
+|tumor_content| tumor cell content estimation|
 | **`units.tsv`** |
 | sample | same sample/patient id as in `samples.tsv` |
 | type | data type identifier (one letter), can be one of **T**umor, **N**ormal, **R**NA |
@@ -49,42 +67,41 @@ The following information need to be added to these files:
 | fastq1/2 | absolute path to forward and reverse reads |
 | adapter | adapter sequences to be trimmed, separated by comma |
 
+A [`resources.yaml`](https://github.com/clinical-genomics-uppsala/marple/blob/develop/config/resources.yaml) and [`config.yaml`](https://github.com/clinical-genomics-uppsala/marple/blob/develop/config/config.yaml) also need to be available to run Marple. 
+
 ## :white_check_mark: Testing
 
-The workflow repository contains a small test dataset `.tests/integration` which can be run like so:
+The workflow repository contains a small test dataset (:exclamation: Todo: as of now dry-run only) `.tests/integration` which can be run like so:
 
 ```bash
 $ cd .tests/integration
-$ snakemake -s ../../Snakefile -j1 --use-singularity
+$ snakemake -n -s ../../workflow/Snakefile --configfiles ../../config/config.yaml config.yaml --config sequenceid="990909_test"
 ```
 
 ## :rocket: Usage
 
-To use this module in your workflow, follow the description in the
-[snakemake docs](https://snakemake.readthedocs.io/en/stable/snakefiles/modularization.html#modules).
-Add the module to your `Snakefile` like so:
+To use this run this pipeline `sample.tsv`, `units.tsv`, `resources.yaml`, and `config.yaml` files need to be available in the current directory (or otherwise specified in `config.yaml`). You always need to specify the `config`-file and `sequenceid` variable in the command. To run the pipeline:
 
 ```bash
-module prealignment:
-    snakefile:
-        github(
-            "miss_lemon",
-            path="workflow/Snakefile",
-            tag="1.0.0",
-        )
-    config:
-        config
-
-
-use rule * from miss_lemon as miss_lemon_*
+$ snakemake --profile snakemake-profile --snakefile ../../workflow/Snakefile --configfile config.yaml --config sequenceid="990909_test"
 ```
 
 ### Output files
 
-The following output files should be targeted via another rule:
+The following output files are located in `Results/`-folder:
 
 | File | Description |
 |---|---|
-| `miss_lemon/PATH/FILE` | DESCRIPTION |
+| `{sequenceid}_MultiQC.html` | `.html` file with aggregated qc values for entire run |
+|`{sample}_{sequenceid}/{sample}_{sequenceid}.xlsx`| `.xlsx` file with qc (primarily coverage) stats for each sample|
+|`{sample}_{sequenceid}/{sample}_{sequenceid}.bam`| Deduplicated `.bam` alignment file |
+|`{sample}_{sequenceid}/{sample}_{sequenceid}.bam.bai`| Index for `.bam` file|
+|`{sample}_{sequenceid}/{sample}_{sequenceid}.vcf.gz`| `.vcf` file normalized and annotated with vep|
+|`{sample}_{sequenceid}/{sample}_{sequenceid}.vcf.gz.tbi`| Index for `.vcf` file|
+|`{sample}_{sequenceid}/{sample}_{sequenceid}.merged.genome.vcf.gz`| A `genome.vcf` file for all variation|
+|`{sample}_{sequenceid}/{sample}_{sequenceid}.merged.genome.vcf.gz.tbi`| Index for `genome.vcf` |
+|`{sample}_{sequenceid}/{sample}_{sequenceid}_exomedepth_SV.txt`| `.txt` file with structural variants|
+|`{sample}_{sequenceid}/{sample}_{sequenceid}_exomedepth.aed`| `.aed` file with structural variants|
 
 ## :judge: Rule Graph
+![rule_graph](images/rulegraph.svg)

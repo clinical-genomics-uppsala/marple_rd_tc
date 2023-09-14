@@ -1,0 +1,29 @@
+__author__ = "Arielle R. Munters"
+__copyright__ = "Copyright 2023, Arielle R. Munters"
+__email__ = "arielle.munters@scilifelab.uu.se"
+__license__ = "GPL-3"
+
+
+include: "rules/common_references.smk"
+
+
+report: "report/workflow.rst"
+
+
+rule all:
+    input:
+        unpack(compile_output_list),
+
+
+module references:
+    snakefile:
+        github(
+            "hydra-genetics/references",
+            path="workflow/Snakefile",
+            tag="907d302",
+        )
+    config:
+        config
+
+
+use rule * from references as references_*

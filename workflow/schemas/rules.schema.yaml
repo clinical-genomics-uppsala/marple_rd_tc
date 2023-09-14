@@ -1,0 +1,133 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+description: snakemake rule input and output files description file
+type: object
+properties:
+  add_ref_to_vcf:
+    type: object
+    description: input and output parameters for add_ref_to_vcf
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          vcf:
+            type: string
+            description: final vcf where reference should be added to vcf-header
+          ref:
+            type: string
+            description: fasta reference used
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: final vcf with reference genome in vcf-header
+
+  exomedepth_export:
+    type: object
+    description: input and output files for exomedepth export
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          exon:
+            type: string
+            description: Rdata from exomedepth call
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          aed:
+            type: string
+            description: calls from exomedepth in aed format
+            #value: set to override value in table, else remove
+          nexus_sv:
+            type: string
+            description: nexus SV txt file with exomedepth calls
+  
+  export_qc_bedtools_intersect:
+    type: object
+    description: input and output files for export_qc_bedtools_intersect
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          left:
+            type: string
+            description: per-base coverage file from mosdepth
+          coverage_csi:
+            type: string
+            description: index file for per-base.bed.gz file
+          right:
+            type: string
+            description: design bed used to only look at coverage based on design
+      output:
+        type: object
+        description: list of output files
+        properties:
+          results:
+            type: string
+            description: .txt file with coverage per base for design file
+  
+  export_qc_xlsx_report:
+    type: object
+    description: input and output files for export_qc_xlsx_report
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          mosdepth_summary:
+            type: string
+            description: mosdepth bed summary file
+          mosdepth_thresholds:
+            type: string
+            description: Mosdepth bed thresholds file
+          mosdepth_regions:
+            type: string
+            description: mosdepth bed coverage per region file
+          mosdepth_perbase: 
+            type: string
+            description: mosdepth bed per-base result file
+          picard_dup:
+            type: string
+            description: picard collect duplication metrics results file
+          design_bed:
+            type: string
+            description: design bed defined in config-file 
+          pgrs_bed:
+            type: string
+            description: bedfile with PGRS score SNPs
+      output:
+        type: object
+        description: list of output files
+        properties:
+          results:
+            type: string
+            description: .xlsx file with summarized QC-values per sample
+
+  sample_order_multiqc:
+    type: object
+    description: list of input and output files for sample_order_multiqc
+    properties:
+      input:
+        type: object
+        description: list of inputfiles
+        properties:
+          sample_sheet:
+            type: string
+            description: samplesheet from demultiplexing on Illumina machine. *Double check header, it changes often*
+      output: 
+        type: object
+        description: list of output files
+        properties:
+          replacement:
+            type: string
+            description: list of sample name replacement, `sampleXXX` based on order in SampleSheet
+          order:
+            type: string
+            description: list of back-translated name from `sampleXXX` to original names

@@ -1,0 +1,47 @@
+digraph snakemake_dag {
+	rankdir=LR;
+    graph[bgcolor=white, margin=0];
+    node[shape=box, style=rounded, fontname=sans,                 fontsize=10, penwidth=2];
+    edge[penwidth=2, color=grey];
+	multiqc[label = "qc_multiqc", color = "0.14 0.6 0.85", style="rounded"];
+	multiqc_html[label = "MultiQC: html", color = "0.0 0.0 0.0", style="dotted"];
+	p_mm[label = "qc_picard_collect_multiple_metrics", color = "0.13 0.6 0.85", style="rounded"];
+	bam[label = "bam: merged", color = "0.0 0.0 0.0", style="dotted"];
+	fastp[label = "prealignment_fastp_pe", color = "0.11 0.6 0.85", style="rounded"];
+	mosdepth[label = "qc_mosdepth_bed", color = "0.04 0.6 0.85", style="rounded"];
+	samtools[label = "qc_samtools_stats", color = "0.05 0.6 0.85", style="rounded"];
+	p_hs[label = "qc_picard_collect_hs_metrics", color = "0.26 0.6 0.85", style="rounded"];
+	fastqc[label = "qc_fastqc", color = "0.52 0.6 0.85", style="rounded"];
+	fastq[label = "fastq: raw", color = "0.0 0.0 0.0", style="dotted"];
+	p_gc[label = "qc_picard_collect_gc_bias_metrics", color = "0.41 0.6 0.85", style="rounded"];
+	p_insert[label = "qc_picard_collect_insert_size_metrics", color = "0.49 0.6 0.85", style="rounded"];
+	p_align[label = "qc_picard_collect_alignment_summary_metrics", color = "0.29 0.6 0.85", style="rounded"];
+	p_dup[label = "qc_picard_collect_duplication_metrics", color = "0.34 0.6 0.85", style="rounded"];
+	sampleorder[label = "sample_order_multiqc", color = "0.00 0.6 0.85", style="rounded"];
+	samplesheet[label = "SampleSheet.csv", color = "0.0 0.0 0.0", style="dotted"];
+	
+	multiqc -> multiqc_html
+	sampleorder -> multiqc
+	samplesheet -> sampleorder
+	fastp -> multiqc
+	fastp -> bam [style="dotted", label = "alignment", fontcolor = "grey50", fontsize=9, fontname=sans ]
+	p_gc -> multiqc
+	p_align -> multiqc
+	p_dup -> multiqc
+	fastq -> fastqc
+	fastq -> fastp
+	fastqc -> multiqc
+	mosdepth -> multiqc
+	p_hs -> multiqc
+	p_mm -> multiqc
+	samtools -> multiqc
+	p_insert -> multiqc
+	bam -> p_mm
+	bam -> mosdepth
+	bam -> samtools
+	bam -> p_hs
+	bam -> p_gc
+	bam -> p_insert
+	bam -> p_align
+	bam -> p_dup
+}            

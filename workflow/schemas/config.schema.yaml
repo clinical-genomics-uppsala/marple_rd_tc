@@ -8,12 +8,440 @@ properties:
     type: string
   resources:
     type: string
-    description: Path to resources.yaml file
+    description: path to resources.yaml file
+  output:
+    type: string
+    description: path to output-yaml or json that defines which files to cp to a results folder
+
+  modules:
+    type: object
+    description: list of hydra modules used with which tag or commit to use
+    properties:
+      alignment:
+        type: string
+        description: version/branch/tag
+      annotation:
+        type: string
+        description: version/branch/tag
+      cnv_sv:
+        type: string
+        description: version/branch/tag
+      parabricks:
+        type: string
+        description: version/branch/tag
+      prealignment:
+        type: string
+        description: version/branch/tag
+      snv_indels:
+        type: string
+        description: version/branch/tag
+      qc:
+        type: string
+        description: version/branch/tag
+    required:
+      - alignment
+      - annotation
+      - cnv_sv
+      - parabricks
+      - prealignment
+      - snv_indels
+      - qc
+
+
   default_container:
     type: string
     description: name or path to a default docker/singularity container
+
+  reference:
+    type: object
+    properties:
+      fai:
+         type: string
+         description: path to reference fasta.fai file
+      fasta:
+         type: string
+         description: path to reference fasta file
+      sites:
+        type: string
+        description: path to known siters list
+      design_bed:
+        type: string
+        description: bedfile of design
+      design_intervals:
+        type: string
+        description: same as bed_design but intervals format
+      exon_bed:
+        type: string
+        description: bedfile over just exons
+      exon_intervals:
+        type: string
+        description: intervals file over just exons
+      pgrs_bed:
+        type: string
+        description: bedfile for PGRS position
+      skip_chrs:
+        type: array
+        items:
+            type: string
+        description: list of chromosomes that should be skipped, used when determining which chr bam files will be merged
+    required:
+      - fasta
+      - fai
+      - sites
+      - design_bed
+      - design_intervals
+      - exon_bed
+      - exon_intervals
+      - pgrs_bed
+      - skip_chrs
+
+  trimmer_software:
+    type: string
+    description: name of rule to be used for trimming
+
+  add_ref_to_vcf:
+    type: object
+    description: parameters for add_ref_to_vcf
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+  bwa_mem:
+    type: object
+    description: configuration for bwa mem
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      amb:
+        type: string
+        description: path to amb file
+      ann:
+        type: string
+        description: path to ann file
+      bwt:
+        type: string
+        description: path to bwt file
+      pac:
+        type: string
+        description: path to pac file
+      sa:
+        type: string
+        description: path to sa file
+    required:
+      - container
+      - amb
+      - ann
+      - bwt
+      - pac
+      - sa
+
+  fastp_pe:
+    type: object
+    description: configuration for fastp_pe
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  fastqc:
+    type: object
+    description: configuration for fastqc
+    properties:
+      container:
+        type: string
+        description: path or name to container
+      extra:
+        type: string
+        description: extra configuration for fastqc
+
+  exomedepth_call:
+    type: object
+    description: configuration for exomedepth
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      genome_version:
+        type: string
+        pattern: "hg38|hg19"
+        description: name of reference genome, defaults to hg19 
+        default: hg19
+      bedfile:
+        type: string
+        description: path to bedfile, window size is determine by each line in bedfile
+    export_qc_thresholds:
+      type: object
+      description: configuration of bedtools intersect to extract coverage
+  
+  exomedepth_export:
+    type: object
+    description: configuration for exomedepth export R script
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  export_qc_thresholds:
+    type: object
+    description: configuration of bedtools intersect to extract coverage
+
+  export_qc_bedtools_intersect:
+    type: object
+    description: configuration for bedtools intersect
+    properties:
+      container:
+        type: string
+        description: path to container with bedtools (common)
+      extra:
+        type: string
+        description: extra configuration for bedtools intersect
+
+  export_qc_xlsx_report:
+    type: object
+    description: configuration for xlsx-report
+    properties:
+      container:
+        type: string
+        description: path to container, pyton3, gzip, date and xlsxwriter
+
+  mosdepth_bed:
+    type: object
+    description: configuration for mosdepth_bed
+    properties:
+      container:
+        type: string
+        description: name or path to docker&singularity container
+      thresholds:
+        type: string
+        description: three thresholds values to use, comma-separated
+      extra:
+        type: string
+        description: extra parameters
+    required:
+      - thresholds
+
+  multiqc:
+    type: object
+    description: configuration for multiqc
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+      reports:
+        type: object
+        description: list of multiqc reports that will be generated
+        additionalProperties:
+          type: object
+          properties:
+            config:
+              type: string
+              description: path to multiqc config file
+            included_unit_types:
+              type: array
+              description: unit types that will be included
+              items:
+                type: string
+                pattern: "^(N|T)$"
+            qc_files:
+              type: array
+              description: list with path to qc-files that will be used to generate a MultiQC report
+              items:
+                type: string
+          required:
+            - qc_files
+            - config
+            - included_unit_types
+    required:
+      - reports
+
+  pbrun_deepvariant:
+    type: object
+    description: configuration for parabricks deepvaraiant
+    properties:
+      container:
+        type: string
+        description: name or path to container
+      extra:
+        type: string
+        description: extra parameters for deepvaraiant such as ...
+
+  picard_collect_alignment_summary_metrics:
+    type: object
+    description: configuration for collect alignment metrics
+    properties: 
+      container: 
+        type: string
+        description: name or path to container
+      extra:
+        type: string
+        description: extra parameters for collect alignment metrics 
+
+  picard_collect_insert_size_metrics:
+    type: object
+    description: configuration for collect insert size metrics
+    properties: 
+      container: 
+        type: string
+        description: name or path to container
+      extra:
+        type: string
+        description: extra parameters for collect insert size metrics 
+
+  picard_collect_multiple_metrics:
+    type: object
+    description: configuration for picard collect multiple metrics
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      output_ext:
+        type: array
+        description: list of output file extensions
+        items:
+          type: string
+      extra:
+        type: string
+        description: extra commands if needed
+    required:
+      - output_ext
+
+  picard_collect_duplication_metrics:
+    type: object
+    description: configuration for picard collect duplication metrics
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra commands if needed
+
+  picard_collect_gc_bias_metrics:
+    type: object
+    description: configuration for picard collect gc bias metrics
+    properties:
+      container:
+        type: string
+        description: name or path to container
+      extra:
+        type: string
+        description: extra commands if needed
+
+  picard_collect_hs_metrics:
+    type: object
+    description: configuration for picard collect hs metrics
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+        extra:
+          type: string
+          description: extra commands if needed
+
+  picard_mark_duplicates:
+    type: object
+    description: configuration for picard mark duplicates
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: any extra parameters
+
+  sample_order_multiqc:
+    type: object
+    description: configuration for sample order of multiqc
+    properties:
+      container:
+        type: string
+        description: path to container
+      sample_sheet:
+        type: string
+        description: path to SampleSheet used to order samples
+    required:
+      - sample_sheet
+
+  vep:
+    type: object
+    description: configuration for vep annotation
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      vep_cache:
+        type: string
+        description: path to vep cache
+      mode:
+        type: string
+        description: vep mode, default is offline and cache
+        examples:
+          - "--offline --cache"
+      extra:
+        type: string
+        description: extra parameters
+    required:
+      - vep_cache
+
+  vt_decompose:
+    type: object
+    description: configuration for vt_decompose
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters for vt_decompose
+
+  vt_normalize:
+    type: object
+    description: configuration for vt_normalize
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters for vt_normalize
+
 required:
   - samples
   - units
   - resources
+  - output
+  - modules
   - default_container
+  - reference
+  - trimmer_software
+  - bwa_mem
+  - fastp_pe
+  - fastqc
+  - mosdepth_bed
+  - multiqc
+  - pbrun_deepvariant
+  - picard_collect_alignment_summary_metrics
+  - picard_collect_duplication_metrics
+  - picard_collect_gc_bias_metrics
+  - picard_collect_hs_metrics
+  - picard_collect_insert_size_metrics
+  - picard_collect_multiple_metrics
+  - picard_mark_duplicates
+  - sample_order_multiqc
+  - vep
+  - vt_decompose
+  - vt_normalize

@@ -1,5 +1,59 @@
-resources: "resources.yaml"
-samples: "samples.tsv"
-units: "units.tsv"
+---
+output: "../../config/output_files.yaml"
 
-default_container: "docker://hydragenetics/common:0.1.1"
+reference:
+  fasta: "reference/ref.fasta"
+  fai: "reference/ref.fasta.fai"
+  sites: "reference/design.bed"
+  design_bed: "reference/design.bed"
+  design_intervals: "reference/design.intervals"
+  exon_bed: "reference/design.bed"
+  exon_intervals: "reference/design.intervals"
+  pgrs_bed: "reference/design.pgrs.bed"
+  skip_chrs:
+    - "chr3"
+    - "chr4"
+    - "chr5"
+    - "chr6"
+    - "chr7"
+    - "chr8"
+    - "chr10"
+    - "chr11"
+    - "chr12"
+    - "chr13"
+    - "chr14"
+    - "chr15"
+    - "chr16"
+    - "chr17"
+    - "chr18"
+    - "chr19"
+    - "chr20"
+    - "chr21"
+    - "chr22"
+    - "chrX"
+    - "chrY"
+    - "chrM"
+
+bwa_mem:
+  amb: "reference/ref.fasta.amb"
+  ann: "reference/ref.fasta.ann"
+  bwt: "reference/ref.fasta.bwt"
+  pac: "reference/ref.fasta.pac"
+  sa: "reference/ref.fasta.sa"
+
+exomedepth_call:
+  bedfile: "reference/design.bed"
+  ref_count: "reference/ref_count.Rdata"
+  genesfile: "reference/genes.txt"
+  exonsfile: "reference/exons.txt"
+
+multiqc:
+  reports:
+    DNA:
+      config: "../../config/multiqc_config.yaml"
+
+vep:
+  vep_cache: "reference/vep_cache"
+
+xlsx_report:
+  wanted_transcripts: "reference/wanted_transcripts.txt"

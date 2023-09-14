@@ -19,7 +19,125 @@ properties:
         description: default memory used per cpu for a rule
       partition:
         type: string
-        description: default partition to use on the cluser for a rule
+        description: default partition to use on the cluster for a rule
+
+  add_ref_to_vcf:
+    type: object
+    description: resource definitions for add_ref_to_vcf
+    properties:
+      mem_mb:
+        type: integer
+        description: max memory in MB to be available
+      mem_per_cpu:
+        type: integer
+        description: memory in MB used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
+      threads:
+        type: integer
+        description: number of threads to be available
+      time:
+        type: string
+        description: max execution time
+
+  exomedepth_export:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by exomedepth_export
+      time:
+        type: string
+        description: max execution time for exomedepth_export
+      mem_mb:
+        type: integer
+        description: memory used for exomedepth_export
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for exomedepth_export
+      partition:
+        type: string
+        description: partition to use on the cluster for exomedepth_export
+  
+  export_qc_bedtools_intersect:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by export_qc_bedtools_intersect
+      time:
+        type: string
+        description: max execution time for export_qc_bedtools_intersect
+      mem_mb:
+        type: integer
+        description: memory used for eexport_qc_bedtools_intersect
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for export_qc_bedtools_intersect
+      partition:
+        type: string
+        description: partition to use on the cluster for export_qc_bedtools_intersect
+  
+  export_qc_xlsx_report:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by export_qc_xlsx_report
+      time:
+        type: string
+        description: max execution time for export_qc_xlsx_report
+      mem_mb:
+        type: integer
+        description: memory used for export_qc_xlsx_report
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for export_qc_xlsx_report
+      partition:
+        type: string
+        description: partition to use on the cluster for export_qc_xlsx_report
+
+  pbrun_deepvariant:
+    type: object
+    properties:
+      gres:
+        type: string
+        description: generic resource scheduling
+      threads:
+        type: integer
+        description: number of threads that will be used by pbrun_deepvariant
+      time:
+        type: string
+        description: max execution time for pbrun_deepvariant
+      mem_mb:
+        type: integer
+        description: memory used for pbrun_deepvariant
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for pbrun_deepvariant
+      partition:
+        type: string
+        description: partition to use on the cluster for pbrun_deepvariant
+
+  sample_order_multiqc:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by sample_order_multiqc
+      time:
+        type: string
+        description: max execution time for sample_order_multiqc
+      mem_mb:
+        type: integer
+        description: memory used for sample_order_multiqc
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for sample_order_multiqc
+      partition:
+        type: string
+        description: partition to use on the cluster for sample_order_multiqc
 
 required:
   - default_resources
