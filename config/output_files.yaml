@@ -30,3 +30,6 @@ files:
   - name: Exomedepth aed
     input: cnv_sv/exomedepth_call/{sample}_N.aed
     output: "{sample}_{sequenceid}/{sample}_{sequenceid}_exomedepth.aed"
+  - name: Config-file
+    input: config.yaml
+    output: "{sequenceid}_config.yaml"
