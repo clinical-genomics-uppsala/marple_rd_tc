@@ -2,7 +2,12 @@
 ## :exclamation: Requirements
 
 ### Recommended hardware 
-blubb
+ - [GPU Nividia A30 with Parabricks v4.1.1-1 installed](https://docs.nvidia.com/clara/parabricks/latest/whatsnew/whatsnew4.1.1-1.html)
+ - CPU: >10 cores per sample
+ - Memory: 6GB per core
+   
+!!! note
+    Running the pipeline with other/less resources may work, but has not been tested.
 
 ### Software
 
