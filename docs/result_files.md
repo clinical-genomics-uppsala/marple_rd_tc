@@ -16,6 +16,7 @@ The following output files are located in `Results/`-folder:
 |`{sample}_{sequenceid}/{sample}_{sequenceid}.genome.vcf.gz.tbi`| tbi | Index for genome VCF-file |
 |`{sample}_{sequenceid}/{sample}_{sequenceid}_exomedepth_SV.txt`| txt | Nexus SV text file with structural variants from Exomedepth |
 |`{sample}_{sequenceid}/{sample}_{sequenceid}_exomedepth.aed`| aed | aed text file with structural variants from Exomedepth |
+|`{sequenceid}_config.yaml`| yaml | yaml configfile with settings and program versions used |
 
 
 ## MultiQC report
