@@ -1,5 +1,5 @@
 # Result files
-Marple produces a lot of intermediate and result files but only files defined in [`output_files.yaml`](https://github.com/clinical-genomics-uppsala/marple_rd_tc/blob/develop/config/output_files.yaml) are kept, the rest are temporary and will be deleted when not needed in the any consecutive rules. If other files than the predefined are wanted you need to edit `output_files.yaml` or add `--no-temp` to the running command.
+Marple produces a lot of intermediate and result files but only files defined in [`output_files.yaml`](https://github.com/clinical-genomics-uppsala/marple_rd_tc/blob/main/config/output_files.yaml) are kept, the rest are temporary and will be deleted when not needed in the any consecutive rules. If other files than the predefined are wanted you need to edit `output_files.yaml` or add `--no-temp` to the running command.
 
 ## Files
 The following output files are located in `Results/`-folder:
@@ -39,8 +39,8 @@ The general statistics table are ordered based on the sample order in `SampleShe
 
 | Column Name | Origin | Comment | 
 | --- | --- | --- |
-| K Total Seq | [Samtools stats](http://www.htslib.org/doc/samtools-stats.html) | Only reads on target (`config[reference][design_bed]`) |
-| K Reads Mapped| [Samtools stats](http://www.htslib.org/doc/samtools-stats.html) | Only reads on target (`config[reference][design_bed]`) |
+| K Total Seq | [Samtools stats](http://www.htslib.org/doc/samtools-stats.html) | Only readpairs on target (`config[reference][design_bed]`) |
+| K Reads Mapped| [Samtools stats](http://www.htslib.org/doc/samtools-stats.html) | Only readpairs on target (`config[reference][design_bed]`) |
 | % Mapped| [Samtools stats](http://www.htslib.org/doc/samtools-stats.html) | Only reads on target (`config[reference][design_bed]`) |
 | % Proper pairs| [Samtools stats](http://www.htslib.org/doc/samtools-stats.html) | Only reads on target (`config[reference][design_bed]`) |
 | Average Quality | [Samtools stats](http://www.htslib.org/doc/samtools-stats.html) | Ratio between sum of base quality over total length. Only reads on target (`config[reference][design_bed]`) |
