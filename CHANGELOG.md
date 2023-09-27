@@ -1,5 +1,23 @@
 # Changelog
 
+### [0.1.2](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.1.1...v0.1.2) (2023-09-27)
+
+
+### Bug Fixes
+
+* add config to Results folder ([5b00887](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/5b00887f7c82691bd483aa35a3a153d5de145ff7))
+* update snakemakeprofile and normal panel for exomedepthversion ([f49efe9](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/f49efe94653afa20d9227bf922c1ac1fc9615353))
+
+
+### Documentation
+
+* add config to resultsfiles.md ([300fa5b](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/300fa5b36f5a44d91e98ab1ef28d120592327b5f))
+* update mkdocs.yaml ([fa6f819](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/fa6f819fdb84921b468c18bf57e28af85ee40a21))
+* update parabricks and links to main branch of marple ([adf752e](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/adf752e7bcee51bfd086c4489c7b8bed9cd4220e))
+* update README.md ([51bf321](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/51bf321eb9158360a943fc10b61a4b534e22040e))
+* update running.md with some hardware specs ([635e60c](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/635e60cd4822bdf99bd1cd906c2ce562048fa1ce))
+* update some links ([60b4e7a](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/60b4e7a235c9f6c6a6b547d8bdb887d472a93f8f))
+
 ### [0.1.1](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.1.0...v0.1.1) (2023-09-14)
 
 
