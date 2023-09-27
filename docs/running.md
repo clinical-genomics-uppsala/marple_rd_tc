@@ -2,7 +2,12 @@
 ## :exclamation: Requirements
 
 ### Recommended hardware 
-blubb
+ - [GPU Nividia A30 with Parabricks v4.1.1-1 installed](https://docs.nvidia.com/clara/parabricks/latest/whatsnew/whatsnew4.1.1-1.html)
+ - CPU: >10 cores per sample
+ - Memory: 6GB per core
+   
+!!! note
+    Running the pipeline with other/less resources may work, but has not been tested.
 
 ### Software
 
@@ -14,7 +19,7 @@ blubb
 If this is available installation is easily executed with pip.
 
 ## :computer: Installation
-A list of releases for Marple - Inherited Cancer pipeline can be found on [github](https://github.com/clinical-genomics-uppsala/marple_rd_tc/releases) or in the [Changelog](../changelog.md).
+A list of releases for Marple - Inherited Cancer pipeline can be found on [github](https://github.com/clinical-genomics-uppsala/marple_rd_tc/releases) or in the [Changelog](/changelog).
 
 ### Clone the Marple git repo
 To clone the repository and fetch the pipeline.
@@ -49,7 +54,7 @@ This will install all required softwares needed to run the pipeline in an virtua
 ## :books: Input files 
 Four different files need to be adapted to your compute environment and sequence data, `samples.tsv`, `units.tsv`, `config.yaml` and `resources.yaml`.
 ### Samples and units
-A `samples.tsv` and an `units.tsv` file which contain sample information, sequencing meta information and location of fastq-files are needed. Specification of what columns are needed can be found at [Marple schemas](https://github.com/clinical-genomics-uppsala/marple_rd_tc/tree/develop/workflow/schemas). The `.tsv`-files can also be generated with the help of hydra-genetics tools: `hydra-genetics create-input-files`.
+A `samples.tsv` and an `units.tsv` file which contain sample information, sequencing meta information and location of fastq-files are needed. Specification of what columns are needed can be found at [Marple schemas](https://github.com/clinical-genomics-uppsala/marple_rd_tc/tree/main/workflow/schemas). The `.tsv`-files can also be generated with the help of hydra-genetics tools: `hydra-genetics create-input-files`.
 
 ``` bash
 hydra-genetics create-input-files -d /path/to/fastq/ --tc 1.0 -a 'adaptersequence1,adaptersequence2' --sample-type N  --sample-regex "^([0-9]{4})_S"

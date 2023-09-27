@@ -10,7 +10,7 @@ new_header = vcf_in.header
 new_header.add_line("##reference=" + snakemake.input.ref)
 
 # start new vcf with the new_header
-vcf_out = VariantFile(snakemake.output.vcf, 'w', header=new_header)
+vcf_out = VariantFile(snakemake.output.vcf, "w", header=new_header)
 
 
 for record in vcf_in.fetch():

@@ -5,3 +5,7 @@ describe_workflow.rst
 describe_jupyter_notebook.txt
 marple
 .vscode
+docs/includes/config.yaml
+docs/includes/config_references.yaml
+docs/includes/multiqc_config.yaml
+docs/includes/resources.yaml
