@@ -23,7 +23,7 @@ fi
 ## Collect statistics
 echo "Statistics.."
 export sequenceid
-python3 -c 'import json; import os; from ductus.tools.utils import generate_elastic_statistics; writer=open("/projects/wp3/nobackup/Collect_statistics/"+os.environ["sequenceid"]+".json", "w"); [writer.write(json.dumps(d) + "\n") for d in generate_elastic_statistics(samplesheet="SampleSheet.csv", workpackage="wp3", tool="tc", analysis="Twist_Cancer", project="klinik", prep="Fresh")]; writer.close()'
+python3 -c 'import json; import os; from ductus.tools.utils import generate_elastic_statistics; writer=open("/projects/wp3/nobackup/Collect_statistics/"+os.environ["sequenceid"]+".json", "w"); [writer.write(json.dumps(d) + "\n") for d in generate_elastic_statistics(samplesheet="SampleSheet.csv", workpackage="wp3", tool="tc", analysis="Twist_Cancer", project="klinik", prep="Fresh")]; writer.close()' && \
 ## cp config and resources
 echo "Creating sample.tsv and units.tsv and cp all .[tc]sv and .yaml to scratch" && \
 hydra-genetics create-input-files -d /projects/wp3/nobackup/TwistCancer/Workarea/${sequenceid}/fastq/ \
