@@ -39,8 +39,8 @@ The general statistics table are ordered based on the sample order in `SampleShe
 
 | Column Name | Origin | Comment | 
 | --- | --- | --- |
-| K Total Seq | [Samtools stats](http://www.htslib.org/doc/samtools-stats.html) | Only reads on target (`config[reference][design_bed]`) |
-| K Reads Mapped| [Samtools stats](http://www.htslib.org/doc/samtools-stats.html) | Only reads on target (`config[reference][design_bed]`) |
+| K Total Seq | [Samtools stats](http://www.htslib.org/doc/samtools-stats.html) | Only readpairs on target (`config[reference][design_bed]`) |
+| K Reads Mapped| [Samtools stats](http://www.htslib.org/doc/samtools-stats.html) | Only readpairs on target (`config[reference][design_bed]`) |
 | % Mapped| [Samtools stats](http://www.htslib.org/doc/samtools-stats.html) | Only reads on target (`config[reference][design_bed]`) |
 | % Proper pairs| [Samtools stats](http://www.htslib.org/doc/samtools-stats.html) | Only reads on target (`config[reference][design_bed]`) |
 | Average Quality | [Samtools stats](http://www.htslib.org/doc/samtools-stats.html) | Ratio between sum of base quality over total length. Only reads on target (`config[reference][design_bed]`) |

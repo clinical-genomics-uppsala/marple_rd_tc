@@ -118,7 +118,7 @@ For quality control the **QC** module ([ReadTheDocs](https://hydra-genetics-qc.r
 * `Results/{sequenceid}_MultiQC.html`
 
 ### MultiQC
-A MultiQC html report is generated using **[MultiQC](https://github.com/ewels/MultiQC)** v1.11. The report starts with a general statistics table showing the most important QC-values followed by additional QC data and diagrams. The qc data is collected and generated using Fastp, FastQC, samtools, picard and Mosdepth.
+A MultiQC html report is generated using **[MultiQC](https://github.com/ewels/MultiQC)** v1.11. The report starts with a general statistics table showing the most important QC-values followed by additional QC data and diagrams. See [result files page](/result_files) for more in-depth info on general stats columns. The qc data is collected and generated using Fastp, FastQC, samtools, picard and Mosdepth.
 
 The samples in the MultiQC report is renamed and ordered based on the order of the `SampleSheet.csv` to enable easier integration with the wet lab follow-up.
 
@@ -144,10 +144,10 @@ The report is configured based on a MultiQC config file.
 ### Picard
 **[Picard](https://broadinstitute.github.io/picard/)** v2.25.4 is run on BWA-mem aligned and merged bam files collecting a number of metrics. The metrics calculated are listed below:
 
-* **picard CollectAlignmentSummaryMetrics** - using a [fasta reference genome](references.md#reference_fasta) file
+* **picard CollectAlignmentSummaryMetrics** - using fasta reference genome file
 * **picard CollectDuplicationMetrics**
 * **picard CollectGCBiasMetrics**
-* **picard CollectHsMetrics** - using a fasta fasta reference genome file, the full capture design bedfile (`config[reference][design_bed]`), and with the option COVERAGE_CAP=5000
+* **picard CollectHsMetrics** - using fasta reference genome file, the full capture design bedfile (`config[reference][design_bed]`), and with the option COVERAGE_CAP=5000
 * **picard CollectInsertSizeMetrics**
-* **picard CollectMultipleMetrics** - using a fasta fasta reference genome file, and the full bedfile (`config[reference][design_intervals]`)
+* **picard CollectMultipleMetrics** - using fasta reference genome file, and the full bedfile (`config[reference][design_intervals]`)
 ---
