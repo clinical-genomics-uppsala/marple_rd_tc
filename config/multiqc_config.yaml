@@ -91,14 +91,15 @@ table_columns_visible:
     PCT_30X: False
     PCT_TARGET_BASES_30X: False
     FOLD_ENRICHMENT: False
+    TOTAL_READS: True
   Samtools:
     error_rate: False
     non-primary_alignments: False
-    reads_mapped: True
+    reads_mapped: False
     reads_mapped_percent: True
     reads_properly_paired_percent: True
     reads_MQ0_percent: False
-    raw_total_sequences: True #only on bedfile not total of fastq
+    raw_total_sequences: False #only on bedfile not total of fastq, bases on target only
 
 # Patriks plug in, addera egna columner till general stats
 multiqc_cgs:
@@ -157,6 +158,7 @@ table_columns_placement:
     reads_MQ0_percent: 555
     non-primary_alignments: 555
   Picard:
+    TOTAL_READS: 500
     PCT_SELECTED_BASES: 801
     FOLD_80_BASE_PENALTY: 802
     PCT_PF_READS_ALIGNED: 888
