@@ -39,8 +39,8 @@ The general statistics table are ordered based on the sample order in `SampleShe
 
 | Column Name | Origin | Comment | 
 | --- | --- | --- |
-| K Reads | [Picard](https://broadinstitute.github.io/picard/) HSMetrics | Total number of reads in inputfile (`alignment/samtools_merge_bam/{sample}_{type}.bam`) |
-| % Mapped| [Samtools stats](http://www.htslib.org/doc/samtools-stats.html) | Only reads on target (`config[reference][design_bed]`) |
+| K Reads | [Samtools stats](http://www.htslib.org/doc/samtools-stats.html)  | Total number of reads in inputfile (`alignment/samtools_merge_bam/{sample}_{type}.bam`) |
+| % Mapped| [Samtools stats](http://www.htslib.org/doc/samtools-stats.html) | Percent reads mapped, anywhere in the reference (no design file used) |
 | % Proper pairs| [Samtools stats](http://www.htslib.org/doc/samtools-stats.html) | Only reads on target (`config[reference][design_bed]`) |
 | Average Quality | [Samtools stats](http://www.htslib.org/doc/samtools-stats.html) | Ratio between sum of base quality over total length. Only reads on target (`config[reference][design_bed]`) |
 | Median | [Mosdepth](https://github.com/brentp/mosdepth) | Median Coverage over coding exon in design (`config[reference][exon_bed]`) |

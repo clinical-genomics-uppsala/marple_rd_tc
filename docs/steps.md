@@ -3,7 +3,7 @@ To go into details of the pipeline we dived the pipeline into modules similar to
 
 ---
 ## Prealignment
-See the **Prealignment** hydra-genetics module documentation on [ReadTheDoc](https://hydra-genetics-prealignment.readthedocs.io/en/latest/) or [github]() documentation for more details on the softwares. Default hydra-genetics settings/resources are used if no configuration is specified.
+See the **Prealignment** hydra-genetics module documentation on [ReadTheDoc](https://hydra-genetics-prealignment.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/prealignment) documentation for more details on the softwares. Default hydra-genetics settings/resources are used if no configuration is specified.
 
 ![dag plot](includes/images/prealignment.png){: style="height:30%;width:30%"}
 
@@ -87,7 +87,7 @@ Variants are called using [**Parabricks deepvariant** v4.1.1-1](https://docs.nvi
 The standard vcf files is decomposed with [**vt decompose**](https://genome.sph.umich.edu/wiki/Vt#Decompose) followed by [**vt decompose_blocksub**](https://genome.sph.umich.edu/wiki/Vt#Decompose_biallelic_block_substitutions) v2015.11.10. The decomposed vcf files are then normalized by [**vt normalize**](https://genome.sph.umich.edu/wiki/Vt#Normalization) v2015.11.10.
 
 ### Annotation
-Both the normalized standard VCF files and the genome vcf files are then annotated using **[VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)** v109. Vep is run with the extra parameters `--assembly GRCh38 --check_existing --pick --variant_class --everything`.
+Both the normalized standard VCF files and the genome vcf files are then annotated using **[VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)** v109.3. Vep is run with the extra parameters `--assembly GRCh38 --check_existing --pick --variant_class --everything`.
 
 See the [annotation hydra-genetics module](https://hydra-genetics-annotation.readthedocs.io/en/latest/) for additional information.
 
@@ -139,7 +139,7 @@ The report is configured based on a MultiQC config file.
 **[Mosdepth](https://github.com/brentp/mosdepth)** v0.3.2 is used together with a bedfile covering all coding exons (`config[reference][exon_bed]`) and thresholds (`10,20,50`) to calculate coverage.
 
 ### Samtools
-**[Samtools stats](http://www.htslib.org/doc/samtools-stats.html)** v1.15 is run on BWA-mem aligned and merged bam files over the full bedfile (`config[reference][design_bed]`).
+**[Samtools stats](http://www.htslib.org/doc/samtools-stats.html)** v1.15 is run on BWA-mem aligned and merged bam files without any designfile.
 
 ### Picard
 **[Picard](https://broadinstitute.github.io/picard/)** v2.25.4 is run on BWA-mem aligned and merged bam files collecting a number of metrics. The metrics calculated are listed below:
