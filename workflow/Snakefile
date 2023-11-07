@@ -235,6 +235,11 @@ use rule picard_collect_multiple_metrics from qc as qc_picard_collect_multiple_m
         extra=lambda wildcards, input: f" INTERVALS={input.intervals}",
 
 
+use rule samtools_stats from qc as qc_samtools_stats with:
+    params:
+        extra="%s " % (config.get("samtools_stats", {}).get("extra", ""),),
+
+
 use rule multiqc from qc as qc_multiqc with:
     input:
         files=lambda wildcards: set(
