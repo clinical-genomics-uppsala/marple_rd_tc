@@ -33,7 +33,6 @@ markdown_extensions:
       emoji_generator: !!python/name:materialx.emoji.to_svg
   - pymdownx.blocks.details
 
-
 plugins:
   - search
   - include-markdown
