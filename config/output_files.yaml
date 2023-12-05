@@ -33,3 +33,13 @@ files:
   - name: Config-file
     input: config.yaml
     output: "{sequenceid}_config.yaml"
+  - name: melt alu fil
+    input: "cnv_sv/melt/Results_single_{sample}_{type}/ALU.final_comp.vcf"
+    output: "(sample}_{sequenceid}/{sample}_{sequenceid}_melt_ALU.aed"
+  - name: melt line1 fil
+    input: "cnv_sv/melt/Results_single_{sample}_{type}/LINE1.final_comp.vcf"
+    output: "(sample}_{sequenceid}/{sample}_{sequenceid}_melt_LINE1.aed"
+  - name: melt sva fil
+    input: "cnv_sv/melt/Results_single_{sample}_{type}/SVA_final_comp.vcf"
+    output: "(sample}_{sequenceid}/{sample}_{sequenceid}_melt_SVA.aed"
+
