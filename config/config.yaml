@@ -7,7 +7,7 @@ output: "/projects/wp3/nobackup/TwistCancer/Bin/marple_rd_tc/config/output_files
 modules:
   alignment: "v0.4.0"
   annotation: "v0.3.0"
-  cnv_sv: "78f270c"
+  cnv_sv: "66cb04f"
   parabricks: "v1.1.0"
   prealignment: "v1.0.0"
   snv_indels: "v0.5.0"
@@ -59,6 +59,11 @@ exomedepth_call:
 
 exomedepth_export:
   container: "docker://hydragenetics/exomedepth:1.1.15"
+
+melt:
+  container: "docker://###########/melt:2.2.2"
+  include_bed: "/data/ref_genomes/GRCh38/MELT/MELTv2.2.2/add_bed_files/1KGP_Hg19/hg19.genes.bed"
+  include_mei: "/data/ref_genomes/GRCh38/MELT/MELTv2.2.2/me_refs/1KGP_Hg19/mei_list.txt"
 
 mosdepth_bed:
   container: "docker://hydragenetics/mosdepth:0.3.2"
