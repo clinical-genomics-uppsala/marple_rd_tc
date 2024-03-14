@@ -1,5 +1,23 @@
-
 # Changelog
+
+### [0.1.3](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.1.2...v0.1.3) (2024-02-13)
+
+
+### Bug Fixes
+
+* pin pulp to 2.8 or less ([5182cca](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/5182cca2208cd203b7d35004426f0d76cd06b69f))
+* replace total seq (samtools) with total reads (picard) in multiqc ([81eb4a2](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/81eb4a2fc7eabd93055cbbf098be66a5a274be54))
+* run samtools stats without bed, use value in multiqc ([ae637c9](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/ae637c9ceccc7cc5db699369e4fe5fc6bb94e110))
+
+
+### Performance Improvements
+
+* use correct num for common docker ([3a2f797](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/3a2f7978bac89184333481239a684c9225e57daf))
+
+
+### Documentation
+
+* update samtools stats info ([4ef515f](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/4ef515f721e6900dcde5dceaa295a28789eb3c51))
 
 ### [0.1.2](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.1.1...v0.1.2) (2023-09-27)
 
@@ -78,4 +96,3 @@
 * update rulegraph ([5ee4577](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/5ee457745b8f3db43a357259706f3bd6bb383186))
 * update running ref ([8f99ae7](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/8f99ae7f2b802f38617626729ea309de092d3ea5))
 * update schemas ([fc25b81](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/fc25b815590c4b076d2a48b5d6db11b0ca2a5ad5))
-

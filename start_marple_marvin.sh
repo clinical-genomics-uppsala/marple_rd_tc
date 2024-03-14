@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source /projects/wp3/nobackup/TwistCancer/Bin/venv_marple/bin/activate
-pip install -r /projects/wp3/nobackup/TwistCancer/Bin/marple_rd_tc/requirements.txt
+#pip install -r /projects/wp3/nobackup/TwistCancer/Bin/marple_rd_tc/requirements.txt
 module load slurm-drmaa/1.1.3
 
 ## To match stackstorm outline
@@ -41,6 +41,6 @@ snakemake --profile /projects/wp3/nobackup/TwistCancer/Bin/marple_rd_tc/profiles
 
 ## Cp Results to OUTBOX and trigger stackstorm
 echo 'Pipeline done, cp back data and trigger stackstorm' && \
-rsync -ru /scratch/wp3/TwistCancer/${sequencerun}/Results/ ${outbox}/${sequencerun}/ && \
-touch ${outbox}/${sequencerun}/Done.txt && \
+rsync -ru /scratch/wp3/TwistCancer/${sequenceid}/Results/ ${outbox}/${sequenceid}/ && \
+touch ${outbox}/${sequenceid}/Done.txt && \
 echo 'All done!'
