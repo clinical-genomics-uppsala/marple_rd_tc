@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source /projects/wp3/nobackup/TwistCancer/Bin/venv_marple/bin/activate
-pip install -r /projects/wp3/nobackup/TwistCancer/Bin/marple_rd_tc/requirements.txt
+#pip install -r /projects/wp3/nobackup/TwistCancer/Bin/marple_rd_tc/requirements.txt
 module load slurm-drmaa/1.1.3
 
 ## To match stackstorm outline
