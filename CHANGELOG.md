@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.4](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.1.3...v0.1.4) (2024-03-14)
+
+
+### Bug Fixes
+
+* add missing bai to exomedepth, fix typo in start script ([1c58ea7](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/1c58ea73eb0374aeedd954ad8b1aefaf0d397621))
+
 ### [0.1.3](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.1.2...v0.1.3) (2024-02-13)
 
 
