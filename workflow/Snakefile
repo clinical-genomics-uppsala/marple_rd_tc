@@ -74,6 +74,7 @@ use rule * from cnv_sv as cnv_sv_*
 use rule exomedepth_call from cnv_sv as cnv_sv_exomedepth_call with:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         bedfile=config.get("exomedepth_call", {}).get("bedfile", ""),
         ref_count=config["exomedepth_call"]["ref_count"],
         genes=config.get("exomedepth_call", {}).get("genesfile", ""),
