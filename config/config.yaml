@@ -45,8 +45,8 @@ exomedepth_call:
   bedfile: "/projects/wp3/nobackup/TwistCancer/Bedfiles/Twist_Cancer_230706_hg38_TE-98982205-wPGRS.merged_200bpwindows.bed"
   ref_count: "/projects/wp3/nobackup/TwistCancer/Bedfiles/Exomedepth_refCount_230706.Rdata"
   genome_version: "hg38"
-  genesfile: "/projects/wp3/nobackup/Workspace/padraic_testing/exomedepth/exomedepth_hg38_ref_generation/genes_GRCh38_ensembl109.txt"
-  exonsfile: "/projects/wp3/nobackup/Workspace/padraic_testing/exomedepth/exomedepth_hg38_ref_generation/exons_GRCh38_ensembl109.txt"
+  genesfile: "/projects/wp3/nobackup/TwistCancer/Bedfiles/genes_GRCh38_ensembl109.txt"
+  exonsfile: "/projects/wp3/nobackup/TwistCancer/Bedfiles/exons_GRCh38_ensembl109.txt"
 
 exomedepth_export:
   container: "docker://hydragenetics/exomedepth:1.1.15"
