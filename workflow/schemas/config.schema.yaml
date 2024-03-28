@@ -13,40 +13,6 @@ properties:
     type: string
     description: path to output-yaml or json that defines which files to cp to a results folder
 
-  modules:
-    type: object
-    description: list of hydra modules used with which tag or commit to use
-    properties:
-      alignment:
-        type: string
-        description: version/branch/tag
-      annotation:
-        type: string
-        description: version/branch/tag
-      cnv_sv:
-        type: string
-        description: version/branch/tag
-      parabricks:
-        type: string
-        description: version/branch/tag
-      prealignment:
-        type: string
-        description: version/branch/tag
-      snv_indels:
-        type: string
-        description: version/branch/tag
-      qc:
-        type: string
-        description: version/branch/tag
-    required:
-      - alignment
-      - annotation
-      - cnv_sv
-      - parabricks
-      - prealignment
-      - snv_indels
-      - qc
-
 
   default_container:
     type: string
@@ -424,7 +390,6 @@ required:
   - units
   - resources
   - output
-  - modules
   - default_container
   - reference
   - trimmer_software
@@ -433,7 +398,6 @@ required:
   - fastqc
   - mosdepth_bed
   - multiqc
-  - pbrun_deepvariant
   - picard_collect_alignment_summary_metrics
   - picard_collect_duplication_metrics
   - picard_collect_gc_bias_metrics
