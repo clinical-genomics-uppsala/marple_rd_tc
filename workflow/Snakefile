@@ -141,6 +141,7 @@ use rule * from snv_indels as snv_indels_*
 use rule fix_af from snv_indels as snv_indels_fix_af with:
     input:
         vcf="parabricks/pbrun_deepvariant/{sample}_{type}.vcf.gz",
+        tbi="parabricks/pbrun_deepvariant/{sample}_{type}.vcf.gz.tbi",
     output:
         vcf=temp("parabricks/pbrun_deepvariant/{sample}_{type}.fix_af.vcf"),
     log:
@@ -155,6 +156,7 @@ use rule fix_af from snv_indels as snv_indels_fix_af with:
 use rule fix_af from snv_indels as snv_indels_fix_af_g with:
     input:
         vcf="parabricks/pbrun_deepvariant/{sample}_{type}.g.vcf.gz",
+        tbi="parabricks/pbrun_deepvariant/{sample}_{type}.g.vcf.gz.tbi",
     output:
         vcf=temp("parabricks/pbrun_deepvariant/{sample}_{type}.g.fix_af.vcf"),
     log:
@@ -169,6 +171,7 @@ use rule fix_af from snv_indels as snv_indels_fix_af_g with:
 use rule vt_decompose from snv_indels as snv_indels_vt_decompose with:
     input:
         vcf="parabricks/pbrun_deepvariant/{sample}_{type}.fix_af.vcf.gz",
+        tbi=="parabricks/pbrun_deepvariant/{sample}_{type}.fix_af.vcf.gz.tbi",
     output:
         vcf=temp("parabricks/pbrun_deepvariant/{sample}_{type}.decomposed.vcf.gz"),
     log:
@@ -183,6 +186,7 @@ use rule vt_decompose from snv_indels as snv_indels_vt_decompose with:
 use rule vt_normalize from snv_indels as snv_indels_vt_normalized with:
     input:
         vcf="parabricks/pbrun_deepvariant/{sample}_{type}.decomposed.vcf.gz",
+        tbi="parabricks/pbrun_deepvariant/{sample}_{type}.decomposed.vcf.gz.tbi",
         ref=config["reference"]["fasta"],
     output:
         vcf=temp("parabricks/pbrun_deepvariant/{sample}_{type}.normalized.vcf.gz"),
