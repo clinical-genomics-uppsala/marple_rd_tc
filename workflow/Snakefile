@@ -34,7 +34,7 @@ module alignment:
         github(
             "hydra-genetics/alignment",
             path="workflow/Snakefile",
-            tag=config["modules"]["alignment"],
+            tag="v0.4.0",
         )
     config:
         config
@@ -48,7 +48,7 @@ module annotation:
         github(
             "hydra-genetics/annotation",
             path="workflow/Snakefile",
-            tag=config["modules"]["annotation"],
+            tag="v0.3.0",
         )
     config:
         config
@@ -62,7 +62,7 @@ module cnv_sv:
         github(
             "hydra-genetics/cnv_sv",
             path="workflow/Snakefile",
-            tag=config["modules"]["cnv_sv"],
+            tag="78f270c",
         )
     config:
         config
@@ -86,7 +86,7 @@ module parabricks:
         github(
             "hydra-genetics/parabricks",
             path="workflow/Snakefile",
-            tag=config["modules"]["parabricks"],
+            tag="v1.1.0",
         )
     config:
         config
@@ -115,7 +115,7 @@ module prealignment:
         github(
             "hydra-genetics/prealignment",
             path="workflow/Snakefile",
-            tag=config["modules"]["prealignment"],
+            tag="v1.0.0",
         )
     config:
         config
@@ -129,7 +129,7 @@ module snv_indels:
         github(
             "hydra-genetics/snv_indels",
             path="workflow/Snakefile",
-            tag=config["modules"]["snv_indels"],
+            tag="v0.5.0",
         )
     config:
         config
@@ -204,7 +204,7 @@ module qc:
         github(
             "hydra-genetics/qc",
             path="workflow/Snakefile",
-            tag=config["modules"]["qc"],
+            tag="ca947b1",
         )
     config:
         config

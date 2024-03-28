@@ -4,15 +4,6 @@ samples: "samples.tsv"
 units: "units.tsv"
 output: "/projects/wp3/nobackup/TwistCancer/Bin/marple_rd_tc/config/output_files.yaml"
 
-modules:
-  alignment: "v0.4.0"
-  annotation: "v0.3.0"
-  cnv_sv: "78f270c"
-  parabricks: "v1.1.0"
-  prealignment: "v1.0.0"
-  snv_indels: "v0.5.0"
-  qc: "ca947b1"
-
 default_container: "docker://hydragenetics/common:1.8.1"
 
 reference:
