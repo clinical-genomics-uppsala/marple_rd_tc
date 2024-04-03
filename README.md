@@ -10,13 +10,13 @@
 This ReadMe is only a brief introduction, please refer to ReadTheDocs for the latest documentation. 
 
 ---
-![Lint](https://github.com/clinical-genomics-uppsala/marple/actions/workflows/lint.yaml/badge.svg?branch=main)
-![Snakefmt](https://github.com/clinical-genomics-uppsala/marple/actions/workflows/snakefmt.yaml/badge.svg?branch=main)
-![snakemake dry run](https://github.com/clinical-genomics-uppsala/marple/actions/workflows/snakemake-dry-run.yaml/badge.svg?branch=main)
-![integration test](https://github.com/clinical-genomics-uppsala/marple/actions/workflows/integration1.yaml/badge.svg?branch=main)
+![Lint](https://github.com/clinical-genomics-uppsala/marple_rd_tc/actions/workflows/lint.yaml/badge.svg?branch=main)
+![Snakefmt](https://github.com/clinical-genomics-uppsala/marple_rd_tc/actions/workflows/snakefmt.yaml/badge.svg?branch=main)
+![snakemake dry run](https://github.com/clinical-genomics-uppsala/marple_rd_tc/actions/workflows/snakemake-dry-run.yaml/badge.svg?branch=main)
+![integration test](https://github.com/clinical-genomics-uppsala/marple_rd_tc/actions/workflows/integration1.yaml/badge.svg?branch=main)
 
-![pycodestyle](https://github.com/clinical-genomics-uppsala/marple/actions/workflows/pycodestyle.yaml/badge.svg?branch=main)
-![pytest](https://github.com/clinical-genomics-uppsala/marple/actions/workflows/pytest.yaml/badge.svg?branch=main)
+![pycodestyle](https://github.com/clinical-genomics-uppsala/marple_rd_tc/actions/workflows/pycodestyle.yaml/badge.svg?branch=main)
+![pytest](https://github.com/clinical-genomics-uppsala/marple_rd_tc/actions/workflows/pytest.yaml/badge.svg?branch=main)
 
 [![License: GPL-3](https://img.shields.io/badge/License-GPL3-yellow.svg)](https://opensource.org/licenses/gpl-3.0.html)
 
@@ -40,7 +40,7 @@ $ snakemake -n -s ../../workflow/Snakefile --configfiles ../../config/config.yam
 To use this run this pipeline `sample.tsv`, `units.tsv`, `resources.yaml`, and `config.yaml` files need to be available in the current directory (or otherwise specified in `config.yaml`). You always need to specify the `config`-file and `sequenceid` variable in the command. To run the pipeline:
 
 ```bash
-$ snakemake --profile snakemakeprofile --configfile config.yaml --config sequenceid="990909_test" -s /path/to/marple/workflow/Snakefile
+$ snakemake --profile snakemakeprofile --configfile config.yaml --config sequenceid="990909_test" -s /path/to/marple_rd_tc/workflow/Snakefile
 ```
 
 ## :books: [Output files](https://marple-rd-tc.readthedocs.io/en/latest/result_files/)

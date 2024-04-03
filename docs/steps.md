@@ -1,9 +1,9 @@
 # Steps in Marple :woman_detective:
-To go into details of the pipeline we dived the pipeline into modules similar to Hydra-Genetics module system.
+To go into details of the pipeline we dived the pipeline into modules similar to Hydra-Genetics module system. Default hydra-genetics settings/resources are used if no configuration is specified.
 
 ---
 ## Prealignment
-See the **Prealignment** hydra-genetics module documentation on [ReadTheDoc](https://hydra-genetics-prealignment.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/prealignment) documentation for more details on the softwares. Default hydra-genetics settings/resources are used if no configuration is specified.
+See the **Prealignment** hydra-genetics module documentation on [ReadTheDoc](https://hydra-genetics-prealignment.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/prealignment/tree/v1.0.0) documentation for more details on the softwares. 
 
 ![dag plot](includes/images/prealignment.png){: style="height:30%;width:30%"}
 
@@ -63,12 +63,10 @@ Bamfile indexing is performed by **[samtools index](http://www.htslib.org/doc/sa
 
 ---
 ## SNV indels
-SNV and indels are called using the **Parabricks** ([github](https://github.com/hydra-genetics/parabricks/tree/v1.1.0)) and **SNV_indels** ([ReadTheDoc](https://hydra-genetics-snv-indels.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/snv_indels/tree/v0.5.0)) modules. Annotation is then done with **Annotation** module ([ReadTheDocs](https://hydra-genetics-annotation.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/annotation/tree/v0.3.0)).
+SNV and indels are called using the **SNV_indels** ([ReadTheDoc](https://hydra-genetics-snv-indels.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/snv_indels/tree/3935ecf)) module. Annotation is then done with **Annotation** module ([ReadTheDocs](https://hydra-genetics-annotation.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/annotation/tree/v0.3.0)).
 
 ![dag plot](includes/images/snv_indels.png){: style="height:100%;width:100%"}
 
-!!! warning
-    As of now a GPU with licensed Parabricks is needed ro run SNV calling. A non-licensed CPU alternative will be added at a later stage.
 
 ### Pipeline output files
 
@@ -76,18 +74,13 @@ SNV and indels are called using the **Parabricks** ([github](https://github.com/
 * `Results/{sample}_{sequenceid}/{sample}_{sequenceid}.genome.vcf.gz`
 
 ### SNV calling
-#### GPU track
-Variants are called using [**Parabricks deepvariant** v4.1.1-1](https://docs.nvidia.com/clara/parabricks/latest/documentation/tooldocs/man_deepvariant.html#man-deepvariant) on a GPU licensed for Parabricks. `pbrun_deepvariant` is run with the interval file `config["refernce"]["design_bed"]` and the extra parameters defined in `config.yaml` (`--use-wes-model --disable-use-window-selector-model --gvcf `). This ensures that a genome vcf is produced as well as a standard vcf, by using `disable-use-window-selector-model` we increases reproducibility for later implementation of a parallel CPU-track. The AF field is added to the `INFO` column in the vcf:s using the `fix_af.py` from the snv_indel module. The vcf header in the standard vcf is also updated to include a reference line using the `add_ref_to_vcf.py` to ensure that programs such as Alissa acknowledge the use of Hg38.
-
-#### CPU track
-!!! note
-    To be added.
+Variants are called using [Deepvariant](https://github.com/google/deepvariant). Deepvariant is run per chromosome over the regions defined in `config["references"]["design_bed"]`. The model type is set to "WES" and `--output_gvcf` is used to ensure that both genome vcf as well as a standard vcf is produced. The AF field is added to the `INFO` column in the vcf:s using the `fix_af.py`. The vcf header in the standard vcf is also updated to include a reference line using the `add_ref_to_vcf.py` to ensure that programs such as Alissa acknowledge the use of Hg38.
 
 ### Normalizing
 The standard vcf files is decomposed with [**vt decompose**](https://genome.sph.umich.edu/wiki/Vt#Decompose) followed by [**vt decompose_blocksub**](https://genome.sph.umich.edu/wiki/Vt#Decompose_biallelic_block_substitutions) v2015.11.10. The decomposed vcf files are then normalized by [**vt normalize**](https://genome.sph.umich.edu/wiki/Vt#Normalization) v2015.11.10.
 
 ### Annotation
-Both the normalized standard VCF files and the genome vcf files are then annotated using **[VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)** v109.3. Vep is run with the extra parameters `--assembly GRCh38 --check_existing --pick --variant_class --everything`.
+The normalized standard VCF files are then annotated using **[VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)** v109.3. Vep is run with the extra parameters `--assembly GRCh38 --check_existing --pick --variant_class --everything`.
 
 See the [annotation hydra-genetics module](https://hydra-genetics-annotation.readthedocs.io/en/latest/) for additional information.
 
@@ -104,7 +97,7 @@ CNVs are called using the Hydra-Genetics **CNV_SV** module ([ReadTheDocs](https:
 * `Results/{sample}_{sequenceid}/{sample}_{sequenceid}_exomedepth.aed`
 
 ### Exomedepth
-To call larger structural variants **[Exomedepth](https://cran.r-project.org/web/packages/ExomeDepth/index.html)** v1.1.15 is used. Exomedepth does **not** use a window approach but evaluates each row in the bedfile as a segment, therefor the bedfile need to be split into appropriate large windows (e.g. using `bedtools makewindows`). Exomedepth also need a `RData` file containing the normal pool, this can be created using the [Marple - references workflow](/running_ref). Lines with no-change calls (`reads.ratio == 1`) are removed from the output for Alissa compatibility. 
+To call larger structural variants **[Exomedepth](https://cran.r-project.org/web/packages/ExomeDepth/index.html)** v1.1.15 is used. Exomedepth does **not** use a window approach but evaluates each row in the bedfile as a segment, therefor the bedfile need to be split into appropriate large windows (e.g. using `bedtools makewindows`). Exomedepth also need a `RData` file containing the normal pool, this can be created using the [Marple - references workflow](/running_ref). Lines with no-change calls (`reads.ratio == 1`) are removed from the output for Alissa compatibility. Since no sex-chromosome are included in the design Exomedepth is run with the same normalpool irregardless of the sample's biological sex. Marple is designed on HG38 therefor a genes and exonfile are also needed for annotation. 
 
 ---
 ## QC

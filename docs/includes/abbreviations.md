@@ -7,4 +7,6 @@
 *[SNVs]: Single Nucleotide Variants
 *[SV]: Structural Variant
 *[VCF]: Variant Call Format
+*[WES]: Whole Exome Sequencing
+*[WGS]: Whole Genome Sequencing
 *[QC]: Quality Control

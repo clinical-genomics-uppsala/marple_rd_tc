@@ -34,7 +34,7 @@ module alignment:
         github(
             "hydra-genetics/alignment",
             path="workflow/Snakefile",
-            tag=config["modules"]["alignment"],
+            tag="v0.4.0",
         )
     config:
         config
@@ -48,7 +48,7 @@ module annotation:
         github(
             "hydra-genetics/annotation",
             path="workflow/Snakefile",
-            tag=config["modules"]["annotation"],
+            tag="v0.3.0",
         )
     config:
         config
@@ -62,7 +62,7 @@ module cnv_sv:
         github(
             "hydra-genetics/cnv_sv",
             path="workflow/Snakefile",
-            tag=config["modules"]["cnv_sv"],
+            tag="78f270c",
         )
     config:
         config
@@ -81,41 +81,12 @@ use rule exomedepth_call from cnv_sv as cnv_sv_exomedepth_call with:
         exons=config.get("exomedepth_call", {}).get("exonsfile", ""),
 
 
-module parabricks:
-    snakefile:
-        github(
-            "hydra-genetics/parabricks",
-            path="workflow/Snakefile",
-            tag=config["modules"]["parabricks"],
-        )
-    config:
-        config
-
-
-use rule pbrun_deepvariant from parabricks as parabricks_deepvariant with:
-    input:
-        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
-        fasta=config.get("reference", {}).get("fasta", ""),
-        bed=config["reference"]["design_bed"],
-    output:
-        vcf=temp("parabricks/pbrun_deepvariant/{sample}_{type}.g.vcf"),
-        vcf2=temp("parabricks/pbrun_deepvariant/{sample}_{type}.vcf"),
-    params:
-        cuda=get_cuda_devices,
-        num_gpus=lambda wildcards: get_num_gpus("pbrun_deepvariant", wildcards),
-        extra=lambda wildcards, input: " --interval-file "
-        + input.bed
-        + " "
-        + config.get("pbrun_deepvariant", {}).get("extra", ""),
-
-
 module prealignment:
     snakefile:
         github(
             "hydra-genetics/prealignment",
             path="workflow/Snakefile",
-            tag=config["modules"]["prealignment"],
+            tag="v1.0.0",
         )
     config:
         config
@@ -129,7 +100,7 @@ module snv_indels:
         github(
             "hydra-genetics/snv_indels",
             path="workflow/Snakefile",
-            tag=config["modules"]["snv_indels"],
+            tag="3935ecf",
         )
     config:
         config
@@ -138,64 +109,32 @@ module snv_indels:
 use rule * from snv_indels as snv_indels_*
 
 
-use rule fix_af from snv_indels as snv_indels_fix_af with:
+use rule deepvariant from snv_indels as snv_indels_deepvariant with:
     input:
-        vcf="parabricks/pbrun_deepvariant/{sample}_{type}.vcf.gz",
-        tbi="parabricks/pbrun_deepvariant/{sample}_{type}.vcf.gz.tbi",
-    output:
-        vcf=temp("parabricks/pbrun_deepvariant/{sample}_{type}.fix_af.vcf"),
-    log:
-        "parabricks/pbrun_deepvariant/{sample}_{type}.fix_af.vcf.log",
-    benchmark:
-        repeat(
-            "parabricks/pbrun_deepvariant/{sample}_{type}.fix_af.vcf.benchmark.tsv",
-            config.get("fix_af", {}).get("benchmark_repeats", 1),
-        )
+        bam="alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam",
+        bai="alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam.bai",
+        ref=config.get("reference", {}).get("fasta", ""),
+        bed="snv_indels/bed_split/design_bedfile_{chr}.bed",
+    params:
+        model_type=config.get("deepvariant", {}).get("model_type", ""),
+        output_gvcf=lambda wildcards: get_gvcf_output(wildcards, "deepvariant"),
+        int_res=lambda wildcards: f"snv_indels/deepvariant/{wildcards.sample}_{wildcards.type}_{wildcards.chr}",
+        regions=lambda wildcards, input: f" --regions {input.bed} ",
+        extra=config.get("deepvariant", {}).get("extra", ""),
 
 
 use rule fix_af from snv_indels as snv_indels_fix_af_g with:
     input:
-        vcf="parabricks/pbrun_deepvariant/{sample}_{type}.g.vcf.gz",
-        tbi="parabricks/pbrun_deepvariant/{sample}_{type}.g.vcf.gz.tbi",
+        vcf="snv_indels/deepvariant/{sample}_{type}.merged.g.vcf.gz",
+        tbi="snv_indels/deepvariant/{sample}_{type}.merged.g.vcf.gz.tbi",
     output:
-        vcf=temp("parabricks/pbrun_deepvariant/{sample}_{type}.g.fix_af.vcf"),
+        vcf=temp("snv_indels/deepvariant/{sample}_{type}.g.fix_af.vcf"),
     log:
-        "parabricks/pbrun_deepvariant/{sample}_{type}.g.fix_af.vcf.log",
+        "snv_indels/deepvariant/{sample}_{type}.g.fix_af.vcf.log",
     benchmark:
         repeat(
-            "parabricks/pbrun_deepvariant/{sample}_{type}.fix_af.g.vcf.benchmark.tsv",
+            "snv_indels/deepvariant/{sample}_{type}.fix_af.g.vcf.benchmark.tsv",
             config.get("fix_af", {}).get("benchmark_repeats", 1),
-        )
-
-
-use rule vt_decompose from snv_indels as snv_indels_vt_decompose with:
-    input:
-        vcf="parabricks/pbrun_deepvariant/{sample}_{type}.fix_af.vcf.gz",
-        tbi=="parabricks/pbrun_deepvariant/{sample}_{type}.fix_af.vcf.gz.tbi",
-    output:
-        vcf=temp("parabricks/pbrun_deepvariant/{sample}_{type}.decomposed.vcf.gz"),
-    log:
-        "parabricks/pbrun_deepvariant/{sample}_{type}.decomposed.vcf.gz.log",
-    benchmark:
-        repeat(
-            "parabricks/pbrun_deepvariant/{sample}_{type}.decomposed.vcf.gz.benchmark.tsv",
-            config.get("vt_decompose", {}).get("benchmark_repeats", 1),
-        )
-
-
-use rule vt_normalize from snv_indels as snv_indels_vt_normalized with:
-    input:
-        vcf="parabricks/pbrun_deepvariant/{sample}_{type}.decomposed.vcf.gz",
-        tbi="parabricks/pbrun_deepvariant/{sample}_{type}.decomposed.vcf.gz.tbi",
-        ref=config["reference"]["fasta"],
-    output:
-        vcf=temp("parabricks/pbrun_deepvariant/{sample}_{type}.normalized.vcf.gz"),
-    log:
-        "parabricks/pbrun_deepvariant/{sample}_{type}.normalized.vcf.gz.log",
-    benchmark:
-        repeat(
-            "parabricks/pbrun_deepvariant/{sample}_{type}.normalized.vcf.gz.benchmark.tsv",
-            config.get("vt_normalize", {}).get("benchmark_repeats", 1),
         )
 
 
@@ -204,7 +143,7 @@ module qc:
         github(
             "hydra-genetics/qc",
             path="workflow/Snakefile",
-            tag=config["modules"]["qc"],
+            tag="ca947b1",
         )
     config:
         config

@@ -6,7 +6,7 @@ To generate `.bam` **and** `.bai`-files for all samples you need to run Marple u
 
 ```bash
 # Run snakemake command with the extra config parameter called sequenceid
-snakemake --profile snakemakeprofile --configfile config.yaml --config sequenceid="230202-test" -s /path/to/marple/workflow/Snakefile --no-temp --until qc_mosdepth_bed
+snakemake --profile snakemakeprofile --configfile config.yaml --config sequenceid="normal_samples" -s /path/to/marple/workflow/Snakefile --no-temp --until qc_mosdepth_bed
 
 ```
 ### :books: Input files 
@@ -35,7 +35,7 @@ An `resources.yaml` file can also be found in the `config/`-folder. This is adap
 
 ### :rocket: Run command 
 ```bash
-#Activate the virtual enviorment
+#Activate the virtual environment
 source virtual/environment/bin/activate
 
 # Run snakemake command
