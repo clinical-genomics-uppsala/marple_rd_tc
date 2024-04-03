@@ -32,6 +32,7 @@ bwa_mem:
   sa: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.sa"
 
 deepvariant:
+  container: "docker://hydragenetics/deepvariant:1.4.0"
   model_type: "WES"
   output_gvcf: True
 
