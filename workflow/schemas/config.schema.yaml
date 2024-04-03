@@ -182,6 +182,10 @@ properties:
   export_qc_bedtools_intersect_pgrs:
     type: object
     description: intersect per-base with pgrs_bed using extra-parameter from export_qc_bedtools_intersect
+    properties:
+      container:
+        type: string
+        description: path to container with bedtools
 
   export_qc_xlsx_report:
     type: object

@@ -139,6 +139,25 @@ properties:
         type: string
         description: partition to use on the cluster for export_qc_bedtools_intersect
 
+  export_qc_bedtools_intersect_pgrs:
+    type: object
+    properties:
+      threads:
+        type: integer
+        description: number of threads that will be used by export_qc_bedtools_intersect_pgrs
+      time:
+        type: string
+        description: max execution time for export_qc_bedtools_intersect_pgrs
+      mem_mb:
+        type: integer
+        description: memory used for eexport_qc_bedtools_intersect_pgrs
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu for export_qc_bedtools_intersect_pgrs
+      partition:
+        type: string
+        description: partition to use on the cluster for export_qc_bedtools_intersect_pgrs
+  
   export_qc_xlsx_report:
     type: object
     properties:
