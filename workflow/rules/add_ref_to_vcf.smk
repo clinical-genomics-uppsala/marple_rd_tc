@@ -26,6 +26,6 @@ rule add_ref_to_vcf:
     container:
         config.get("add_ref_to_vcf", {}).get("container", config["default_container"])
     message:
-        "{rule}: Add reference to the header of the haplotypecaller vcf: {input.vcf}"
+        "{rule}: Add reference to the header of the deepvariant vcf: {input.vcf}"
     script:
         "../scripts/add_ref_to_vcf.py"
