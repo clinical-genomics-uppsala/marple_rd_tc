@@ -20,7 +20,6 @@ reference:
     - "chrY"
     - "chrM"
 
-
 trimmer_software: fastp_pe
 
 bwa_mem:
@@ -36,15 +35,6 @@ deepvariant:
   model_type: "WES"
   output_gvcf: True
 
-fastp_pe:
-  container: "docker://hydragenetics/fastp:0.20.1"
-
-fastqc:
-  container: "docker://hydragenetics/fastqc:0.11.9"
-
-export_qc_bedtools_intersect:
-  extra: " -wb "
-
 exomedepth_call:
   container: "docker://hydragenetics/exomedepth:1.1.15"
   bedfile: "/projects/wp3/nobackup/TwistCancer/Bedfiles/Twist_Cancer_230706_hg38_TE-98982205-wPGRS.merged_200bpwindows.bed"
@@ -56,6 +46,18 @@ exomedepth_call:
 exomedepth_export:
   container: "docker://hydragenetics/exomedepth:1.1.15"
 
+export_qc_bedtools_intersect:
+  extra: " -wb "
+
+export_qc_xlsx_report:
+  wanted_transcripts: "/projects/wp3/nobackup/TwistCancer/Bedfiles/wanted_transcripts.txt"
+
+fastp_pe:
+  container: "docker://hydragenetics/fastp:0.20.1"
+
+fastqc:
+  container: "docker://hydragenetics/fastqc:0.11.9"
+
 mosdepth_bed:
   container: "docker://hydragenetics/mosdepth:0.3.2"
   thresholds: "10,20,50"
@@ -64,7 +66,7 @@ multiqc:
   container: "docker://hydragenetics/multiqc:1.11"
   reports:
     DNA:
-      included_unit_types: ['T', 'N']
+      included_unit_types: ["T", "N"]
       config: "/projects/wp3/nobackup/TwistCancer/Bin/marple_rd_tc/config/multiqc_config.yaml"
       qc_files:
         - "prealignment/fastp_pe/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastp.json"
@@ -89,7 +91,7 @@ picard_collect_duplication_metrics:
 
 picard_collect_gc_bias_metrics:
   container: "docker://hydragenetics/picard:2.25.4"
-  
+
 picard_collect_hs_metrics:
   container: "docker://hydragenetics/picard:2.25.4"
 
@@ -130,7 +132,3 @@ vt_decompose:
 
 vt_normalize:
   container: "docker://hydragenetics/vt:2015.11.10"
-
-xlsx_report:
-  wanted_transcripts: "/projects/wp3/nobackup/TwistCancer/Bedfiles/wanted_transcripts.txt"
-

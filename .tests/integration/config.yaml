@@ -47,6 +47,9 @@ exomedepth_call:
   genesfile: "reference/genes.txt"
   exonsfile: "reference/exons.txt"
 
+export_qc_xlsx_report:
+  wanted_transcripts: "reference/wanted_transcripts.txt"
+
 multiqc:
   reports:
     DNA:
@@ -54,6 +57,3 @@ multiqc:
 
 vep:
   vep_cache: "reference/vep_cache"
-
-xlsx_report:
-  wanted_transcripts: "reference/wanted_transcripts.txt"

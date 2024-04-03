@@ -76,7 +76,7 @@ rule export_qc_xlsx_report:
         pgrs_coverage="qc/mosdepth_bed/{sample}_{type}.mosdepth.pgrs_cov.txt",
         design_bed=config["reference"]["design_bed"],
         pgrs_bed=config["reference"]["pgrs_bed"],
-        wanted_transcripts=config["xlsx_report"]["wanted_transcripts"],
+        wanted_transcripts=config["export_qc_xlsx_report"]["wanted_transcripts"],
     output:
         results=temp("qc/xlsx_report/{sample}_{type}.xlsx"),
     params:
