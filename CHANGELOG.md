@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.2.0](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.1.4...v0.2.0) (2024-04-04)
+
+
+### Features
+
+* switch gpu deepvariant to cpu version ([a2a65b0](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/a2a65b041d0d80d3e2e233fa71a445b79301400e))
+
+
+### Bug Fixes
+
+* add deepvariant container ([c846250](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/c84625043cf4b9fe80d36645856b4873b3c2e199))
+* add missing tbi files ([665217f](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/665217f7dbbfd37fa69d12ebe9447d9bfc4c7b13))
+
+
+### Documentation
+
+* remove gpu from doc add cpu ([3e8e72a](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/3e8e72a65807a696a18b75ac7b7829de89ab2749))
+
 ### [0.1.4](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.1.3...v0.1.4) (2024-03-14)
 
 
