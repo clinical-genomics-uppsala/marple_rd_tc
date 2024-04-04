@@ -6,15 +6,15 @@ __license__ = "GPL-3"
 
 rule add_ref_to_vcf:
     input:
-        vcf="parabricks/pbrun_deepvariant/{sample}_N.normalized.sorted.vep_annotated.vcf.gz",
+        vcf="snv_indels/deepvariant/{sample}_N.normalized.sorted.vep_annotated.vcf.gz",
         ref=config["reference"]["fasta"],
     output:
-        vcf=temp("parabricks/pbrun_deepvariant/{sample}_N.normalized.sorted.vep_annotated.ref.vcf"),
+        vcf=temp("snv_indels/deepvariant/{sample}_N.normalized.sorted.vep_annotated.ref.vcf"),
     log:
-        "sparabricks/pbrun_deepvariant/{sample}_N.normalized.sorted.vep_annotated.ref.vcf.log",
+        "snv_indels/deepvariant/{sample}_N.normalized.sorted.vep_annotated.ref.vcf.log",
     benchmark:
         repeat(
-            "parabricks/pbrun_deepvariant/{sample}_N.normalized.sorted.vep_annotated.ref.vcf.benchmark.tsv",
+            "snv_indels/deepvariant/{sample}_N.normalized.sorted.vep_annotated.ref.vcf.benchmark.tsv",
             config.get("add_ref_to_vcf", {}).get("benchmark_repeats", 1),
         )
     resources:
@@ -26,6 +26,6 @@ rule add_ref_to_vcf:
     container:
         config.get("add_ref_to_vcf", {}).get("container", config["default_container"])
     message:
-        "{rule}: Add reference to the header of the haplotypecaller vcf: {input.vcf}"
+        "{rule}: Add reference to the header of the deepvariant vcf: {input.vcf}"
     script:
         "../scripts/add_ref_to_vcf.py"

@@ -68,6 +68,23 @@ Rules that creates a `.xlsx` file per sample with aggregated coverage informatio
 
 #RESOURCESSCHEMA__export_qc_bedtools_intersect#
 
+### :snake: Rule
+
+#SNAKEMAKE_RULE_SOURCE__export_qc__export_qc_bedtools_intersect_pgrs#
+
+#### :left_right_arrow: input / output files
+
+#SNAKEMAKE_RULE_TABLE__export_qc__export_qc_bedtools_intersect_pgrs#
+
+### :wrench: Configuration
+
+#### Software settings (`config.yaml`)
+
+#CONFIGSCHEMA__export_qc_bedtools_intersect_pgrs#
+
+#### Resources settings (`resources.yaml`)
+
+#RESOURCESSCHEMA__export_qc_bedtools_intersect_pgrs#
 
 ### :snake: Rule
 

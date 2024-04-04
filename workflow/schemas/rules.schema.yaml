@@ -35,7 +35,6 @@ properties:
           exon:
             type: string
             description: Rdata from exomedepth call
-
       output:
         type: object
         description: list of outputs
@@ -43,11 +42,10 @@ properties:
           aed:
             type: string
             description: calls from exomedepth in aed format
-            #value: set to override value in table, else remove
           nexus_sv:
             type: string
             description: nexus SV txt file with exomedepth calls
-  
+
   export_qc_bedtools_intersect:
     type: object
     description: input and output files for export_qc_bedtools_intersect
@@ -64,7 +62,7 @@ properties:
             description: index file for per-base.bed.gz file
           right:
             type: string
-            description: design bed used to only look at coverage based on design
+            description: design bed used to only look at coverage based on bedfile
       output:
         type: object
         description: list of output files
@@ -72,7 +70,32 @@ properties:
           results:
             type: string
             description: .txt file with coverage per base for design file
-  
+
+  export_qc_bedtools_intersect_pgrs:
+    type: object
+    description: input and output files for export_qc_bedtools_intersect_pgrs
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          left:
+            type: string
+            description: per-base coverage file from mosdepth
+          coverage_csi:
+            type: string
+            description: index file for per-base.bed.gz file
+          right:
+            type: string
+            description: design bed used to only look at coverage based on bedfile, in this case pgrs positions
+      output:
+        type: object
+        description: list of output files
+        properties:
+          results:
+            type: string
+            description: .txt file with coverage per base for design file
+
   export_qc_xlsx_report:
     type: object
     description: input and output files for export_qc_xlsx_report
@@ -90,18 +113,24 @@ properties:
           mosdepth_regions:
             type: string
             description: mosdepth bed coverage per region file
-          mosdepth_perbase: 
+          mosdepth_perbase:
             type: string
-            description: mosdepth bed per-base result file
+            description: mosdepth bed per-base result file subsampled into exons in export_qc_bedtools_intersect output
           picard_dup:
             type: string
             description: picard collect duplication metrics results file
+          pgrs_coverage:
+            type: string
+            description: mosdepth per-base file from export_qc_bedtools_intersect_pgrs output
           design_bed:
             type: string
-            description: design bed defined in config-file 
+            description: design bed defined in config-file
           pgrs_bed:
             type: string
             description: bedfile with PGRS score SNPs
+          wanted_transcripts:
+            type: string
+            description: path to txt-file in bedformat of transcripts of interest
       output:
         type: object
         description: list of output files
@@ -121,7 +150,7 @@ properties:
           sample_sheet:
             type: string
             description: samplesheet from demultiplexing on Illumina machine. *Double check header, it changes often*
-      output: 
+      output:
         type: object
         description: list of output files
         properties:

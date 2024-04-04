@@ -2,7 +2,6 @@
 ## :exclamation: Requirements
 
 ### Recommended hardware 
- - [GPU Nividia A30 with Parabricks v4.1.1-1 installed](https://docs.nvidia.com/clara/parabricks/latest/whatsnew/whatsnew4.1.1-1.html)
  - CPU: >10 cores per sample
  - Memory: 6GB per core
    
@@ -49,7 +48,7 @@ source virtual/environment/bin/activate
 # Install requirements
 pip install -r requirements.txt
 ```
-This will install all required softwares needed to run the pipeline in an virtual environment which you will have to remember to activate before running the pipeline each time. 
+This will install all required softwares needed to run the pipeline in an virtual environment which you will have to activate before running the pipeline each time. 
 
 ## :books: Input files 
 Four different files need to be adapted to your compute environment and sequence data, `samples.tsv`, `units.tsv`, `config.yaml` and `resources.yaml`.

@@ -4,15 +4,6 @@ samples: "samples.tsv"
 units: "units.tsv"
 output: "/projects/wp3/nobackup/TwistCancer/Bin/marple_rd_tc/config/output_files.yaml"
 
-modules:
-  alignment: "v0.4.0"
-  annotation: "v0.3.0"
-  cnv_sv: "78f270c"
-  parabricks: "v1.1.0"
-  prealignment: "v1.0.0"
-  snv_indels: "v0.5.0"
-  qc: "ca947b1"
-
 default_container: "docker://hydragenetics/common:1.8.1"
 
 reference:
@@ -29,7 +20,6 @@ reference:
     - "chrY"
     - "chrM"
 
-
 trimmer_software: fastp_pe
 
 bwa_mem:
@@ -40,25 +30,33 @@ bwa_mem:
   pac: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.pac"
   sa: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.sa"
 
-fastp_pe:
-  container: "docker://hydragenetics/fastp:0.20.1"
-
-fastqc:
-  container: "docker://hydragenetics/fastqc:0.11.9"
-
-export_qc_bedtools_intersect:
-  extra: " -wb "
+deepvariant:
+  container: "docker://hydragenetics/deepvariant:1.4.0"
+  model_type: "WES"
+  output_gvcf: True
 
 exomedepth_call:
   container: "docker://hydragenetics/exomedepth:1.1.15"
   bedfile: "/projects/wp3/nobackup/TwistCancer/Bedfiles/Twist_Cancer_230706_hg38_TE-98982205-wPGRS.merged_200bpwindows.bed"
   ref_count: "/projects/wp3/nobackup/TwistCancer/Bedfiles/Exomedepth_refCount_230706.Rdata"
   genome_version: "hg38"
-  genesfile: "/projects/wp3/nobackup/Workspace/padraic_testing/exomedepth/exomedepth_hg38_ref_generation/genes_GRCh38_ensembl109.txt"
-  exonsfile: "/projects/wp3/nobackup/Workspace/padraic_testing/exomedepth/exomedepth_hg38_ref_generation/exons_GRCh38_ensembl109.txt"
+  genesfile: "/projects/wp3/nobackup/TwistCancer/Bedfiles/genes_GRCh38_ensembl109.txt"
+  exonsfile: "/projects/wp3/nobackup/TwistCancer/Bedfiles/exons_GRCh38_ensembl109.txt"
 
 exomedepth_export:
   container: "docker://hydragenetics/exomedepth:1.1.15"
+
+export_qc_bedtools_intersect:
+  extra: " -wb "
+
+export_qc_xlsx_report:
+  wanted_transcripts: "/projects/wp3/nobackup/TwistCancer/Bedfiles/wanted_transcripts.txt"
+
+fastp_pe:
+  container: "docker://hydragenetics/fastp:0.20.1"
+
+fastqc:
+  container: "docker://hydragenetics/fastqc:0.11.9"
 
 mosdepth_bed:
   container: "docker://hydragenetics/mosdepth:0.3.2"
@@ -68,7 +66,7 @@ multiqc:
   container: "docker://hydragenetics/multiqc:1.11"
   reports:
     DNA:
-      included_unit_types: ['T', 'N']
+      included_unit_types: ["T", "N"]
       config: "/projects/wp3/nobackup/TwistCancer/Bin/marple_rd_tc/config/multiqc_config.yaml"
       qc_files:
         - "prealignment/fastp_pe/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastp.json"
@@ -85,10 +83,6 @@ multiqc:
         - "qc/mosdepth_bed/{sample}_{type}.mosdepth.region.dist.txt"
         - "qc/mosdepth_bed/{sample}_{type}.mosdepth.global.dist.txt"
 
-pbrun_deepvariant:
-  container: "docker://nvcr.io/nvidia/clara/clara-parabricks:4.1.1-1"
-  extra: "--use-wes-model --disable-use-window-selector-model --gvcf "
-
 picard_collect_alignment_summary_metrics:
   container: "docker://hydragenetics/picard:2.25.4"
 
@@ -97,7 +91,7 @@ picard_collect_duplication_metrics:
 
 picard_collect_gc_bias_metrics:
   container: "docker://hydragenetics/picard:2.25.4"
-  
+
 picard_collect_hs_metrics:
   container: "docker://hydragenetics/picard:2.25.4"
 
@@ -138,7 +132,3 @@ vt_decompose:
 
 vt_normalize:
   container: "docker://hydragenetics/vt:2015.11.10"
-
-xlsx_report:
-  wanted_transcripts: "/projects/wp3/nobackup/TwistCancer/Bedfiles/wanted_transcripts.txt"
-

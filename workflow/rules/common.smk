@@ -75,12 +75,6 @@ with open(config["output"]) as output:
 validate(output_spec, schema="../schemas/output_files.schema.yaml")
 
 
-### Set wildcard constraints
-wildcard_constraints:
-    sample="|".join(samples.index),
-    type="N|T|R",
-
-
 # Check that fastq files actually exist. If not, this might result in other
 # errors that can be hard to interpret
 for fq1, fq2 in zip(units["fastq1"].values, units["fastq2"].values):
@@ -90,23 +84,12 @@ for fq1, fq2 in zip(units["fastq1"].values, units["fastq2"].values):
         sys.exit(f"fastq file not found: {fq2}\ncontrol the paths in {config['units']}")
 
 
-### Get cuda devices for deepvariant
-def get_cuda_devices(wildcards):
-    if os.getenv("CUDA_VISIBLE_DEVICES") is not None:
-        cuda_devices = "CUDA_VISIBLE_DEVICES={}".format(os.getenv("CUDA_VISIBLE_DEVICES"))
+### get gvcf output for deepvariant
+def get_gvcf_output(wildcards, name):
+    if config.get(name, {}).get("output_gvcf", False):
+        return f" --output_gvcf snv_indels/deepvariant/{wildcards.sample}_{wildcards.type}_{wildcards.chr}.g.vcf.gz "
     else:
-        cuda_devices = ""
-    return cuda_devices
-
-
-### Get num gpu for deepvariant
-def get_num_gpus(rule, wildcards):
-    gres = config.get(rule, {"gres": "--gres=gres:gpu:1"}).get("gres", "--gres=gres:gpu:1")[len("--gres=") :]
-    gres_dict = dict()
-    for item in gres.split(","):
-        items = item.split(":")
-        gres_dict[items[1]] = items[2]
-    return gres_dict["gpu"]
+        return ""
 
 
 ### Set wildcard constraints
