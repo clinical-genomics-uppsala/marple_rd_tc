@@ -2,7 +2,7 @@
 resources: "resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
-output: "/projects/wp3/nobackup/TwistCancer/Bin/marple_rd_tc/config/output_files.yaml"
+output: "{{PATH_TO_REPO}}/marple_rd_tc/config/output_files.yaml"
 
 default_container: "docker://hydragenetics/common:1.8.1"
 
@@ -67,7 +67,7 @@ multiqc:
   reports:
     DNA:
       included_unit_types: ["T", "N"]
-      config: "/projects/wp3/nobackup/TwistCancer/Bin/marple_rd_tc/config/multiqc_config.yaml"
+      config: "{{PATH_TO_REPO}}/marple_rd_tc/config/multiqc_config.yaml"
       qc_files:
         - "prealignment/fastp_pe/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastp.json"
         - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_{read}_fastqc.zip"
