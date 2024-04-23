@@ -384,11 +384,6 @@ properties:
       container:
         type: string
         description: path to container
-      sample_sheet:
-        type: string
-        description: path to SampleSheet used to order samples
-    required:
-      - sample_sheet
 
   vep:
     type: object
@@ -464,7 +459,6 @@ required:
   - picard_collect_insert_size_metrics
   - picard_collect_multiple_metrics
   - picard_mark_duplicates
-  - sample_order_multiqc
   - vep
   - vt_decompose
   - vt_normalize

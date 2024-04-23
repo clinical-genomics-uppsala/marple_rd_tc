@@ -33,7 +33,7 @@ The report is configured based on a MultiQC config file.
 ///
 
 ### General Statistics
-The general statistics table are ordered based on the sample order in `SampleSheet.csv`, this is done by renaming the samples in two steps using the script `sample_order_multiqc.py`. To toggle between "Sample Order" and "Sample Name" use the buttons just above General Stats header.
+The general statistics table are ordered based on the fastq-file  "S"-index, e.g. `sampleT_S1_R1_001.fastq.gz` will be before `sampleA_S2_R1_001.fastq.gz`. This is done by renaming the samples in two steps using the script `sample_order_multiqc.py`. To toggle between "Sample Order" and "Sample Name" use the buttons just above General Stats header.
 
 <br />
 
