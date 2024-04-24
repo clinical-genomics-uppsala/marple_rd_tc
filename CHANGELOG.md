@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.3.0](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.2.0...v0.3.0) (2024-04-24)
+
+
+### Features
+
+* adding PATH_TO_REPO parameter in config ([efad76a](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/efad76ac1fdd86326bb3d4e76c3e9c3517162808))
+* remove SampleSheet.csv for sample order ([3aa4b74](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/3aa4b748fac13af067e018a8693d946fa18f88cd))
+
+
+### Bug Fixes
+
+* remove Snakefile in profile ([5dac5ef](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/5dac5ef8dbc66ac0c70c50fd9e6c689984d375f4))
+
 ## [0.2.0](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.1.4...v0.2.0) (2024-04-04)
 
 
