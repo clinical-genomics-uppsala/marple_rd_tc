@@ -6,9 +6,12 @@ To generate `.bam` **and** `.bai`-files for all samples you need to run Marple u
 
 ```bash
 # Run snakemake command with the extra config parameter called sequenceid
-snakemake --profile snakemakeprofile --configfile config.yaml --config sequenceid="normal_samples" -s /path/to/marple/workflow/Snakefile --no-temp --until qc_mosdepth_bed
+snakemake --profile snakemakeprofile --configfile config.yaml --config sequenceid="normal_samples" -s /path/to/marple/workflow/Snakefile --no-temp --until qc_mosdepth_bed --config PATH_TO_REPO=/folder/containing/marple_rd_tc/
 
 ```
+
+> **_NOTE:_**   If using the variable `PATH_TO_REPO` (folder containing `marple_rd_tc`) in the config-file this need to be defined in the commandline
+
 ### :books: Input files 
 Four different files need to be available in your runfolder and to be adapted to your compute-environment and sequence run; `samples.tsv`, `units_references.tsv`, `config_references.yaml` and `resources.yaml`.
 #### Samples and Units

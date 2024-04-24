@@ -37,7 +37,7 @@ git clone --branch ${VERSION} https://github.com/clinical-genomics-uppsala/marpl
 To run the Marple pipeline a python virtual environment is needed. Create a virtual environment and then install pipeline requirements specified in `requirements.txt`.
 ```bash
 # Create a new virtual environment
-python3 -m venv ${WORKING_DIRECTORY}/virtual/environment
+python3.9 -m venv ${WORKING_DIRECTORY}/virtual/environment
 
 # Enter working directory
 cd ${WORKING_DIRECTORY}
@@ -88,7 +88,6 @@ An `resources.yaml` file can also be found in the `config/`-folder. This is adap
 source virtual/environment/bin/activate
 
 # Run snakemake command with the extra config parameter called sequenceid
-snakemake --profile snakemakeprofile --configfile config.yaml --config sequenceid="230202-test" -s /path/to/marple/workflow/Snakefile
-
+snakemake --profile snakemakeprofile --configfile config.yaml --config sequenceid="230202-test" -s /path/to/marple/workflow/Snakefile --config PATH_TO_REPO=/path/to/repo/
 ```
 

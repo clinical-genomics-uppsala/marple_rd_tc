@@ -107,7 +107,7 @@ Rules that creates a `.xlsx` file per sample with aggregated coverage informatio
 ---
 
 ## sample_order_multiqc.smk
-A python script to create sample_replacement and sample_order files to be used in MultiQC to order samples based on order in SampleSheet.csv 
+A python script to create sample_replacement and sample_order files to be used in MultiQC to order samples based on order of the "S"-index in the samplenames.
 
 ### :snake: Rule
 

@@ -32,16 +32,21 @@ The workflow repository contains a small test dataset (:exclamation: Todo: as of
 
 ```bash
 $ cd .tests/integration
-$ snakemake -n -s ../../workflow/Snakefile --configfiles ../../config/config.yaml config.yaml --config sequenceid="990909_test"
+$ snakemake -n -s ../../workflow/Snakefile --configfiles ../../config/config.yaml config.yaml --config sequenceid="990909_test" PATH_TO_REPO=/folder/containing/marple_rd_tc/
 ```
+> **_NOTE:_**   If using the variable `PATH_TO_REPO` in the config-file this need to be defined in the commandline
+
 
 ## :rocket: [Usage](https://marple-rd-tc.readthedocs.io/en/latest/running/)
 
 To use this run this pipeline `sample.tsv`, `units.tsv`, `resources.yaml`, and `config.yaml` files need to be available in the current directory (or otherwise specified in `config.yaml`). You always need to specify the `config`-file and `sequenceid` variable in the command. To run the pipeline:
 
 ```bash
-$ snakemake --profile snakemakeprofile --configfile config.yaml --config sequenceid="990909_test" -s /path/to/marple_rd_tc/workflow/Snakefile
+$ snakemake --profile snakemakeprofile --configfile config.yaml --config sequenceid="990909_test" -s /path/to/marple_rd_tc/workflow/Snakefile --config PATH_TO_REPO=/folder/containing/marple_rd_tc/
 ```
+
+> **_NOTE:_**   If using the variable `PATH_TO_REPO` in the config this need to be defined in the commandline
+
 
 ## :books: [Output files](https://marple-rd-tc.readthedocs.io/en/latest/result_files/)
 
