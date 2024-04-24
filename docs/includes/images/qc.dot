@@ -18,11 +18,9 @@ digraph snakemake_dag {
 	p_align[label = "qc_picard_collect_alignment_summary_metrics", color = "0.29 0.6 0.85", style="rounded"];
 	p_dup[label = "qc_picard_collect_duplication_metrics", color = "0.34 0.6 0.85", style="rounded"];
 	sampleorder[label = "sample_order_multiqc", color = "0.00 0.6 0.85", style="rounded"];
-	samplesheet[label = "SampleSheet.csv", color = "0.0 0.0 0.0", style="dotted"];
 	
 	multiqc -> multiqc_html
 	sampleorder -> multiqc
-	samplesheet -> sampleorder
 	fastp -> multiqc
 	fastp -> bam [style="dotted", label = "alignment", fontcolor = "grey50", fontsize=9, fontname=sans ]
 	p_gc -> multiqc
