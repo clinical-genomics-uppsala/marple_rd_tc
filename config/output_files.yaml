@@ -2,7 +2,7 @@ directory: ./Results
 files:
   - name: MultiQC
     input: qc/multiqc/multiqc_DNA.html
-    output: "{sequenceid}_MultiQC.html"
+    output: "multiqc_DNA.html"
 
   - name: QC xlsx-report
     input: qc/xlsx_report/{sample}_N.xlsx
