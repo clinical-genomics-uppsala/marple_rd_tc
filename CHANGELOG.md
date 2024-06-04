@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.3.1](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.3.0...v0.3.1) (2024-06-04)
+
+
+### Bug Fixes
+
+* update README.md ([54f54a6](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/54f54a6a5bdd0c2abd651617cc4e40e609bcc984))
+
 ## [0.3.0](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.2.0...v0.3.0) (2024-04-24)
 
 
