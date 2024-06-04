@@ -54,7 +54,7 @@ The following output files are located in `Results/`-folder:
 
 | File | Format |Description |
 |---|---|---|
-| `{sequenceid}_MultiQC.html` | html | Aggregated QC values for entire sequence run, open in browser |
+| `multiqc_DNA.html` | html | Aggregated QC values for entire sequence run, open in browser |
 |`{sample}_{sequenceid}/{sample}_{sequenceid}.xlsx`| xlsx | Excel file with QC stats (primarily coverage) for each sample|
 |`{sample}_{sequenceid}/{sample}_{sequenceid}.bam`| bam | Deduplicated alignment file |
 |`{sample}_{sequenceid}/{sample}_{sequenceid}.bam.bai`| bai | Index for alignment file|
