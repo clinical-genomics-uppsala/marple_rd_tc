@@ -39,10 +39,10 @@ $ snakemake -n -s ../../workflow/Snakefile --configfiles ../../config/config.yam
 
 ## :rocket: [Usage](https://marple-rd-tc.readthedocs.io/en/latest/running/)
 
-To use this run this pipeline `sample.tsv`, `units.tsv`, `resources.yaml`, and `config.yaml` files need to be available in the current directory (or otherwise specified in `config.yaml`). You always need to specify the `config`-file and `sequenceid` variable in the command. To run the pipeline:
+To run this pipeline `sample.tsv`, `units.tsv`, `resources.yaml`, and `config.yaml` files need to be available in the current directory (or otherwise specified in `config.yaml`). A config file specifying a path to an exomedepth reference file must also be given (`config_exomedepth_miseq.yaml` in the example below). You always need to specify the `config`-file and `sequenceid` variable in the command. To run the pipeline:
 
 ```bash
-$ snakemake --profile snakemakeprofile --configfile config.yaml --config sequenceid="990909_test" -s /path/to/marple_rd_tc/workflow/Snakefile --config PATH_TO_REPO=/folder/containing/marple_rd_tc/
+$ snakemake --profile snakemakeprofile --configfiles config.yaml config_exomedepth_miseq.yaml --config sequenceid="990909_test" -s /path/to/marple_rd_tc/workflow/Snakefile --config PATH_TO_REPO=/folder/containing/marple_rd_tc/
 ```
 
 > **_NOTE:_**   If using the variable `PATH_TO_REPO` in the config this need to be defined in the commandline
