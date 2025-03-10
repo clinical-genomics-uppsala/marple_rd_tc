@@ -43,3 +43,7 @@ files:
   - name: Config-file
     input: config.yaml
     output: "{sequenceid}_config.yaml"
+  
+  - name: Exomedepth-Config-file
+    input: config_exomedepth.yaml
+    output: "{sequenceid}_config_exomedepth.yaml"
