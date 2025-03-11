@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.0](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.3.1...v0.4.0) (2025-03-11)
+
+
+### Features
+
+* add config with novaseqX exomedepth reference ([34d0941](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/34d0941efe6ab7b7410894a33e5437b40e7536c8))
+* copy the exomedepth config to the results ([a2c8552](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/a2c85520c3cf0ee8d50c8aae9caaf7c74ac84158))
+
 ### [0.3.1](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.3.0...v0.3.1) (2024-06-04)
 
 
