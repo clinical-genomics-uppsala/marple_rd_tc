@@ -4,6 +4,7 @@ __email__ = "arielle.munters@scilifelab.uu.se"
 __license__ = "GPL-3"
 
 import pandas
+import pathlib
 import yaml
 import json
 from datetime import datetime
