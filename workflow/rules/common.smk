@@ -34,8 +34,8 @@ min_version("7.13.0")
 
 hydra_min_version("3.0.0")
 
-## Set and validate config file
 
+## Set and validate config file
 if not workflow.overwrite_configfiles:
     sys.exit("At least one config file must be passed using --configfile/--configfiles, by command line or a profile!")
 
@@ -70,13 +70,11 @@ validate(config, schema="../schemas/resources.schema.yaml")
 
 
 ### Read and validate samples file
-
 samples = pandas.read_table(config["samples"], dtype=str).set_index("sample", drop=False)
 validate(samples, schema="../schemas/samples.schema.yaml")
 
 
 ### Read and validate units file
-
 units = (
     pandas.read_table(config["units"], dtype=str)
     .set_index(["sample", "type", "flowcell", "lane", "barcode"], drop=False)
@@ -87,12 +85,8 @@ validate(units, schema="../schemas/units.schema.yaml")
 
 
 ### Read and validate output file
-
 with open(config["output"]) as output:
-    if config["output"].endswith("json"):
-        output_spec = json.load(output)
-    elif config["output"].endswith("yaml") or config["output"].endswith("yml"):
-        output_spec = yaml.safe_load(output.read())
+    output_json = json.load(output)
 
 validate(output_spec, schema="../schemas/output_files.schema.yaml")
 
