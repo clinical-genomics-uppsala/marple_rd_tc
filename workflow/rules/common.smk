@@ -88,7 +88,7 @@ validate(units, schema="../schemas/units.schema.yaml")
 with open(config["output"]) as output:
     output_json = json.load(output)
 
-validate(output_spec, schema="../schemas/output_files.schema.yaml")
+validate(output_json, schema="../schemas/output_files.schema.yaml")
 
 
 # Check that fastq files actually exist. If not, this might result in other
