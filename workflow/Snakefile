@@ -84,6 +84,28 @@ use rule exomedepth_call from cnv_sv as cnv_sv_exomedepth_call with:
 use rule melt from cnv_sv as cnv_sv_melt
 
 
+module compression:
+    snakefile:
+        get_module_snakefile(
+            config,
+            "hydra-genetics/compression",
+            path="workflow/Snakefile",
+            tag=config["modules"]["compression"],
+        )
+    config:
+        config
+
+
+use rule * from compression as compression_*
+
+
+use rule samtools_view from compression as compression_samtools_view with:
+    input:
+        bam=lambda wildcards: get_bam_input(wildcards, use_sample_wildcard=False)[0],
+        bai=lambda wildcards: get_bam_input(wildcards, use_sample_wildcard=False)[1],
+        ref=config.get("reference", {}).get("fasta", ""),
+    
+
 module filtering:
     snakefile:
         get_module_snakefile(config, "hydra-genetics/filtering", path="workflow/Snakefile", tag=config["modules"]["filtering"])

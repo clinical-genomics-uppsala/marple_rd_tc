@@ -3,21 +3,36 @@ __copyright__ = "Copyright 2023, Arielle R. Munters"
 __email__ = "arielle.munters@scilifelab.uu.se"
 __license__ = "GPL-3"
 
-import itertools
-import numpy as np
-import pathlib
-import pandas as pd
+import pandas
 import yaml
-from snakemake.utils import validate
-from snakemake.utils import min_version
+import json
+from datetime import datetime
 
-from hydra_genetics.utils.misc import replace_dict_variables
+from hydra_genetics.utils.misc import get_module_snakefile
 from hydra_genetics.utils.resources import load_resources
+from hydra_genetics.utils.misc import replace_dict_variables
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
+from hydra_genetics.utils.misc import extract_chr
+from snakemake.utils import min_version
+from snakemake.utils import validate
+
+from hydra_genetics import min_version as hydra_min_version
+
+from hydra_genetics.utils.misc import export_config_as_file
+from hydra_genetics.utils.software_versions import add_version_files_to_multiqc
+from hydra_genetics.utils.software_versions import add_software_version_to_config
+from hydra_genetics.utils.software_versions import export_pipeline_version_as_file
+from hydra_genetics.utils.software_versions import export_software_version_as_file
+from hydra_genetics.utils.software_versions import get_pipeline_version
+from hydra_genetics.utils.software_versions import touch_pipeline_version_file_name
+from hydra_genetics.utils.software_versions import touch_software_version_file
+from hydra_genetics.utils.software_versions import use_container
 
 
 min_version("7.13.0")
+
+hydra_min_version("3.0.0")
 
 ## Set and validate config file
 
@@ -25,6 +40,11 @@ if not workflow.overwrite_configfiles:
     sys.exit("At least one config file must be passed using --configfile/--configfiles, by command line or a profile!")
 
 config = replace_dict_variables(config)
+validate(config, schema="../schemas/config.schema.yaml")
+
+config = load_resources(config, config["resources"])
+validate(config, schema="../schemas/resources.schema.yaml")
+
 
 try:
     validate(config, schema="../schemas/config.schema.yaml")
@@ -51,7 +71,7 @@ validate(config, schema="../schemas/resources.schema.yaml")
 
 ### Read and validate samples file
 
-samples = pd.read_table(config["samples"], dtype=str).set_index("sample", drop=False)
+samples = pandas.read_table(config["samples"], dtype=str).set_index("sample", drop=False)
 validate(samples, schema="../schemas/samples.schema.yaml")
 
 
@@ -100,70 +120,56 @@ wildcard_constraints:
     type="N|T|R",
 
 
-def compile_output_file_list(wildcards):
-    outdir = pathlib.Path(output_spec.get("directory", "./"))
+def compile_output_list(wildcards):
     output_files = []
-
-    for f in output_spec["files"]:
-        # Please remember to add any additional values down below
-        # that the output strings should be formatted with.
-        outputpaths = set(
+    types = set([unit.type for unit in units.itertuples()])
+    for output in output_json:
+        output_files += set(
             [
-                f["output"].format(sample=sample, type=unit_type, sequenceid=config["sequenceid"])
+                output.format(sample=sample, flowcell=flowcell, lane=lane, barcode=barcode, type=unit_type)
                 for sample in get_samples(samples)
                 for unit_type in get_unit_types(units, sample)
+                if unit_type in set(output_json[output]["types"])
+                for flowcell in set([u.flowcell for u in units.loc[(sample, unit_type)].dropna().itertuples()])
+                for barcode in set([u.barcode for u in units.loc[(sample, unit_type)].dropna().itertuples()])
+                for lane in set([u.lane for u in units.loc[(sample, unit_type)].dropna().itertuples()])
             ]
         )
 
-        for op in outputpaths:
-            output_files.append(outdir / Path(op))
-
-    return output_files
+    return list(set(output_files))
 
 
-def generate_copy_rules(output_spec):
-    output_directory = pathlib.Path(output_spec.get("directory", "./"))
-    rulestrings = []
+def generate_copy_code(workflow, output_json):
+    code = ""
+    for result, values in output_json.items():
+        if values["file"] is not None:
+            input_file = values["file"]
+            output_file = result
+            rule_name = values["name"]
+            mem_mb = config.get("_copy", {}).get("mem_mb", config["default_resources"]["mem_mb"])
+            mem_per_cpu = config.get("_copy", {}).get("mem_mb", config["default_resources"]["mem_mb"])
+            partition = config.get("_copy", {}).get("partition", config["default_resources"]["partition"])
+            threads = config.get("_copy", {}).get("threads", config["default_resources"]["threads"])
+            time = config.get("_copy", {}).get("time", config["default_resources"]["time"])
+            copy_container = config.get("_copy", {}).get("container", config["default_container"])
+            result_file = os.path.basename(output_file)
+            code += f'@workflow.rule(name="{rule_name}")\n'
+            code += f'@workflow.input("{input_file}")\n'
+            code += f'@workflow.output("{output_file}")\n'
+            code += f'@workflow.log("logs/{rule_name}_{result_file}.log")\n'
+            code += f'@workflow.container("{copy_container}")\n'
+            code += f'@workflow.resources(time = "{time}", threads = {threads}, mem_mb = {mem_mb}, mem_per_cpu = {mem_per_cpu}, partition = "{partition}")\n'
+            code += '@workflow.shellcmd("cp {input} {output}")\n\n'
+            code += "@workflow.run\n"
+            code += (
+                f"def __rule_{rule_name}(input, output, params, wildcards, threads, resources, log, version, rule, "
+                "conda_env, container_img, singularity_args, use_singularity, env_modules, bench_record, jobid, is_shell, "
+                "bench_iteration, cleanup_scripts, shadow_dir, edit_notebook, conda_base_path, basedir, runtime_sourcecache_path, "
+                "__is_snakemake_rule_func=True):\n"
+                '\tshell ( "(cp {input[0]} {output[0]}) &> {log}" , bench_record=bench_record, bench_iteration=bench_iteration)\n\n'
+            )
 
-    for f in output_spec["files"]:
-        if f["input"] is None:
-            continue
-
-        rule_name = "_copy_{}".format("_".join(re.split(r"\W{1,}", f["name"].strip().lower())))
-        input_file = pathlib.Path(f["input"])
-        output_file = output_directory / pathlib.Path(f["output"])
-
-        mem_mb = config.get("_copy", {}).get("mem_mb", config["default_resources"]["mem_mb"])
-        mem_per_cpu = config.get("_copy", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"])
-        partition = config.get("_copy", {}).get("partition", config["default_resources"]["partition"])
-        threads = config.get("_copy", {}).get("threads", config["default_resources"]["threads"])
-        time = config.get("_copy", {}).get("time", config["default_resources"]["time"])
-        copy_container = config.get("_copy", {}).get("container", config["default_container"])
-
-        rule_code = "\n".join(
-            [
-                f'@workflow.rule(name="{rule_name}")',
-                f'@workflow.input("{input_file}")',
-                f'@workflow.output("{output_file}")',
-                f'@workflow.log("logs/{rule_name}_{output_file.name}.log")',
-                f'@workflow.container("{copy_container}")',
-                f'@workflow.resources(time="{time}", threads={threads}, mem_mb="{mem_mb}", '
-                f'mem_per_cpu={mem_per_cpu}, partition="{partition}")',
-                f'@workflow.shellcmd("{copy_container}")',
-                "@workflow.run\n",
-                f"def __rule_{rule_name}(input, output, params, wildcards, threads, resources, "
-                "log, version, rule, conda_env, container_img, singularity_args, use_singularity, "
-                "env_modules, bench_record, jobid, is_shell, bench_iteration, cleanup_scripts, "
-                "shadow_dir, edit_notebook, conda_base_path, basedir, runtime_sourcecache_path, "
-                "__is_snakemake_rule_func=True):",
-                '\tshell("(cp --preserve=timestamps {input[0]} {output[0]}) &> {log}", bench_record=bench_record, '
-                "bench_iteration=bench_iteration)\n\n",
-            ]
-        )
-
-        rulestrings.append(rule_code)
-
-    exec(compile("\n".join(rulestrings), "copy_result_files", "exec"), workflow.globals)
+    exec(compile(code, "result_to_copy", "exec"), workflow.globals)
 
 
-generate_copy_rules(output_spec)
+generate_copy_code(workflow, output_json)
