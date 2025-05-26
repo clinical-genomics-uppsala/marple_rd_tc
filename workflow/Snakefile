@@ -25,7 +25,7 @@ ruleorder: _copy_genome_vcf_index_file_no_normalize > snv_indels_tabix
 # included, since they also contain 'All' rule
 rule all:
     input:
-        compile_output_file_list,
+        unpack(compile_output_list),
 
 
 # Include modules
