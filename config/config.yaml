@@ -1,10 +1,21 @@
 ---
-resources: "resources.yaml"
-samples: "samples.tsv"
-units: "units.tsv"
-output: "{{PATH_TO_REPO}}/marple_rd_tc/config/output_files.yaml"
 
-default_container: "docker://hydragenetics/common:1.8.1"
+resources: "config/resources.yaml"
+samples: "config/samples.tsv"
+units: "config/units.tsv"
+
+output: "config/output_list.json"
+
+default_container: "docker://hydragenetics/common:1.11.1"
+
+modules:
+  alignment: "v0.6.0"
+  annotation: "v1.1.0"
+  cnv_sv: "6739845"
+  filtering: "v1.1.0"
+  prealignment: "v1.2.0"
+  qc: "v0.5.0"
+  snv_indels: "mosaicforecast"
 
 reference:
   fasta: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta"
@@ -30,17 +41,28 @@ bwa_mem:
   pac: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.pac"
   sa: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.sa"
 
+deepmosaic_draw:
+  container: "library://sanglee8888/deepmosaic/deepmosaic:sha256.28b3dd3b3ab1daa63b53d627c3fba3e6b4da38447ccdb9c7abc073718ff9453e"
+
+deepmosaic_predict:
+  container: "library://sanglee8888/deepmosaic/deepmosaic:sha256.28b3dd3b3ab1daa63b53d627c3fba3e6b4da38447ccdb9c7abc073718ff9453e"
+
 deepvariant:
   container: "docker://hydragenetics/deepvariant:1.4.0"
   model_type: "WES"
   output_gvcf: True
 
+deepsomatic_t_only:
+  container: "docker://google/deepsomatic:1.8.0"
+  extra: "--use_default_pon_filtering=true " #--use_default_pon_filtering=true or --pon_filtering="pon.vcf" --process_somatic=true or ""
+  model: "WGS_TUMOR_ONLY" # WGS,WES,PACBIO,ONT,FFPE_WGS,FFPE_WES,WGS_TUMOR_ONLY,PACBIO_TUMOR_ONLY,ONT_TUMOR_ONLY
+
 exomedepth_call:
   container: "docker://hydragenetics/exomedepth:1.1.15"
   bedfile: "/projects/wp3/nobackup/TwistCancer/Bedfiles/Twist_Cancer_230706_hg38_TE-98982205-wPGRS.merged_200bpwindows.bed"
-  genome_version: "hg38"
-  genesfile: "/projects/wp3/nobackup/TwistCancer/Bedfiles/genes_GRCh38_ensembl109.txt"
   exonsfile: "/projects/wp3/nobackup/TwistCancer/Bedfiles/exons_GRCh38_ensembl109.txt"
+  genesfile: "/projects/wp3/nobackup/TwistCancer/Bedfiles/genes_GRCh38_ensembl109.txt"
+  genome_version: "hg38"
 
 exomedepth_export:
   container: "docker://hydragenetics/exomedepth:1.1.15"
@@ -56,6 +78,16 @@ fastp_pe:
 
 fastqc:
   container: "docker://hydragenetics/fastqc:0.11.9"
+
+melt:
+  container: "docker://vanallenlab/melt:3159ce1"
+  bed: "/projects/wp3/Software/MELTv2.2.2/add_bed_files/Hg38/Hg38.genes.bed"
+  extra: ""
+  mei: "/projects/wp3/Software/MELTv2.2.2/mei_list.txt"
+
+mosaicforecast:
+  container: "docker://yanmei/mosaicforecast_hg38:0.0.1"
+  path: "alignment/samtools_merge_bam/"
 
 mosdepth_bed:
   container: "docker://hydragenetics/mosdepth:0.3.2"
