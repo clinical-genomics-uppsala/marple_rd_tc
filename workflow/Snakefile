@@ -20,6 +20,8 @@ ruleorder: _copy_vep_tbi > snv_indels_tabix
 ruleorder: _copy_snv_indels_vcf > snv_indels_bgzip
 ruleorder: _copy_snv_indels_tbi > snv_indels_tabix
 ruleorder: cnv_sv_bgzip > annotation_bgzip_vcf
+ruleorder: cnv_sv_tabix > annotation_tabix_vcf
+ruleorder: snv_indels_bgzip > annotation_bgzip_vcf
 ruleorder: snv_indels_tabix > annotation_tabix_vcf
 
 
