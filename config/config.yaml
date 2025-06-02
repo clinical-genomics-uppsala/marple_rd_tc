@@ -3,8 +3,7 @@
 resources: "config/resources.yaml"
 samples: "config/samples.tsv"
 units: "config/units.tsv"
-
-output: "{{PATH_TO_REPO}}/marple_rd_tc/config/output_list.json"
+output: "config/output_list.json"
 
 default_container: "docker://hydragenetics/common:1.11.1"
 

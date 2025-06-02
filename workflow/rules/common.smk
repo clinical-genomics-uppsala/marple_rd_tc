@@ -38,7 +38,6 @@ min_version("7.13.0")
 
 hydra_min_version("3.0.0")
 
-
 ## Set and validate config file
 if not workflow.overwrite_configfiles:
     sys.exit("At least one config file must be passed using --configfile/--configfiles, by command line or a profile!")
@@ -78,7 +77,6 @@ units = (
     .set_index(["sample", "type", "flowcell", "lane", "barcode"], drop=False)
     .sort_index()
 )
-
 validate(units, schema="../schemas/units.schema.yaml")
 
 
@@ -94,6 +92,32 @@ for fq1, fq2 in zip(units["fastq1"].values, units["fastq2"].values):
         sys.exit(f"fastq file not found: {fq1}\ncontrol the paths in {config['units']}")
     if not pathlib.Path(fq2).exists():
         sys.exit(f"fastq file not found: {fq2}\ncontrol the paths in {config['units']}")
+
+
+def get_bam_input(wildcards, use_sample_wildcard=True, use_type_wildcard=True, by_chr=False):
+    if use_sample_wildcard and use_type_wildcard is True:
+        sample_str = "{}_{}".format(wildcards.sample, wildcards.type)
+    elif use_sample_wildcard and use_type_wildcard is not True:
+        sample_str = "{}_{}".format(wildcards.sample, "N")
+    else:
+        sample_str = wildcards.file
+
+    aligner = config.get("aligner", None)
+    if aligner is None:
+        sys.exit("aligner missing from config, valid options: bwa_gpu or bwa_cpu")
+    elif aligner == "bwa_gpu":
+        bam_input = "parabricks/pbrun_fq2bam/{}.bam".format(sample_str)
+    elif aligner == "bwa_cpu":
+        if by_chr:  # if a bam for single chromosome is needed
+            bam_input = "alignment/picard_mark_duplicates/{}_{}.bam".format(sample_str, wildcards.chr)
+        else:
+            bam_input = "alignment/samtools_merge_bam/{}.bam".format(sample_str)
+    else:
+        sys.exit("valid options for aligner are: bwa_gpu or bwa_cpu")
+
+    bai_input = "{}.bai".format(bam_input)
+
+    return (bam_input, bai_input)
 
 
 ### get gvcf output for deepvariant
