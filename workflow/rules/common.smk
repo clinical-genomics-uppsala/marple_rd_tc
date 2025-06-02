@@ -3,11 +3,15 @@ __copyright__ = "Copyright 2023, Arielle R. Munters"
 __email__ = "arielle.munters@scilifelab.uu.se"
 __license__ = "GPL-3"
 
+
+from datetime import datetime
+import itertools
+import json
 import pandas
 import pathlib
 import yaml
-import json
-from datetime import datetime
+from snakemake.utils import validate
+from snakemake.utils import min_version
 
 from hydra_genetics.utils.misc import get_module_snakefile
 from hydra_genetics.utils.resources import load_resources
@@ -30,7 +34,6 @@ from hydra_genetics.utils.software_versions import touch_pipeline_version_file_n
 from hydra_genetics.utils.software_versions import touch_software_version_file
 from hydra_genetics.utils.software_versions import use_container
 
-
 min_version("7.13.0")
 
 hydra_min_version("3.0.0")
@@ -41,11 +44,6 @@ if not workflow.overwrite_configfiles:
     sys.exit("At least one config file must be passed using --configfile/--configfiles, by command line or a profile!")
 
 config = replace_dict_variables(config)
-validate(config, schema="../schemas/config.schema.yaml")
-
-config = load_resources(config, config["resources"])
-validate(config, schema="../schemas/resources.schema.yaml")
-
 
 try:
     validate(config, schema="../schemas/config.schema.yaml")
@@ -63,7 +61,6 @@ except WorkflowError as we:
         schema_hiearachy = parent_rule_.split()[-1]
         schema_section = ".".join(re.findall(r"\['([^']+)'\]", schema_hiearachy)[1::2])
         sys.exit(f"{error_msg} in {schema_section}")
-
 
 ## Load and validate resources
 config = load_resources(config, config["resources"])
