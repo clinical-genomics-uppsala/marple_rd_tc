@@ -130,8 +130,14 @@ def get_gvcf_output(wildcards, name):
 
 ### Set wildcard constraints
 wildcard_constraints:
-    sample="|".join(samples.index),
+    barcode="[A-Z+]+",
+    chr="[^_]+",
+    flowcell="[A-Z0-9]+",
+    lane="L[0-9]+",
+    read="fastq[1|2]",
+    sample="|".join(get_samples(samples)),
     type="N|T|R",
+    anno="^vcf_final/.+||^snv_indels/deepvariant/.+||^qc/peddy/.+",
 
 
 def compile_output_list(wildcards):

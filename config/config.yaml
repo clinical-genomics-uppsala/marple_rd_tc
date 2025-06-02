@@ -33,6 +33,9 @@ reference:
 
 trimmer_software: fastp_pe
 
+aligner: "bwa_cpu" # or "bwa_cpu"
+snp_caller: "deepvariant_cpu" # or "deepvariant_cpu"
+
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
   amb: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.amb"
