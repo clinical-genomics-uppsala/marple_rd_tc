@@ -238,7 +238,7 @@ use rule deepmosaic_draw from snv_indels as snv_indels_deepmosaic_draw with:
     input:
         annovar=config.get("reference", {}).get("annovar", ""),
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bai="alignment/samtools_merge_bam/{sample}_{type}.bai",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         txt="snv_indels/deepmosaic/{sample}_{type}.input.txt",
         vcf="snv_indels/bcftools_view/{sample}_{type}.ds.vcf.gz",
 
@@ -246,7 +246,7 @@ use rule deepmosaic_draw from snv_indels as snv_indels_deepmosaic_draw with:
 rule deepmosaic_input:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
-        bai="alignment/samtools_merge_bam/{sample}_{type}.bai",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         vcf="snv_indels/bcftools_view/{sample}_{type}.ds.vcf.gz",
     output:
         txt=temp("snv_indels/deepmosaic/{sample}_{type}.input.txt"),
