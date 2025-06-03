@@ -24,9 +24,7 @@ else:
 
 file = snakemake.output.txt
 with open(file, "w") as output:
-    output.write("#sample_name\tbam\tvcf\tdepth\tsex\n")
-    for s in range(len(sex.get("sample"))):
-        if re.search(sex.get("sample")[s], sample):
-            output.write(str(sample) + "\t" + str(bam_path) +
-                         "\t" + str(vcf_path) + "\t" + str(depth) +
-                         "\tfemale\n")
+    output.write("#sample_name\tbam\tvcf\tdepth\tsex\n" +
+                 str(sample) + "\t" + str(bam_path) +
+                 "\t" + str(vcf_path) + "\t" + str(depth) +
+                 "\t" + "female" + "\n")
