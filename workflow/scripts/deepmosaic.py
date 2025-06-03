@@ -10,16 +10,13 @@ if not os.path.exists("snv_indels/deepmosaic"):
     os.makedirs("snv_indels/deepmosaic")
 
 bam_path = snakemake.input.bam
-vcf_path = snakemake.input.vcf
+depth = 200
 sample = snakemake.params.name
-
-path = "{PWD}"
-if re.search("TE", path):
-    depth = 100
-elif re.search("TC", path):
-    depth = 200
-else:
-    depth = 40
+vcf_path = snakemake.input.vcf
+ 
+print(sample)
+print(vcf_path)
+print(bam_path)
 
 file = snakemake.output.txt
 with open(file, "w") as output:
