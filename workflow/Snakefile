@@ -23,7 +23,7 @@ ruleorder: _copy_vep_tbi > snv_indels_tabix
 ruleorder: _copy_snv_indels_vcf > snv_indels_bgzip
 ruleorder: _copy_snv_indels_tbi > snv_indels_tabix
 ruleorder: cnv_sv_exomedepth_call > cnv_sv_bgzip
-ruleorder: deepmosaic_input > snv_indels_deepmosaic_input
+ruleorder: snv_indels_deepvariant > snv_indels_bgzip
 
 
 # 'All' rule, must be specified before any other modules are
@@ -231,10 +231,7 @@ module snv_indels:
         config
 
 
-use rule bgzip from snv_indels as snv_indels_bgzip
-
-
-use rule tabix from snv_indels as snv_indels_tabix
+use rule * from snv_indels as snv_indels_*
 
 
 use rule deepmosaic_draw from snv_indels as snv_indels_deepmosaic_draw with:

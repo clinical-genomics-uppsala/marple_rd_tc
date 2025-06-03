@@ -18,6 +18,7 @@ modules:
   snv_indels: "mosaicforecast"
 
 reference:
+  annovar: "/opt/ohpc/pub/annotators/annovar/2025Feb18"
   fasta: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta"
   fai: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.fai"
   sites: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.known_indels.vcf.gz" #Needed?
