@@ -22,8 +22,6 @@ elif re.search("TC", path):
 else:
     depth = 40
 
-sex = pd.read_csv("config/samples.tsv", sep = '\t')
-
 file = snakemake.output.txt
 with open(file, "w") as output:
     output.write("#sample_name\tbam\tvcf\tdepth\tsex\n")
@@ -31,4 +29,4 @@ with open(file, "w") as output:
         if re.search(sex.get("sample")[s], sample):
             output.write(str(sample) + "\t" + str(bam_path) +
                          "\t" + str(vcf_path) + "\t" + str(depth) +
-                         "\t" + str(sex.get("sex")[s]) + "\n")
+                         "\tfemale\n")
