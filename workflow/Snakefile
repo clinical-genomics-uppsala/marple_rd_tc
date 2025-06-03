@@ -23,6 +23,7 @@ ruleorder: _copy_vep_tbi > snv_indels_tabix
 ruleorder: _copy_snv_indels_vcf > snv_indels_bgzip
 ruleorder: _copy_snv_indels_tbi > snv_indels_tabix
 ruleorder: cnv_sv_exomedepth_call > cnv_sv_bgzip
+ruleorder: deepmosaic_input > snv_indels_deepmosaic_input
 ruleorder: snv_indels_deepvariant > snv_indels_bgzip
 
 
@@ -274,7 +275,7 @@ rule deepmosaic_input:
         {rule}: Creates an input file {output.txt} for DeepMosaic with info: {input.bam}, {input.vcf}, depth and sex
         """
     script:
-        "../scripts/deepmosaic_input.py"
+        "../scripts/deepmosaic.py"
 
 
 use rule deepmosaic_predict from snv_indels as snv_indels_deepmosaic_predict
