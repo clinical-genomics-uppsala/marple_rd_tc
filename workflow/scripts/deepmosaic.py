@@ -13,10 +13,6 @@ bam_path = snakemake.input.bam
 depth = 200
 sample = snakemake.params.name
 vcf_path = snakemake.input.vcf
- 
-print(sample)
-print(vcf_path)
-print(bam_path)
 
 file = snakemake.output.txt
 with open(file, "w") as output:
