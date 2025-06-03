@@ -234,7 +234,7 @@ module snv_indels:
 use rule bgzip from snv_indels as snv_indels_bgzip
 
 
-use rule snv_indels_tabix from snv_indels as snv_indels_tabix
+use rule tabix from snv_indels as snv_indels_tabix
 
 
 use rule deepmosaic_draw from snv_indels as snv_indels_deepmosaic_draw with:
