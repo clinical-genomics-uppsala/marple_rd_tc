@@ -6,7 +6,7 @@ __license__ = "GPL-3"
 
 rule sample_prep:
     input:
-        sample="config/samples.tsv",
+        samples="config/samples.tsv",
     output:
         sex=temp("config/sample_sex.tsv"),
     log:
