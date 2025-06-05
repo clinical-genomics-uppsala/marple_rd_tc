@@ -24,7 +24,6 @@ ruleorder: _copy_vep_tbi > snv_indels_tabix
 ruleorder: _copy_snv_indels_vcf > snv_indels_bgzip
 ruleorder: _copy_snv_indels_tbi > snv_indels_tabix
 ruleorder: cnv_sv_exomedepth_call > cnv_sv_bgzip
-ruleorder: deepmosaic_input > snv_indels_deepmosaic_input
 ruleorder: snv_indels_deepvariant > snv_indels_bgzip
 
 
@@ -245,7 +244,7 @@ use rule deepmosaic_draw from snv_indels as snv_indels_deepmosaic_draw with:
         vcf="snv_indels/bcftools_view/{sample}_{type}.ds.vcf.gz",
 
 
-rule deepmosaic_input from snv_indels as snv_indels_deepmosaic_input with:
+use rule deepmosaic_input from snv_indels as snv_indels_deepmosaic_input with:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
