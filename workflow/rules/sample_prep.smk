@@ -23,6 +23,6 @@ rule sample_prep:
     message:
         "{rule}: Create tsv with sample and column with sex (all female) to run deepmosaic"
     shell:
-        """(awk -F="," '{{print $1, $2, "female"}}' {input.samples} > {output.sex}) &&
+        """(awk 'BEGIN {{ FS="\t"; OFS=","}} {{ print $1, $2, "female"}}' {input.samples} > {output.sex}) &&
        (sed -i "1s/female/sex/" {output.sex})
         &> {log}"""
