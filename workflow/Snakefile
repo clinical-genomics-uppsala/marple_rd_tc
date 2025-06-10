@@ -297,4 +297,8 @@ use rule mosaicforecast_input from snv_indels as snv_indels_mosaicforecast_input
         vcf="snv_indels/bcftools_view/{sample}_{type}.ds.vcf.gz",
 
 
-use rule mosaicforecast from snv_indels as snv_indels_mosaicforecast
+use rule mosaicforecast_genotype_predition from snv_indels as snv_indels_mosaicforecast_genotype_predition
+
+use rule mosaicforecast_phasing from snv_indels as snv_indels_mosaicforecast_phasing
+
+use rule mosaicforecast_readlevel from snv_indels as snv_indels_mosaicforecast_readlevel

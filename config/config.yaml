@@ -89,9 +89,21 @@ melt:
   extra: ""
   mei: "/projects/wp3/Software/MELTv2.2.2/mei_list.txt"
 
-mosaicforecast:
+mosaicforecast_phasing:
   container: "docker://yanmei/mosaicforecast_hg38:0.0.1"
-  path: "alignment/samtools_merge_bam/"
+  path: "alignment/samtools_merge_bam/" # path to bam-files
+  f_formats: "bam" # cram/bam
+
+mosaicforecast_readlevel:
+  container: "docker://yanmei/mosaicforecast_hg38:0.0.1"
+  path: "alignment/samtools_merge_bam/" # path to bam-files
+  f_formats: "bam" # cram/bam
+
+mosaicforecast_genotype_predition:
+  container: "docker://yanmei/mosaicforecast_hg38:0.0.1"
+  model_trained: "150xRFmodel_addRMSK_Refine.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
+  model_type: "Refine"  # phase/refine
+  predict: "snv_indels/mosaicforecast/{sample}_{type}/SNP.predictions" # SNP.predictions or DEL.predictions (phase) or INS.predictions (phase)
 
 mosdepth_bed:
   container: "docker://hydragenetics/mosdepth:0.3.2"
