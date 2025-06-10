@@ -101,7 +101,7 @@ mosaicforecast_readlevel:
 
 mosaicforecast_genotype_predition:
   container: "docker://yanmei/mosaicforecast_hg38:0.0.1"
-  model_trained: "150xRFmodel_addRMSK_Refine.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
+  model_trained: " /data/ref_data/wp3/mosaicforecast/150xRFmodel_addRMSK_Refine.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
   model_type: "Refine"  # phase/refine
   predict: "snv_indels/mosaicforecast/{sample}_{type}/SNP.predictions" # SNP.predictions or DEL.predictions (phase) or INS.predictions (phase)
 
