@@ -11,6 +11,7 @@
   "results/{sample}/{sample}_exomedepth.vcf.gz": {"name": "_copy_exomedepth_vcf", "file": "cnv_sv/exomedepth_call/{sample}_N.vcf.gz", "types": ["N"]},
   "results/{sample}/{sample}.deepmosaic.txt": {"name": "_copy_deepmosaic", "file": "snv_indels/deepmosaic/{sample}_N/final_predictions.txt", "types": ["N"]},
   "results/{sample}/{sample}.mosaicforecast.phasing": {"name": "_copy_mosaicforecast_phase", "file": "snv_indels/mosaicforecast/{sample}_N/all.phasing", "types": ["N"]}, 
+  "results/{sample}/{sample}.mosaicforecast.features": {"name": "_copy_mosaicforecast_readlevel", "file": "snv_indels/mosaicforecast/{sample}_N/features.txt", "types": ["N"]}, 
   "results/{sample}/{sample}.SNP.predictions": {"name": "_copy_mosaicforecast_predict", "file": "snv_indels/mosaicforecast/{sample}_N/SNP.predictions", "types": ["N"]}, 
   "results/{sample}/{sample}.deepsomatic.vcf.gz": {"name": "_copy_deepsomatic_vcf", "file": "snv_indels/deepsomatic_t_only/{sample}_N.vcf.gz", "types": ["N"]},
   "results/{sample}/{sample}.deepsomatic.vcf.gz.tbi": {"name": "_copy_deepsomatic_tbi", "file": "snv_indels/deepsomatic_t_only/{sample}_N.vcf.gz.tbi", "types": ["N"]},
