@@ -25,7 +25,6 @@ ruleorder: _copy_snv_indels_vcf > snv_indels_bgzip
 ruleorder: _copy_snv_indels_tbi > snv_indels_tabix
 ruleorder: cnv_sv_exomedepth_call > cnv_sv_bgzip
 ruleorder: snv_indels_deepvariant > snv_indels_bgzip
-ruleorder: mosaicforecast_genotype_predition > snv_indels_mosaicforecast_genotype_predition
 
 
 # 'All' rule, must be specified before any other modules are
