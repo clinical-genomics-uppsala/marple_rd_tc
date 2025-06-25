@@ -91,13 +91,14 @@ melt:
 
 mosaicforecast_phasing:
   container: "docker://yanmei/mosaicforecast_hg38:0.0.1"
-  path: "alignment/samtools_merge_bam/" # path to bam-files
   f_format: "bam" # cram/bam
+  path: "alignment/samtools_merge_bam/" # path to bam-files
+
 
 mosaicforecast_readlevel:
   container: "docker://yanmei/mosaicforecast_hg38:0.0.1"
-  path: "alignment/samtools_merge_bam/" # path to bam-files
   f_format: "bam" # cram/bam
+  path: "alignment/samtools_merge_bam/" # path to bam-files
 
 mosaicforecast_genotype_prediction:
   container: "docker://yanmei/mosaicforecast_hg38:0.0.1"
