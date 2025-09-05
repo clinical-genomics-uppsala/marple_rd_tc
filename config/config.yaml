@@ -37,6 +37,9 @@ trimmer_software: fastp_pe
 aligner: "bwa_cpu" # or "bwa_cpu"
 snp_caller: "deepvariant_cpu" # or "deepvariant_cpu"
 
+bcftools_view_deepsomatic:
+  extra: "--exclude 'QUAL<1 | FORMAT/DP<10 | FORMAT/GQ<2 | FORMAT/VAF>0.4 && FORMAT/VAF<0.6 | FORMAT/VAF<0.01 | FORMAT/VAF>0.99' " # remove gnomad of some AF threshold? -T ^/projects/wp3/nobackup/Workspace/mosaic/hardregNgnomad_hg38.bed
+
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
   amb: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.amb"
@@ -58,7 +61,7 @@ deepvariant:
 
 deepsomatic_t_only:
   container: "docker://google/deepsomatic:1.8.0"
-  extra: "--use_default_pon_filtering=true " #--use_default_pon_filtering=true or --pon_filtering="pon.vcf" --process_somatic=true or ""
+  extra: "--use_default_pon_filtering=true make_examples_extra_args='vsc_min_fraction_snps=0.029,vsc_min_fraction_indels=0.05' " #--use_default_pon_filtering=true or --pon_filtering="pon.vcf" --process_somatic=true or ""
   model: "WGS_TUMOR_ONLY" # WGS,WES,PACBIO,ONT,FFPE_WGS,FFPE_WES,WGS_TUMOR_ONLY,PACBIO_TUMOR_ONLY,ONT_TUMOR_ONLY
 
 exomedepth_call:
@@ -103,8 +106,11 @@ mosaicforecast_readlevel:
 
 mosaicforecast_genotype_prediction:
   container: "docker://yanmei/mosaicforecast_hg38:0.0.1"
-  model_trained: "/data/ref_data/wp3/mosaicforecast/150xRFmodel_addRMSK_Refine.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
-  model_type: "Refine"  # phase/refine
+  model_trainedSNP: "/data/ref_data/wp3/mosaicforecast/150xRFmodel_addRMSK_Refine.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
+  model_trainedINS: "/data/ref_data/wp3/mosaicforecast/insertions_250x.RF.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
+  model_trainedDEL: "/data/ref_data/wp3/mosaicforecast/deletions_250x.RF.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
+  model_typeSNP: "Refine"  # phase/refine
+  model_typeINDEL: "Phase"  # phase/refine
  
 mosdepth_bed:
   container: "docker://hydragenetics/mosdepth:0.3.2"
