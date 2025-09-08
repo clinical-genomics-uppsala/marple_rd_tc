@@ -153,3 +153,26 @@ properties:
           order:
             type: string
             description: list of back-translated name from `sampleXXX` to original names
+
+  tsv2vcf:
+    type: object
+    description: input and output parameters for tsv2vcf
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          tsv:
+            type: string
+            description: Exomdepth calls in csv format
+          ref:
+            type: string
+            description: reference geneome fasta file
+
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: Exomedepth calls in compressed VCF

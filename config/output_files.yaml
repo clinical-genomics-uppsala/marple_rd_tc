@@ -18,11 +18,11 @@ files:
 
   - name: Annotated vcf file
     input: snv_indels/deepvariant/{sample}_N.normalized.sorted.vep_annotated.ref.vcf.gz
-    output: "{sample}_{sequenceid}/{sample}_{sequenceid}.vcf.gz"
+    output: "{sample}_{sequenceid}/{sample}.hard-filtered.vcf.gz"
 
   - name: Annotated vcf tbi file
     input: snv_indels/deepvariant/{sample}_N.normalized.sorted.vep_annotated.ref.vcf.gz.tbi
-    output: "{sample}_{sequenceid}/{sample}_{sequenceid}.vcf.gz.tbi"
+    output: "{sample}_{sequenceid}/{sample}.hard-filtered.vcf.gz.tbi"
 
   - name: Genome vcf file no normalize
     input: snv_indels/deepvariant/{sample}_N.g.fix_af.vcf.gz
@@ -47,3 +47,11 @@ files:
   - name: Exomedepth-Config-file
     input: config_exomedepth.yaml
     output: "{sequenceid}_config_exomedepth.yaml"
+  
+  - name: TSV2VCF output
+    input: "cnv_sv/exomedepth_call/{sample}_N.vcf.gz"
+    output: "{sample}_{sequenceid}/{sample}.cnv.vcf.gz"
+
+  - name: TSV2VCF output
+    input: "cnv_sv/exomedepth_call/{sample}_N.vcf.gz.tbi"
+    output: "{sample}_{sequenceid}/{sample}.cnv.vcf.gz.tbi"
