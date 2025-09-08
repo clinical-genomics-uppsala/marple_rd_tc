@@ -8,11 +8,15 @@ digraph snakemake_dag {
 	2[label = "exomedepth: nexus sv", color = "0.0 0.0 0.0", style="dotted"];
 	3[label = "exomedepth: aes", color = "0.0 0.0 0.0", style="dotted"];
 	4[label = "exomedepth_export", color = "0.31 0.6 0.85", style="rounded"];
-	5[label = "cnv_sv_exomedepth_call", color = "0.47 0.6 0.85", style="rounded"];
+	5[label = "exomedepth: VCF", color = "0.31 0.6 0.85", style="rounded"];
+	6[label = "tsv2vcf", color = "0.31 0.6 0.85", style="rounded"];
+	7[label = "cnv_sv_exomedepth_call", color = "0.47 0.6 0.85", style="rounded"];
 
-	0 -> 5
-	1 -> 5
-	5 -> 4
+	0 -> 7
+	1 -> 7
+	7 -> 4
 	4 -> 3
 	4 -> 2
+	6 -> 5
+	7 -> 6
 }            

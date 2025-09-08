@@ -7,15 +7,17 @@ The following output files are located in `Results/`-folder:
 | File | Format |Description |
 |---|---|---|
 | `{sequenceid}_MultiQC.html` | html | Aggregated QC values for entire sequence run, open in browser |
-|`{sample}_{sequenceid}/{sample}_{sequenceid}.xlsx`| xlsx | Excel file with QC stats (primarily coverage) for each sample|
-|`{sample}_{sequenceid}/{sample}_{sequenceid}.bam`| bam | Deduplicated alignment file |
-|`{sample}_{sequenceid}/{sample}_{sequenceid}.bam.bai`| bai | Index for alignment file|
-|`{sample}_{sequenceid}/{sample}_{sequenceid}.vcf.gz`| vcf.gz | Compressed VCF-file decomposed, normalized and annotated with vep |
-|`{sample}_{sequenceid}/{sample}_{sequenceid}.vcf.gz.tbi`| tbi | Index for variant file |
-|`{sample}_{sequenceid}/{sample}_{sequenceid}.genome.vcf.gz`| genome.vcf.gz | Compressed VCF-file for all positions in the design, not decomposed nor normalized |
-|`{sample}_{sequenceid}/{sample}_{sequenceid}.genome.vcf.gz.tbi`| tbi | Index for genome VCF-file |
-|`{sample}_{sequenceid}/{sample}_{sequenceid}_exomedepth_SV.txt`| txt | Nexus SV text file with structural variants from Exomedepth |
-|`{sample}_{sequenceid}/{sample}_{sequenceid}_exomedepth.aed`| aed | aed text file with structural variants from Exomedepth |
+|`{sample}/{sample}_{sequenceid}.xlsx`| xlsx | Excel file with QC stats (primarily coverage) for each sample|
+|`{sample}/{sample}.bam`| bam | Deduplicated alignment file |
+|`{sample}/{sample}.bam.bai`| bai | Index for alignment file|
+|`{sample}/{sample}.vcf.gz`| vcf.gz | Compressed VCF-file decomposed, normalized and annotated with vep |
+|`{sample}/{sample}.vcf.gz.tbi`| tbi | Index for variant file |
+|`{sample}/{sample}.genome.vcf.gz`| genome.vcf.gz | Compressed VCF-file for all positions in the design, not decomposed nor normalized |
+|`{sample}/{sample}.genome.vcf.gz.tbi`| tbi | Index for genome VCF-file |
+|`{sample}/{sample}_exomedepth_SV.txt`| txt | Nexus SV text file with structural variants from Exomedepth |
+|`{sample}/{sample}_exomedepth.aed`| aed | aed text file with structural variants from Exomedepth |
+|`{sample}/{sample}.cnv.vcf.gz`| vcf.gz | Compressed VCF-file of CNVs from Exomedepth |
+|`{sample}/{sample}.cnv.vcf.gz.tbi`| tbi| Index fpr compressed VCF-file of CNVs from Exomedepth |
 |`{sequenceid}_config.yaml`| yaml | yaml configfile with settings and program versions used |
 
 

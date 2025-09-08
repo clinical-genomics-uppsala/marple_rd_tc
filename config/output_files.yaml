@@ -30,7 +30,7 @@ files:
 
   - name: Genome vcf index file no normalize
     input: snv_indels/deepvariant/{sample}_N.g.fix_af.vcf.gz.tbi
-    output: "{sample}/{sample}_{sequenceid}.genome.vcf.gz.tbi"
+    output: "{sample}/{sample}.genome.vcf.gz.tbi"
 
   - name: Exomedepth nexus
     input: cnv_sv/exomedepth_call/{sample}_N_SV.txt
