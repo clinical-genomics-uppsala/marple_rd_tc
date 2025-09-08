@@ -6,39 +6,39 @@ files:
 
   - name: QC xlsx-report
     input: qc/xlsx_report/{sample}_N.xlsx
-    output: "{sample}_{sequenceid}/{sample}_{sequenceid}.xlsx"
+    output: "{sample}/{sample}_{sequenceid}.xlsx"
 
   - name: Alignment bam file
     input: alignment/samtools_merge_bam/{sample}_N.bam
-    output: "{sample}_{sequenceid}/{sample}_{sequenceid}.bam"
+    output: "{sample}/{sample}.bam"
 
   - name: Alignment bai file
     input: alignment/samtools_merge_bam/{sample}_N.bam.bai
-    output: "{sample}_{sequenceid}/{sample}_{sequenceid}.bam.bai"
+    output: "{sample}/{sample}.bam.bai"
 
   - name: Annotated vcf file
     input: snv_indels/deepvariant/{sample}_N.normalized.sorted.vep_annotated.ref.vcf.gz
-    output: "{sample}_{sequenceid}/{sample}.hard-filtered.vcf.gz"
+    output: "{sample}/{sample}.hard-filtered.vcf.gz"
 
   - name: Annotated vcf tbi file
     input: snv_indels/deepvariant/{sample}_N.normalized.sorted.vep_annotated.ref.vcf.gz.tbi
-    output: "{sample}_{sequenceid}/{sample}.hard-filtered.vcf.gz.tbi"
+    output: "{sample}/{sample}.hard-filtered.vcf.gz.tbi"
 
   - name: Genome vcf file no normalize
     input: snv_indels/deepvariant/{sample}_N.g.fix_af.vcf.gz
-    output: "{sample}_{sequenceid}/{sample}_{sequenceid}.genome.vcf.gz"
+    output: "{sample}/{sample}.genome.vcf.gz"
 
   - name: Genome vcf index file no normalize
     input: snv_indels/deepvariant/{sample}_N.g.fix_af.vcf.gz.tbi
-    output: "{sample}_{sequenceid}/{sample}_{sequenceid}.genome.vcf.gz.tbi"
+    output: "{sample}/{sample}_{sequenceid}.genome.vcf.gz.tbi"
 
   - name: Exomedepth nexus
     input: cnv_sv/exomedepth_call/{sample}_N_SV.txt
-    output: "{sample}_{sequenceid}/{sample}_{sequenceid}_exomedepth_SV.txt"
+    output: "{sample}/{sample}_exomedepth_SV.txt"
 
   - name: Exomedepth aed
     input: cnv_sv/exomedepth_call/{sample}_N.aed
-    output: "{sample}_{sequenceid}/{sample}_{sequenceid}_exomedepth.aed"
+    output: "{sample}/{sample}_exomedepth.aed"
 
   - name: Config-file
     input: config.yaml
@@ -48,10 +48,10 @@ files:
     input: config_exomedepth.yaml
     output: "{sequenceid}_config_exomedepth.yaml"
   
-  - name: TSV2VCF output
+  - name: exomedepth vcf
     input: "cnv_sv/exomedepth_call/{sample}_N.vcf.gz"
-    output: "{sample}_{sequenceid}/{sample}.cnv.vcf.gz"
+    output: "{sample}/{sample}.cnv.vcf.gz"
 
-  - name: TSV2VCF output
+  - name: exomedepth vcf tbi
     input: "cnv_sv/exomedepth_call/{sample}_N.vcf.gz.tbi"
-    output: "{sample}_{sequenceid}/{sample}.cnv.vcf.gz.tbi"
+    output: "{sample}/{sample}.cnv.vcf.gz.tbi"

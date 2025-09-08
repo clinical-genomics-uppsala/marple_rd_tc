@@ -16,10 +16,12 @@ include: "rules/tsv2vcf.smk"
 report: "report/workflow.rst"
 
 
+ruleorder: _copy_alignment_bam_file > alignment_samtools_sort
 ruleorder: _copy_alignment_bai_file > alignment_samtools_index
 ruleorder: _copy_annotated_vcf_tbi_file > snv_indels_tabix
 ruleorder: _copy_genome_vcf_file_no_normalize > snv_indels_bgzip
 ruleorder: _copy_genome_vcf_index_file_no_normalize > snv_indels_tabix
+ruleorder: _copy_exomedepth_vcf_tbi > snv_indels_tabix
 
 
 # 'All' rule, must be specified before any other modules are
