@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.0](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.4.0...v0.5.0) (2025-09-09)
+
+
+### Features
+
+* add exomedepth vcf for seqone and rename vcfs ([f158a02](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/f158a02db8f6dd8b77f7cf17b7cc77ca16263655))
+
+
+### Documentation
+
+* update docs and dag images ([eaee15a](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/commit/eaee15a7e3443d7a40de2ba85f7a407a7d628c33))
+
 ## [0.4.0](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.3.1...v0.4.0) (2025-03-11)
 
 
