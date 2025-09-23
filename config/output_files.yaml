@@ -84,6 +84,10 @@ files:
     input: "cnv_sv/melt/{sample}_N/SVA.final_comp.vcf.gz"
     output: "{sample}/mobile_elements/{sample}.SVA.vcf.gz"   
 
+  - name: MosaicForecast phase
+    input: "snv_indels/mosaicforecast/{sample}_N/all.phasing"
+    output: "{sample}/mosaic/{sample}.mosaicforecast.phasing"   
+
   - name: MosaicForecast DEL predictions
     input: "snv_indels/mosaicforecast/{sample}_N/DEL.predictions"
     output: "{sample}/mosaic/{sample}.mosaicforecast.DEL.predictions"   
