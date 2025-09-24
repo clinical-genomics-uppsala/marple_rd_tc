@@ -35,7 +35,8 @@ rule all:
 # Include modules
 module alignment:
     snakefile:
-        github(
+        get_module_snakefile(
+            config,
             "hydra-genetics/alignment",
             path="workflow/Snakefile",
             tag=config["modules"]["alignment"],
@@ -49,7 +50,8 @@ use rule * from alignment as alignment_*
 
 module annotation:
     snakefile:
-        github(
+        get_module_snakefile(
+            config,
             "hydra-genetics/annotation",
             path="workflow/Snakefile",
             tag=config["modules"]["annotation"],
@@ -63,7 +65,8 @@ use rule vep from annotation as annotation_vep
 
 module cnv_sv:
     snakefile:
-        github(
+        get_module_snakefile(
+            config,
             "hydra-genetics/cnv_sv",
             path="workflow/Snakefile",
             tag=config["modules"]["cnv_sv"],
@@ -136,7 +139,8 @@ use rule bcftools_view from filtering as filtering_bcftools_view_deepsomatic wit
 
 module prealignment:
     snakefile:
-        github(
+        get_module_snakefile(
+            config,
             "hydra-genetics/prealignment",
             path="workflow/Snakefile",
             tag=config["modules"]["prealignment"],
@@ -150,7 +154,8 @@ use rule * from prealignment as prealignment_*
 
 module qc:
     snakefile:
-        github(
+        get_module_snakefile(
+            config,
             "hydra-genetics/qc",
             path="workflow/Snakefile",
             tag=config["modules"]["qc"],
@@ -221,11 +226,7 @@ use rule multiqc from qc as qc_multiqc with:
 
 module snv_indels:
     snakefile:
-        github(
-            "hydra-genetics/snv_indels",
-            path="workflow/Snakefile",
-            tag=config["modules"]["snv_indels"],
-        )
+        get_module_snakefile(config, "hydra-genetics/snv_indels", path="workflow/Snakefile", tag=config["modules"]["snv_indels"])
     config:
         config
 
