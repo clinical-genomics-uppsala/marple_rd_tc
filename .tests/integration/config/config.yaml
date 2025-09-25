@@ -1,0 +1,200 @@
+---
+resources: "config/resources.yaml"
+samples: "config/samples.tsv"
+units: "config/units.tsv"
+output: "config/output_files.yaml"
+
+default_container: "docker://hydragenetics/common:3.1.1"
+
+modules:
+  alignment: "v0.7.0"
+  annotation: "v1.2.0"
+  cnv_sv: "v1.0.1"
+  compression: "v2.1.0"
+  filtering: "v1.1.0"
+  prealignment: "v1.4.0"
+  qc: "v0.6.0"
+  snv_indels: "v1.3.0"
+
+reference:
+  annovar: "reference/annovar"
+  fasta: "reference/ref.fasta"
+  fai: "reference/ref.fasta.fai"
+  sites: "reference/design.bed"
+  design_bed: "reference/design.bed"
+  design_intervals: "reference/design.intervals"
+  exon_bed: "reference/design.bed"
+  exon_intervals: "reference/design.intervals"
+  pgrs_bed: "reference/design.pgrs.bed"
+  skip_chrs:
+    - "chr3"
+    - "chr4"
+    - "chr5"
+    - "chr6"
+    - "chr7"
+    - "chr8"
+    - "chr10"
+    - "chr11"
+    - "chr12"
+    - "chr13"
+    - "chr14"
+    - "chr15"
+    - "chr16"
+    - "chr17"
+    - "chr18"
+    - "chr19"
+    - "chr20"
+    - "chr21"
+    - "chr22"
+    - "chrX"
+    - "chrY"
+    - "chrM"
+
+trimmer_software: fastp_pe
+
+bcftools_view_deepsomatic:
+  extra: "--exclude 'QUAL<1 | FORMAT/DP<10 | FORMAT/GQ<2 | FORMAT/VAF>0.4 && FORMAT/VAF<0.6 | FORMAT/VAF<0.01 | FORMAT/VAF>0.99' " # remove gnomad of some AF threshold? -T ^/projects/wp3/nobackup/Workspace/mosaic/hardregNgnomad_hg38.bed
+
+bwa_mem:
+  container: "docker://hydragenetics/bwa_mem:0.7.17"
+  amb: "reference/ref.fasta.amb"
+  ann: "reference/ref.fasta.ann"
+  bwt: "reference/ref.fasta.bwt"
+  pac: "reference/ref.fasta.pac"
+  sa: "reference/ref.fasta.sa"
+
+deepmosaic_draw:
+  container: "library://sanglee8888/deepmosaic/deepmosaic:sha256.28b3dd3b3ab1daa63b53d627c3fba3e6b4da38447ccdb9c7abc073718ff9453e"
+
+deepmosaic_predict:
+  container: "library://sanglee8888/deepmosaic/deepmosaic:sha256.28b3dd3b3ab1daa63b53d627c3fba3e6b4da38447ccdb9c7abc073718ff9453e"
+
+deepvariant:
+  container: "docker://hydragenetics/deepvariant:1.4.0"
+  model_type: "WES"
+  output_gvcf: True
+
+deepsomatic_t_only:
+  container: "docker://google/deepsomatic:1.8.0"
+  extra: "--use_default_pon_filtering=true make_examples_extra_args='vsc_min_fraction_snps=0.029,vsc_min_fraction_indels=0.05' " #--use_default_pon_filtering=true or --pon_filtering="pon.vcf" --process_somatic=true or ""
+  model: "WGS_TUMOR_ONLY" # WGS,WES,PACBIO,ONT,FFPE_WGS,FFPE_WES,WGS_TUMOR_ONLY,PACBIO_TUMOR_ONLY,ONT_TUMOR_ONLY
+
+exomedepth_call:
+  container: "docker://hydragenetics/exomedepth:1.1.15"
+  bedfile: "reference/design.bed"
+  exonsfile: "reference/exons.txt"
+  genesfile: "reference/genes.txt"
+  genome_version: "hg38"
+
+exomedepth_export:
+  container: "docker://hydragenetics/exomedepth:1.1.15"
+
+export_qc_bedtools_intersect:
+  extra: " -wb "
+
+export_qc_xlsx_report:
+  wanted_transcripts: "reference/wanted_transcripts.txt"
+
+fastp_pe:
+  container: "docker://hydragenetics/fastp:0.20.1"
+
+fastqc:
+  container: "docker://hydragenetics/fastqc:0.11.9"
+
+melt:
+  container: "docker://vanallenlab/melt:3159ce1"
+  bed: "/projects/wp3/Software/MELTv2.2.2/add_bed_files/Hg38/Hg38.genes.bed"
+  extra: ""
+  mei: "/projects/wp3/Software/MELTv2.2.2/mei_list.txt"
+
+mosaicforecast_phasing:
+  container: "docker://yanmei/mosaicforecast_hg38:0.0.1"
+  f_format: "bam" # cram/bam
+  path: "alignment/samtools_merge_bam/" # path to bam-files
+  umap: "/usr/local/bin/k24.umap.wg.bw"
+
+mosaicforecast_readlevel:
+  container: "docker://yanmei/mosaicforecast_hg38:0.0.1"
+  f_format: "bam" # cram/bam
+  path: "alignment/samtools_merge_bam/" # path to bam-files
+  umap: "/usr/local/bin/k24.umap.wg.bw"
+
+mosaicforecast_genotype_prediction:
+  container: "docker://yanmei/mosaicforecast_hg38:0.0.1"
+  model_trainedSNP: "/data/ref_data/wp3/mosaicforecast/150xRFmodel_addRMSK_Refine.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
+  model_trainedINS: "/data/ref_data/wp3/mosaicforecast/insertions_250x.RF.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
+  model_trainedDEL: "/data/ref_data/wp3/mosaicforecast/deletions_250x.RF.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
+  model_typeSNP: "Refine"  # phase/refine
+  model_typeINDEL: "Phase"  # phase/refine
+
+mosdepth_bed:
+  container: "docker://hydragenetics/mosdepth:0.3.2"
+  thresholds: "10,20,50"
+
+multiqc:
+  container: "docker://hydragenetics/multiqc:1.11"
+  reports:
+    DNA:
+      included_unit_types: ["T", "N"]
+      config: "config/multiqc_config.yaml"
+      qc_files:
+        - "prealignment/fastp_pe/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastp.json"
+        - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_{read}_fastqc.zip"
+        - "qc/picard_collect_alignment_summary_metrics/{sample}_{type}.alignment_summary_metrics.txt"
+        - "qc/picard_collect_duplication_metrics/{sample}_{type}.duplication_metrics.txt"
+        - "qc/picard_collect_gc_bias_metrics/{sample}_{type}.gc_bias.summary_metrics"
+        - "qc/picard_collect_hs_metrics/{sample}_{type}.HsMetrics.txt"
+        - "qc/picard_collect_insert_size_metrics/{sample}_{type}.insert_size_metrics.txt"
+        - "qc/picard_collect_multiple_metrics/{sample}_{type}.{ext}"
+        - "qc/samtools_stats/{sample}_{type}.samtools-stats.txt"
+        - "qc/mosdepth_bed/{sample}_{type}.mosdepth.summary.txt"
+        - "qc/mosdepth_bed/{sample}_{type}.per-base.bed.gz"
+        - "qc/mosdepth_bed/{sample}_{type}.mosdepth.region.dist.txt"
+        - "qc/mosdepth_bed/{sample}_{type}.mosdepth.global.dist.txt"
+
+picard_collect_alignment_summary_metrics:
+  container: "docker://hydragenetics/picard:2.25.4"
+
+picard_collect_duplication_metrics:
+  container: "docker://hydragenetics/picard:2.25.4"
+
+picard_collect_gc_bias_metrics:
+  container: "docker://hydragenetics/picard:2.25.4"
+
+picard_collect_hs_metrics:
+  container: "docker://hydragenetics/picard:2.25.4"
+
+picard_collect_insert_size_metrics:
+  container: "docker://hydragenetics/picard:2.25.4"
+
+picard_collect_multiple_metrics:
+  container: "docker://hydragenetics/picard:2.25.4"
+  output_ext:
+    - "gc_bias.pdf" #collect_gc_bias
+    - "gc_bias.summary_metrics"
+    - "gc_bias.detail_metrics"
+    - "alignment_summary_metrics" # collect_alignment_summary
+    - "insert_size_metrics" # collect_insert_size
+    - "insert_size_histogram.pdf"
+    - "error_summary_metrics" # collect_sequencing_artefact
+    - "bait_bias_detail_metrics"
+    - "bait_bias_summary_metrics"
+    - "pre_adapter_detail_metrics"
+    - "pre_adapter_summary_metrics"
+    - "quality_distribution_metrics" # quality_score_distribution
+    - "quality_distribution.pdf"
+    - "quality_yield_metrics" # quality yield metrics
+
+picard_mark_duplicates:
+  container: "docker://hydragenetics/picard:2.25.4"
+
+vep:
+  container: "docker://ensemblorg/ensembl-vep:release_109.3" # "docker://hydragenetics/vep:109"
+  vep_cache: "reference/vep_cache"
+  extra: "--assembly GRCh38 --check_existing --pick --variant_class --everything"
+
+vt_decompose:
+  container: "docker://hydragenetics/vt:2015.11.10"
+
+vt_normalize:
+  container: "docker://hydragenetics/vt:2015.11.10"
