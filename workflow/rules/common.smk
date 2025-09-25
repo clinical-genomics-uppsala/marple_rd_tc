@@ -109,7 +109,7 @@ def get_bam_input(wildcards, use_sample_wildcard=True, use_type_wildcard=True, b
         sample_str = "{}_{}".format(wildcards.sample, "N")
     else:
         sample_str = wildcards.file
- 
+
     bam_input = "alignment/samtools_merge_bam/{}.bam".format(sample_str)
     bai_input = "{}.bai".format(bam_input)
 

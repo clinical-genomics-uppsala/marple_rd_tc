@@ -19,6 +19,7 @@ report: "report/workflow.rst"
 
 ruleorder: _copy_alignment_crai_file > compression_samtools_index
 
+
 # 'All' rule, must be specified before any other modules are
 # included, since they also contain 'All' rule
 rule all:
@@ -312,6 +313,7 @@ use rule mosaicforecast_genotype_prediction from snv_indels as snv_indels_mosaic
             config.get("mosaicforecast_genotype_prediction", {}).get("benchmark_repeats", 1),
         )
 
+
 use rule mosaicforecast_genotype_prediction from snv_indels as snv_indels_mosaicforecast_genotype_predictionDEL with:
     output:
         predict="snv_indels/mosaicforecast/{sample}_{type}/DEL.predictions",
@@ -326,6 +328,7 @@ use rule mosaicforecast_genotype_prediction from snv_indels as snv_indels_mosaic
             "snv_indels/mosaicforecast/{sample}_{type}.mosaicforecast_genotype_predictionDEL.benchmark.tsv",
             config.get("mosaicforecast_genotype_prediction", {}).get("benchmark_repeats", 1),
         )
+
 
 use rule mosaicforecast_phasing from snv_indels as snv_indels_mosaicforecast_phasing
 

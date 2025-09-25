@@ -24,5 +24,5 @@ rule sample_prep:
         "{rule}: Create tsv with sample and column with sex (all female) to run deepmosaic"
     shell:
         """(awk 'BEGIN {{ FS="\t"; OFS=","}} {{ print $1, $2, "female"}}' {input.samples} > {output.sex}) &&
-       (sed -i "1s/female/predicted_sex/" {output.sex}) && (sed -i "1s/sample/sample_id/" {output.sex})
+        (sed -i "1s/female/predicted_sex/" {output.sex}) && (sed -i "1s/sample/sample_id/" {output.sex})
         &> {log}"""
