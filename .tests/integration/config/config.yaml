@@ -103,27 +103,27 @@ fastqc:
 
 melt:
   container: "docker://vanallenlab/melt:3159ce1"
-  bed: "/projects/wp3/Software/MELTv2.2.2/add_bed_files/Hg38/Hg38.genes.bed"
+  bed: "reference/Hg38.genes.bed"
   extra: ""
-  mei: "/projects/wp3/Software/MELTv2.2.2/mei_list.txt"
+  mei: "reference/mei_list.txt"
 
 mosaicforecast_phasing:
   container: "docker://yanmei/mosaicforecast_hg38:0.0.1"
   f_format: "bam" # cram/bam
-  path: "alignment/samtools_merge_bam/" # path to bam-files
+  path: "input/" # path to bam-files
   umap: "/usr/local/bin/k24.umap.wg.bw"
 
 mosaicforecast_readlevel:
   container: "docker://yanmei/mosaicforecast_hg38:0.0.1"
   f_format: "bam" # cram/bam
-  path: "alignment/samtools_merge_bam/" # path to bam-files
+  path: "input/" # path to bam-files
   umap: "/usr/local/bin/k24.umap.wg.bw"
 
 mosaicforecast_genotype_prediction:
   container: "docker://yanmei/mosaicforecast_hg38:0.0.1"
-  model_trainedSNP: "/data/ref_data/wp3/mosaicforecast/150xRFmodel_addRMSK_Refine.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
-  model_trainedINS: "/data/ref_data/wp3/mosaicforecast/insertions_250x.RF.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
-  model_trainedDEL: "/data/ref_data/wp3/mosaicforecast/deletions_250x.RF.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
+  model_trainedSNP: "reference/150xRFmodel_addRMSK_Refine.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
+  model_trainedINS: "reference/insertions_250x.RF.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
+  model_trainedDEL: "reference/deletions_250x.RF.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
   model_typeSNP: "Refine"  # phase/refine
   model_typeINDEL: "Phase"  # phase/refine
 
