@@ -1,8 +1,8 @@
 ---
-resources: "resources.yaml"
-samples: "samples.tsv"
-units: "units.tsv"
-output: "{{PATH_TO_REPO}}/marple_rd_tc/config/output_files.yaml"
+resources: "config/resources.yaml"
+samples: "config/samples.tsv"
+units: "config/units.tsv"
+output: "config/output_files.yaml"
 
 default_container: "docker://hydragenetics/common:3.1.1"
 
@@ -17,16 +17,35 @@ modules:
   snv_indels: "v1.3.0"
 
 reference:
-  annovar: "/opt/ohpc/pub/annotators/annovar/2025Feb18"
-  fasta: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta"
-  fai: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.fai"
-  sites: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.known_indels.vcf.gz" #Needed?
-  design_bed: "/projects/wp3/nobackup/TwistCancer/Bedfiles/Twist_Cancer_230608_hg38_TE-98982205-wPGRS.merged.bed"
-  design_intervals: "/projects/wp3/nobackup/TwistCancer/Bedfiles/Twist_Cancer_230608_hg38_TE-98982205-wPGRS.merged.intervals"
-  exon_bed: "/projects/wp3/nobackup/TwistCancer/Bedfiles/Twist_Cancer_230602_hg38_coding_exons.bed"
-  exon_intervals: "/projects/wp3/nobackup/TwistCancer/Bedfiles/Twist_Cancer_230602_hg38_coding_exons.intervals"
-  pgrs_bed: "/projects/wp3/nobackup/TwistCancer/Bedfiles/Twist_Cancer_230707_hg38_pgrs_snps.bed"
+  annovar: "reference/annovar"
+  fasta: "reference/ref.fasta"
+  fai: "reference/ref.fasta.fai"
+  sites: "reference/design.bed"
+  design_bed: "reference/design.bed"
+  design_intervals: "reference/design.intervals"
+  exon_bed: "reference/design.bed"
+  exon_intervals: "reference/design.intervals"
+  pgrs_bed: "reference/design.pgrs.bed"
   skip_chrs:
+    - "chr3"
+    - "chr4"
+    - "chr5"
+    - "chr6"
+    - "chr7"
+    - "chr8"
+    - "chr10"
+    - "chr11"
+    - "chr12"
+    - "chr13"
+    - "chr14"
+    - "chr15"
+    - "chr16"
+    - "chr17"
+    - "chr18"
+    - "chr19"
+    - "chr20"
+    - "chr21"
+    - "chr22"
     - "chrX"
     - "chrY"
     - "chrM"
@@ -38,11 +57,11 @@ bcftools_view_deepsomatic:
 
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
-  amb: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.amb"
-  ann: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.ann"
-  bwt: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.bwt"
-  pac: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.pac"
-  sa: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.sa"
+  amb: "reference/ref.fasta.amb"
+  ann: "reference/ref.fasta.ann"
+  bwt: "reference/ref.fasta.bwt"
+  pac: "reference/ref.fasta.pac"
+  sa: "reference/ref.fasta.sa"
 
 deepmosaic_draw:
   container: "library://sanglee8888/deepmosaic/deepmosaic:sha256.28b3dd3b3ab1daa63b53d627c3fba3e6b4da38447ccdb9c7abc073718ff9453e"
@@ -62,9 +81,9 @@ deepsomatic_t_only:
 
 exomedepth_call:
   container: "docker://hydragenetics/exomedepth:1.1.15"
-  bedfile: "/projects/wp3/nobackup/TwistCancer/Bedfiles/Twist_Cancer_230706_hg38_TE-98982205-wPGRS.merged_200bpwindows.bed"
-  exonsfile: "/projects/wp3/nobackup/TwistCancer/Bedfiles/exons_GRCh38_ensembl109.txt"
-  genesfile: "/projects/wp3/nobackup/TwistCancer/Bedfiles/genes_GRCh38_ensembl109.txt"
+  bedfile: "reference/design.bed"
+  exonsfile: "reference/exons.txt"
+  genesfile: "reference/genes.txt"
   genome_version: "hg38"
 
 exomedepth_export:
@@ -74,7 +93,7 @@ export_qc_bedtools_intersect:
   extra: " -wb "
 
 export_qc_xlsx_report:
-  wanted_transcripts: "/projects/wp3/nobackup/TwistCancer/Bedfiles/wanted_transcripts.txt"
+  wanted_transcripts: "reference/wanted_transcripts.txt"
 
 fastp_pe:
   container: "docker://hydragenetics/fastp:0.20.1"
@@ -84,27 +103,27 @@ fastqc:
 
 melt:
   container: "docker://vanallenlab/melt:3159ce1"
-  bed: "/projects/wp3/Software/MELTv2.2.2/add_bed_files/Hg38/Hg38.genes.bed"
+  bed: "reference/Hg38.genes.bed"
   extra: ""
-  mei: "/projects/wp3/Software/MELTv2.2.2/mei_list.txt"
+  mei: "reference/mei_list.txt"
 
 mosaicforecast_phasing:
   container: "docker://yanmei/mosaicforecast_hg38:0.0.1"
   f_format: "bam" # cram/bam
-  path: "alignment/samtools_merge_bam/" # path to bam-files
+  path: "input/" # path to bam-files
   umap: "/usr/local/bin/k24.umap.wg.bw"
 
 mosaicforecast_readlevel:
   container: "docker://yanmei/mosaicforecast_hg38:0.0.1"
   f_format: "bam" # cram/bam
-  path: "alignment/samtools_merge_bam/" # path to bam-files
+  path: "input/" # path to bam-files
   umap: "/usr/local/bin/k24.umap.wg.bw"
 
 mosaicforecast_genotype_prediction:
   container: "docker://yanmei/mosaicforecast_hg38:0.0.1"
-  model_trainedSNP: "/data/ref_data/wp3/mosaicforecast/150xRFmodel_addRMSK_Refine.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
-  model_trainedINS: "/data/ref_data/wp3/mosaicforecast/insertions_250x.RF.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
-  model_trainedDEL: "/data/ref_data/wp3/mosaicforecast/deletions_250x.RF.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
+  model_trainedSNP: "reference/150xRFmodel_addRMSK_Refine.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
+  model_trainedINS: "reference/insertions_250x.RF.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
+  model_trainedDEL: "reference/deletions_250x.RF.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
   model_typeSNP: "Refine"  # phase/refine
   model_typeINDEL: "Phase"  # phase/refine
 
@@ -117,7 +136,7 @@ multiqc:
   reports:
     DNA:
       included_unit_types: ["T", "N"]
-      config: "{{PATH_TO_REPO}}/marple_rd_tc/config/multiqc_config.yaml"
+      config: "config/multiqc_config.yaml"
       qc_files:
         - "prealignment/fastp_pe/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastp.json"
         - "qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_{read}_fastqc.zip"
@@ -171,7 +190,7 @@ picard_mark_duplicates:
 
 vep:
   container: "docker://ensemblorg/ensembl-vep:release_109.3" # "docker://hydragenetics/vep:109"
-  vep_cache: "/data/ref_genomes/VEP"
+  vep_cache: "reference/vep_cache"
   extra: "--assembly GRCh38 --check_existing --pick --variant_class --everything"
 
 vt_decompose:

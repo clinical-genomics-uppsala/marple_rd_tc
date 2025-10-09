@@ -3,21 +3,36 @@ __copyright__ = "Copyright 2023, Arielle R. Munters"
 __email__ = "arielle.munters@scilifelab.uu.se"
 __license__ = "GPL-3"
 
-import itertools
-import numpy as np
+import json
 import pathlib
-import pandas as pd
+import pandas
 import yaml
-from snakemake.utils import validate
-from snakemake.utils import min_version
+from datetime import datetime
 
-from hydra_genetics.utils.misc import replace_dict_variables
+from hydra_genetics.utils.misc import get_module_snakefile
 from hydra_genetics.utils.resources import load_resources
+from hydra_genetics.utils.misc import replace_dict_variables
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
+from hydra_genetics.utils.misc import extract_chr
+from snakemake.utils import min_version
+from snakemake.utils import validate
 
+from hydra_genetics import min_version as hydra_min_version
+
+from hydra_genetics.utils.misc import export_config_as_file
+from hydra_genetics.utils.software_versions import add_version_files_to_multiqc
+from hydra_genetics.utils.software_versions import add_software_version_to_config
+from hydra_genetics.utils.software_versions import export_pipeline_version_as_file
+from hydra_genetics.utils.software_versions import export_software_version_as_file
+from hydra_genetics.utils.software_versions import get_pipeline_version
+from hydra_genetics.utils.software_versions import touch_pipeline_version_file_name
+from hydra_genetics.utils.software_versions import touch_software_version_file
+from hydra_genetics.utils.software_versions import use_container
 
 min_version("7.13.0")
+
+hydra_min_version("3.0.0")
 
 ## Set and validate config file
 
@@ -51,7 +66,7 @@ validate(config, schema="../schemas/resources.schema.yaml")
 
 ### Read and validate samples file
 
-samples = pd.read_table(config["samples"], dtype=str).set_index("sample", drop=False)
+samples = pandas.read_table(config["samples"], dtype=str).set_index("sample", drop=False)
 validate(samples, schema="../schemas/samples.schema.yaml")
 
 
@@ -84,6 +99,21 @@ for fq1, fq2 in zip(units["fastq1"].values, units["fastq2"].values):
         sys.exit(f"fastq file not found: {fq1}\ncontrol the paths in {config['units']}")
     if not pathlib.Path(fq2).exists():
         sys.exit(f"fastq file not found: {fq2}\ncontrol the paths in {config['units']}")
+
+
+### get bam input for compression_samtools_view
+def get_bam_input(wildcards, use_sample_wildcard=True, use_type_wildcard=True, by_chr=False):
+    if use_sample_wildcard and use_type_wildcard is True:
+        sample_str = "{}_{}".format(wildcards.sample, wildcards.type)
+    elif use_sample_wildcard and use_type_wildcard is not True:
+        sample_str = "{}_{}".format(wildcards.sample, "N")
+    else:
+        sample_str = wildcards.file
+
+    bam_input = "alignment/samtools_merge_bam/{}.bam".format(sample_str)
+    bai_input = "{}.bai".format(bam_input)
+
+    return (bam_input, bai_input)
 
 
 ### get gvcf output for deepvariant
