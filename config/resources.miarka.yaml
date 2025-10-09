@@ -4,7 +4,7 @@ default_resources:
   mem_mb: 6144
   mem_per_cpu: 6144
   partition: "core"
-
+  
 bwa_mem:
   mem_mb: 122880
   mem_per_cpu: 6144
