@@ -81,16 +81,18 @@
       type: file
       url: file:/beegfs-storage/data/ref_data/wp3/marple/deletions_250x.RF.rds
 
-  annovar:
-    annovar_2025Feb18:
-      path: marple/annovar/
-      type: folder
-      content_checksum:
-        humandb/hg38_gnomad41_genome.txt: 9b140e4a94c875bad1e3f97d8298cd59
-        humandb/hg38_gnomad41_genome.txt.idx: d4cc6fec5c78d8e85c80cf1ccc43a584
-        humandb/hg38_refGene.txt: 77af23e0a7f318fca6ecf517d4296e05
-        humandb/hg39_refGeneMrna.fa: d41d8cd98f00b204e9800998ecf8427e
-      url: file:/opt/ohpc/pub/annotators/annovar/2025Feb18/
+## Transferred separately to Miarka since we get "no space left on device" error when trying to include it. ##
+#  annovar:
+#    annovar_2025Feb18:
+#      compressed_checksum: 893ac2e4f7a7ec7e56b79624e6d502d6 
+#      path: marple/annovar/
+#      type: folder
+#      content_checksum:
+#        humandb/hg38_gnomad41_genome.txt: 9b140e4a94c875bad1e3f97d8298cd59
+#        humandb/hg38_gnomad41_genome.txt.idx: d4cc6fec5c78d8e85c80cf1ccc43a584
+#        humandb/hg38_refGene.txt: 77af23e0a7f318fca6ecf517d4296e05
+#        humandb/hg39_refGeneMrna.fa: d41d8cd98f00b204e9800998ecf8427e
+#      url: file:/beegfs-storage/data/ref_data/wp3/marple/annovar/annovar.tar.gz
 
   vep:
     vep_cache:
