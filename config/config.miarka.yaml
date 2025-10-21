@@ -92,7 +92,7 @@ fastqc:
   container: '{{APPTAINER_CACHE}}/hydragenetics__fastqc_0.11.9.sif'
 
 melt:
-  container: '{{APPTAINER_CACHE}}/vanallenlab__melt_3159ce1.sif'
+  container: '{{APPTAINER_CACHE}}/vanallenlab__melt_3159ce1.sif' # Make new docker with MELT2.2.2, change cnv_sv module
   bed: '{{REFERENCE_DATA}}/marple/melt/Hg38.genes.bed'
   extra: ''
   mei: '{{REFERENCE_DATA}}/marple/melt/mei_list.txt'
@@ -179,7 +179,7 @@ picard_mark_duplicates:
   container: '{{APPTAINER_CACHE}}/hydragenetics__picard_2.25.4.sif'
 
 vep:
-  container: '{{APPTAINER_CACHE}}/ensemblorg__ensembl-vep_release_109.3.sif'
+  container: '{{APPTAINER_CACHE}}/ensemblorg__ensembl-vep_release_110.1.sif'
   vep_cache: '{{REFERENCE_DATA}}/marple/VEP/'
   extra: "--assembly GRCh38 --check_existing --pick --variant_class --everything "
 
