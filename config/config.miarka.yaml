@@ -18,7 +18,7 @@ default_container: '{{APPTAINER_CACHE}}/hydragenetics__common_3.1.1.sif'
 modules:
   alignment: v0.7.0
   annotation: v1.2.0
-  cnv_sv: v1.0.1
+  cnv_sv: f441cb7
   compression: v2.1.0
   filtering: v1.1.0
   prealignment: v1.4.0
@@ -92,7 +92,7 @@ fastqc:
   container: '{{APPTAINER_CACHE}}/hydragenetics__fastqc_0.11.9.sif'
 
 melt:
-  container: '{{APPTAINER_CACHE}}/vanallenlab__melt_3159ce1.sif' # Make new docker with MELT2.2.2, change cnv_sv module
+  container: '{{APPTAINER_CACHE}}/MELT_v2.2.2.sif'
   bed: '{{REFERENCE_DATA}}/marple/melt/Hg38.genes.bed'
   extra: ''
   mei: '{{REFERENCE_DATA}}/marple/melt/mei_list.txt'

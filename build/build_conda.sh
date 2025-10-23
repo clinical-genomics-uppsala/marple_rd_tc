@@ -3,6 +3,8 @@ set -e
 
 eval "$(conda shell.bash hook)"
 
+# !!! Make a mei_list.txt that works for the cluster where it is used (full_path needed) !!! #
+
 # Clone git
 git clone --branch ${TAG_OR_BRANCH} ${PIPELINE_GITHUB_REPO}
 cd ${PIPELINE_NAME}
@@ -44,13 +46,14 @@ tar -zcvf ${PIPELINE_NAME}_${TAG_OR_BRANCH}.tar.gz ${PIPELINE_NAME}_${TAG_OR_BRA
 conda activate ./${PIPELINE_NAME}_${TAG_OR_BRANCH}_env
 hydra-genetics prepare-environment create-singularity-files -c config/config.yaml -o apptainer_cache
 
+cp /projects/wp3/Software/MELTv2.2.2/MELT_v2.2.2.sif apptainer_cache
+
 # Download references
 ## Annovar was excluded from this and transferred by itself because of "no space left on device" error
 for reference_config in "$@"
 do
     hydra-genetics --debug references download -o design_and_ref_files -v $reference_config
 done
-
 
 conda deactivate
 
