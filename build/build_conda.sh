@@ -24,7 +24,6 @@ git clone --branch ${TAG_OR_BRANCH} ${PIPELINE_GITHUB_REPO} ${PIPELINE_NAME}_${T
 ./${PIPELINE_NAME}_${TAG_OR_BRANCH}_env/bin/pip3 install -r ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/requirements.txt 
 conda pack --prefix ./${PIPELINE_NAME}_${TAG_OR_BRANCH}_env -o ${PIPELINE_NAME}_${TAG_OR_BRANCH}/env.tar.gz
 
-
 # Clone snakemake-wrappers and hydra-genetics
 mkdir -p ${PIPELINE_NAME}_${TAG_OR_BRANCH}/hydra-genetics
 
@@ -39,17 +38,19 @@ git clone https://github.com/hydra-genetics/prealignment.git ${PIPELINE_NAME}_${
 git clone https://github.com/hydra-genetics/qc.git ${PIPELINE_NAME}_${TAG_OR_BRANCH}/hydra-genetics/qc
 git clone https://github.com/hydra-genetics/snv_indels.git ${PIPELINE_NAME}_${TAG_OR_BRANCH}/hydra-genetics/snv_indels
 
-# Pack all cloned repositories
-tar -zcvf ${PIPELINE_NAME}_${TAG_OR_BRANCH}.tar.gz ${PIPELINE_NAME}_${TAG_OR_BRANCH}
-
 # Download containers
 conda activate ./${PIPELINE_NAME}_${TAG_OR_BRANCH}_env
 hydra-genetics prepare-environment create-singularity-files -c config/config.yaml -o apptainer_cache
 
 cp /projects/wp3/Software/MELTv2.2.2/MELT_v2.2.2.sif apptainer_cache
 
+#cp config/config.miarka.yaml config/config.yaml.copy
+#hydra-genetics prepare-environment container-path-update -c config/config.yaml.copy -n config/config.miarka.yaml -p apptainer_cache
+
+# Pack all cloned repositories
+tar -zcvf ${PIPELINE_NAME}_${TAG_OR_BRANCH}.tar.gz ${PIPELINE_NAME}_${TAG_OR_BRANCH}
+
 # Download references
-## Annovar was excluded from this and transferred by itself because of "no space left on device" error
 for reference_config in "$@"
 do
     hydra-genetics --debug references download -o design_and_ref_files -v $reference_config

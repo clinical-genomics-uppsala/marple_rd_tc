@@ -66,7 +66,7 @@
       type: file
       url: file:/beegfs-storage/data/ref_data/wp3/marple/Hg38.genes.bed
     mei:
-      checksum: 47eefadac3d3ed1a3fa433fad22e2080
+      checksum: 071a34c6db33009a2b3ea3886aaf8c30
       path: marple/melt/mei_list.txt
       type: file
       url: file:/beegfs-storage/data/ref_data/wp3/marple/mei_list.txt
@@ -124,7 +124,7 @@
         humandb/hg38_gnomad41_genome.txt.idx: d4cc6fec5c78d8e85c80cf1ccc43a584
         humandb/hg38_refGene.txt: 77af23e0a7f318fca6ecf517d4296e05
         humandb/hg39_refGeneMrna.fa: d41d8cd98f00b204e9800998ecf8427e
-      url: file:/beegfs-storage/data/ref_data/wp3/annovar/annovar.tar.gz # move annovar one step out to allow hastings to get it to  packing up annovar to add *.pl scripts and pack again
+      url: file:/beegfs-storage/data/ref_data/wp3/annovar/annovar.tar.gz
 
   vep:
     vep_cache:
