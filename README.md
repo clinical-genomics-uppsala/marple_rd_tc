@@ -32,7 +32,7 @@ The workflow repository contains a small test dataset (:exclamation: Todo: as of
 
 ```bash
 $ cd .tests/integration
-$ snakemake -n -s ../../workflow/Snakefile --configfiles ../../config/config.yaml config.yaml --config sequenceid="990909_test" PATH_TO_REPO=/folder/containing/marple_rd_tc/
+$ snakemake -n -s ../../workflow/Snakefile --configfiles ../../config/config.yaml config.yaml config_exomedepth.yaml --config sequenceid="990909_test" PATH_TO_REPO=/folder/containing/marple_rd_tc/
 ```
 > **_NOTE:_**   If using the variable `PATH_TO_REPO` in the config-file this need to be defined in the commandline
 
@@ -54,14 +54,28 @@ The following output files are located in `Results/`-folder:
 
 | File | Format |Description |
 |---|---|---|
-| `multiqc_DNA.html` | html | Aggregated QC values for entire sequence run, open in browser |
-|`{sample}_{sequenceid}/{sample}_{sequenceid}.xlsx`| xlsx | Excel file with QC stats (primarily coverage) for each sample|
-|`{sample}_{sequenceid}/{sample}_{sequenceid}.bam`| bam | Deduplicated alignment file |
-|`{sample}_{sequenceid}/{sample}_{sequenceid}.bam.bai`| bai | Index for alignment file|
-|`{sample}_{sequenceid}/{sample}_{sequenceid}.vcf.gz`| vcf.gz | Compressed VCF-file decomposed, normalized and annotated with vep |
-|`{sample}_{sequenceid}/{sample}_{sequenceid}.vcf.gz.tbi`| tbi | Index for variant file |
-|`{sample}_{sequenceid}/{sample}_{sequenceid}.genome.vcf.gz`| genome.vcf.gz | Compressed VCF-file for all positions in the design, not decomposed nor normalized |
-|`{sample}_{sequenceid}/{sample}_{sequenceid}.genome.vcf.gz.tbi`| tbi | Index for genome VCF-file |
-|`{sample}_{sequenceid}/{sample}_{sequenceid}_exomedepth_SV.txt`| txt | Nexus SV text file with structural variants from Exomedepth |
-|`{sample}_{sequenceid}/{sample}_{sequenceid}_exomedepth.aed`| aed | aed text file with structural variants from Exomedepth |
+|`multiqc_DNA.html` | html | Aggregated QC values for entire sequence run, open in browser |
+|`{sample}/{sample}.xlsx`| xlsx | Excel file with QC stats (primarily coverage) for each sample|
+|`{sample}/{sample}_N.cram"`| cram | Deduplicated alignment file |
+|`{sample}/{sample}_N.cram.crai`| crai | Index for alignment file|
+|`{sample}/{sample}.hard-filtered.vcf.gz`| vcf.gz | Compressed VCF-file decomposed, normalized and annotated with vep |
+|`{sample}/{sample}.hard-filtered.vcf.gz.tbi`| tbi | Index for variant file |
+|`{sample}/{sample}.genome.vcf.gz`| genome.vcf.gz | Compressed VCF-file for all positions in the design, not decomposed nor normalized |
+|`{sample}/{sample}.genome.vcf.gz.tbi`| tbi | Index for genome VCF-file |
+|`{sample}/{sample}_exomedepth_SV.txt`| txt | Nexus SV text file with structural variants from ExomeDepth |
+|`{sample}/{sample}_exomedepth.aed`| aed | aed text file with structural variants from ExomeDepth |
+|`{sample}/{sample}.cnv.vcf.gz`| vcf.gz | Compressed VCF-file with structural variants from ExomeDepth |
+|`{sample}/{sample}.cnv.vcf.gz.tbi`| tbi | Index for variant file from ExomeDepth |
+|`{sample}/mobile_elements/{sample}.ALU.vcf.gz`| vcf.gz | Compressed VCF-file with predicted ALU elements |
+|`{sample}/mobile_elements/{sample}.LINE1.vcf.gz`| vcf.gz | Compressed VCF-file with predicted LINE1 elements |
+|`{sample}/mobile_elements/{sample}.HERVK.vcf.gz`| vcf.gz | Compressed VCF-file with predicted HERVK elements |
+|`{sample}/mobile_elements/{sample}.SVA.vcf.gz`| vcf.gz | Compressed VCF-file with predicted SVA elements |
+|`{sample}/mosaic/{sample}.deepmosaic.txt`| tsv | Candidate variants and their predictions from DeepMosaic |
+|`{sample}/mosaic/{sample}.deepsomatic.vcf.gz`| vcf.gz | Compressed VCF-file from DeepSomatic where PASS are possible mosaic variants|
+|`{sample}/mosaic/{sample}.deepsomatic.vcf.gz.tbi`| vcf.gz | Index for genome VCF-file |
+|`{sample}/mosaic/{sample}.mosaicforecast.phasing`| tsv | Candidate mosaic variants based on phasing from MosaicForecast |
+|`{sample}/mosaic/{sample}.mosaicforecast.DEL.predictions`| tsv | Candidate deletion variants and their predictions from MosaicForecast |
+|`{sample}/mosaic/{sample}.mosaicforecast.INS.predictions`| tsv | Candidate insertion variants and their predictions from MosaicForecast |
+|`{sample}/mosaic/{sample}.mosaicforecast.SNP.predictions`| tsv | Candidate SNP variants and their predictions from MosaicForecast |
 |`{sequenceid}_config.yaml`| yaml | yaml config-file with programversion and extra settings used |
+|`{sequenceid}_config_exomedepth.yaml`| yaml | yaml config-file with which reference was used for ExomeDepth |

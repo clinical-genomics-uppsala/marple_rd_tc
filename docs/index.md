@@ -11,12 +11,14 @@ This snakemake pipeline uses the module system from [Hydra Genetics](https://git
 <br />
 Marple :woman_detective: uses the following hydra genetics modules:
 
-- [Alignment](https://github.com/hydra-genetics/alignment/tree/v0.4.0)
-- [Annotation](https://github.com/hydra-genetics/annotation/tree/v0.3.0)
-- [CNV](https://github.com/hydra-genetics/cnv_sv/tree/78f270c)
-- [Prealignment](https://github.com/hydra-genetics/prealignment/tree/v1.0.0)
-- [SNV indels](https://github.com/hydra-genetics/snv_indels/tree/3935ecf)
-- [QC](https://github.com/hydra-genetics/qc/tree/ca947b1)
+- [Alignment](https://github.com/hydra-genetics/alignment/tree/v0.7.0)
+- [Annotation](https://github.com/hydra-genetics/annotation/tree/v1.2.0)
+- [CNV](https://github.com/hydra-genetics/cnv_sv/tree/f441cb7)
+- [Compression](https://github.com/hydra-genetics/compression/tree/v2.1.0)
+- [Filtering](https://github.com/hydra-genetics/filtering/tree/v1.1.0)
+- [Prealignment](https://github.com/hydra-genetics/prealignment/tree/v1.4.0)
+- [QC](https://github.com/hydra-genetics/qc/tree/v0.6.0)
+- [SNV indels](https://github.com/hydra-genetics/snv_indels/tree/v1.3.0)
 
 
 ### :judge: Rulegraph 

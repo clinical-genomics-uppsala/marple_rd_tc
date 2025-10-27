@@ -27,7 +27,7 @@ To clone the repository and fetch the pipeline.
 WORKING_DIRECTORY="/path_working_to_directory"
 
 # Set version
-VERSION="v0.1.0"
+VERSION="v0.6.0"
 
 # Clone selected version
 git clone --branch ${VERSION} https://github.com/clinical-genomics-uppsala/marple_rd_tc.git ${WORKING_DIRECTORY}
