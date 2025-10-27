@@ -6,9 +6,9 @@ __license__ = "GPL-3"
 
 rule sample_prep:
     input:
-        samples="config/samples.tsv",
+        samples="samples.tsv",
     output:
-        sex=temp("config/sample_sex.tsv"),
+        sex=temp("sample_sex.tsv"),
     log:
         temp("config/sample_prep.tsv.log"),
     threads: config.get("sample_prep", {}).get("threads", config["default_resources"]["threads"])

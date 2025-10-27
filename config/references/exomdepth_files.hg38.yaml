@@ -1,0 +1,27 @@
+exomedepth:
+  bedfile:
+    checksum: c478054d0e60fb7c8d0142486b630f4a
+    path: marple/Twist_Cancer_230706_hg38_TE-98982205-wPGRS.merged_200bpwindows.bed
+    type: file
+    url: file:/beegfs-storage/data/ref_data/wp3/marple/Twist_Cancer_230706_hg38_TE-98982205-wPGRS.merged_200bpwindows.bed
+  exonsfile:
+    checksum: f3ed2cb6706065422ef72d307d82452f
+    path: marple/exons_GRCh38_ensembl109.txt
+    type: file
+    url: file:/beegfs-storage/data/ref_data/wp3/marple/exons_GRCh38_ensembl109.txt
+  genesfile:
+    checksum: a72c9c1608e07cd8d3a1bfd1f65106ee
+    path: marple/genes_GRCh38_ensembl109.txt
+    type: file
+    url: file:/beegfs-storage/data/ref_data/wp3/marple/genes_GRCh38_ensembl109.txt
+  references:
+    miseq:
+      checksum: 4a18d1e3e159973ddfb454c56b014e3d
+      path: marple/Exomedepth_refCount_230706.Rdata
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/marple/Exomedepth_refCount_230706.Rdata
+    novaseqX:
+      checksum: b52ef521a2668398ce9ae2fd464237f5
+      path: marple/Exomedepth_refCount_NovaSeq_250120.Rdata
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/marple/Exomedepth_refCount_NovaSeq_250120.Rdata

@@ -24,4 +24,4 @@ The following information need to be added to these files:
 | adapter | adapter sequences to be trimmed, separated by comma |
 
 #### Configuration
-A [`resources.yaml`](https://github.com/clinical-genomics-uppsala/marple_rd_tc/blob/main/config/resources.yaml) and [`config.yaml`](https://github.com/clinical-genomics-uppsala/marple_rd_tc/blob/main/config/config.yaml) need to be adapted to work with your computing environment.
+A [`resources.yaml`](https://github.com/clinical-genomics-uppsala/marple_rd_tc/blob/main/config/resources.yaml), [`config.yaml`](https://github.com/clinical-genomics-uppsala/marple_rd_tc/blob/main/config/config.yaml) need to be adapted to work with your computing environment and [`config_exomedepth_miseq.yaml`](https://github.com/clinical-genomics-uppsala/marple_rd_tc/blob/main/config/config_exomedepth_miseq.yaml) or [`config_exomedepth_novaseqX.yaml`](https://github.com/clinical-genomics-uppsala/marple_rd_tc/blob/main/config/config_exomedepth_novaseqX.yaml) to specify the reference used for ExomeDepth.
