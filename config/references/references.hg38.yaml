@@ -64,32 +64,32 @@
       checksum: b7cc511549a1ee6fd5a3ba73955a10ae
       path: marple/melt/Hg38.genes.bed
       type: file
-      url: file:/beegfs-storage/data/ref_data/wp3/marple/Hg38.genes.bed
+      url: file:/beegfs-storage/data/ref_data/wp3/melt/Hg38.genes.bed
     mei:
       checksum: 071a34c6db33009a2b3ea3886aaf8c30
       path: marple/melt/mei_list.txt
       type: file
-      url: file:/beegfs-storage/data/ref_data/wp3/marple/mei_list.txt
+      url: file:/beegfs-storage/data/ref_data/wp3/melt/mei_marple_list.txt
     alu:
       checksum: 8e2bf5db30c7053c640ba8aaa4ded716
       path: marple/melt/me_refs/Hg38/ALU_MELT.zip 
       type: folder
-      url: file:/beegfs-storage/data/ref_data/wp3/marple/me_refs/Hg38/ALU_MELT.zip 
+      url: file:/beegfs-storage/data/ref_data/wp3/melt/me_refs/Hg38/ALU_MELT.zip 
     hervk:
       checksum: 8672106ec4205e5787217204e7186038 
       path: marple/melt/me_refs/Hg38/HERVK_MELT.zip
       type: folder
-      url: file:/beegfs-storage/data/ref_data/wp3/marple/me_refs/Hg38/HERVK_MELT.zip
+      url: file:/beegfs-storage/data/ref_data/wp3/melt/me_refs/Hg38/HERVK_MELT.zip
     line1:
       checksum: d53f11c7e8e0805c8e44b42309855909 
       path: marple/melt/me_refs/Hg38/LINE1_MELT.zip
       type: folder
-      url: file:/beegfs-storage/data/ref_data/wp3/marple/me_refs/Hg38/LINE1_MELT.zip
+      url: file:/beegfs-storage/data/ref_data/wp3/melt/me_refs/Hg38/LINE1_MELT.zip
     sva:
       checksum: 159093e9fecc796f11382fb29340d011
       path: marple/melt/me_refs/Hg38/SVA_MELT.zip
       type: folder
-      url: file:/beegfs-storage/data/ref_data/wp3/marple/me_refs/Hg38/SVA_MELT.zip
+      url: file:/beegfs-storage/data/ref_data/wp3/melt/me_refs/Hg38/SVA_MELT.zip
 
   mosaicforecast_genotype_prediction:
     model_trainedSNP:
