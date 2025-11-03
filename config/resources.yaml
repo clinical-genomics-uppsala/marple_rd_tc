@@ -3,12 +3,12 @@ default_resources:
   time: "12:00:00"
   mem_mb: 6144
   mem_per_cpu: 6144
-  partition: "low"
+  partition: "low_bkup"
 
 bwa_mem:
-  mem_mb: 122880
+  mem_mb: 61440
   mem_per_cpu: 6144
-  threads: 8
+  threads: 10
 
 deepvariant:
   mem_mb: 61440

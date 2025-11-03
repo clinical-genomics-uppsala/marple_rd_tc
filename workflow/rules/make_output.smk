@@ -81,7 +81,7 @@ rule merge_mosaicforecast_phasing:
     message:
         "{rule}: merge all mosaicforecast phasing into one file"
     shell:
-        "bcftools merge --merge both {input.txt} -O z -o {output.txt}"
+        "cat {input.txt} > {output.txt}"
 
 
 rule merge_mosaicforecast_SNP:
