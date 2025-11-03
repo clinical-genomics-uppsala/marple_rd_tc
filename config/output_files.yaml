@@ -48,18 +48,23 @@ files:
     input: "snv_indels/mosaicforecast_genotype_prediction/{sample}_N.SNP.predictions"
     output: "{sample}/mosaic/{sample}.mosaicforecast.SNP.predictions"   
 
-  - name: Four genes deepsomatic file
+  - name: Four genes deepsomatic file all samples
     input: "snv_indels/deepsomatic/deepsomatic.4genes.vcf.gz"
     output: "deepsomatic.4genes.vcf.gz"   
 
-  - name: Index for four genes deepsomatic file
+  - name: Index for four genes deepsomatic file all samples
     input: "snv_indels/deepsomatic/deepsomatic.4genes.vcf.gz.tbi"
     output: "deepsomatic.4genes.vcf.gz.tbi"   
 
-  - name: Four genes deepsomatic file with only PASS
+  - name: Four genes deepsomatic file with only PASS all samples
     input: "snv_indels/deepsomatic/deepsomatic.4genes_filter.vcf.gz"
     output: "deepsomatic.4genes_filter.vcf.gz"   
   
-  - name: Index for four genes deepsomatic file with only PASS
+  - name: Index for four genes deepsomatic file with only PASS all samples
     input: "snv_indels/deepsomatic/deepsomatic.4genes_filter.vcf.gz.tbi"
     output: "deepsomatic.4genes_filter.vcf.gz.tbi"   
+
+  - name: mosaicforecast all samples
+    input: "snv_indels/mosaicforecast/mosaicforecast.phasing"
+    output: "mosaicforecast.phasing"  
+
