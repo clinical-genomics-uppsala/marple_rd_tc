@@ -60,7 +60,7 @@ rule merge_fourgene_filter:
 
 rule merge_mosaicforecast_phasing:
     input:
-        txt=expand("Results/{sample}/{sample}.mosaicforecast.phasing", sample=samples),
+        txt=expand("Results/{sample}/{sample}.mosaicforecast.phasing", sample=samples)),
     output:
         txt="snv_indels/mosaicforecast/mosaicforecast.phasing),
     log:
