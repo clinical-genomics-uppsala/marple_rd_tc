@@ -6,8 +6,8 @@ __license__ = "GPL-3"
 
 rule merge_fourgene:
     input:
-        vcf=expand("Results/{sample}/{sample}.deepsomatic.4genes.vcf.gz", sample=samples),
-        tbi=expand("Results/{sample}/{sample}.deepsomatic.4genes.vcf.gz.tbi", sample=samples),
+        vcf=expand("Results/{sample}/{sample}.deepsomatic.4genes.vcf.gz", sample=get_samples(samples)),
+        tbi=expand("Results/{sample}/{sample}.deepsomatic.4genes.vcf.gz.tbi", sample=get_samples(samples)),
     output:
         vcf="snv_indels/deepsomatic/deepsomatic.4genes.vcf.gz",
     log:
@@ -33,8 +33,8 @@ rule merge_fourgene:
 
 rule merge_fourgene_filter:
     input:
-        vcf=expand("Results/{sample}/{sample}.deepsomatic.4genes_filter.vcf.gz", sample=samples),
-        tbi=expand("Results/{sample}/{sample}.deepsomatic.4genes_filter.vcf.gz.tbi", sample=samples),
+        vcf=expand("Results/{sample}/{sample}.deepsomatic.4genes_filter.vcf.gz", sample=get_samples(samples)),
+        tbi=expand("Results/{sample}/{sample}.deepsomatic.4genes_filter.vcf.gz.tbi", sample=get_samples(samples)),
     output:
         vcf="snv_indels/deepsomatic/deepsomatic.4genes_filter.vcf.gz",
     log:
