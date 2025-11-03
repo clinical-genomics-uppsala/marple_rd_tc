@@ -21,7 +21,7 @@ files:
     output: "{sample}/mosaic/{sample}.deepsomatic.4genes.vcf.gz"   
 
   - name: DeepSomatic tumour only tbi
-    input: "snv_indels/deepsomatic_t_only/{sample}_N_4genes.vcf.gzz.tbi"
+    input: "snv_indels/deepsomatic_t_only/{sample}_N_4genes.vcf.gz.tbi"
     output: "{sample}/mosaic/{sample}.deepsomatic.4genes.vcf.gz.tbi"   
 
   - name: DeepSomatic filtered vcf
