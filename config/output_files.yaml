@@ -17,12 +17,12 @@ files:
     output: "{sample}/mosaic/{sample}.deepmosaic.txt" 
 
   - name: DeepSomatic tumour only vcf
-    input: "snv_indels/deepsomatic_t_only/{sample}_N.vcf.gz"
-    output: "{sample}/mosaic/{sample}.deepsomatic.vcf.gz"   
+    input: "snv_indels/deepsomatic_t_only/{sample}_N_4genes.vcf.gz"
+    output: "{sample}/mosaic/{sample}.deepsomatic.4genes.vcf.gz"   
 
   - name: DeepSomatic tumour only tbi
-    input: "snv_indels/deepsomatic_t_only/{sample}_N.vcf.gz.tbi"
-    output: "{sample}/mosaic/{sample}.deepsomatic.vcf.gz.tbi"   
+    input: "snv_indels/deepsomatic_t_only/{sample}_N_4genes.vcf.gzz.tbi"
+    output: "{sample}/mosaic/{sample}.deepsomatic.4genes.vcf.gz.tbi"   
 
   - name: DeepSomatic filtered vcf
     input: "snv_indels/bcftools_view/{sample}_N.ds.vcf.gz"
