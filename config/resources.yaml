@@ -1,36 +1,36 @@
 default_resources:
-  threads: 1
   time: "12:00:00"
-  mem_mb: 6144
-  mem_per_cpu: 6144
+  mem_mb: 4500
+  mem_per_cpu: 4500
+  threads: 1
   partition: "low"
 
 bwa_mem:
-  mem_mb: 61440
-  mem_per_cpu: 6144
-  threads: 10
+  mem_mb: 36000
+  mem_per_cpu: 4500
+  threads: 8
 
 deepvariant:
-  mem_mb: 61440
-  mem_per_cpu: 6144
-  threads: 10
+  mem_mb: 36000
+  mem_per_cpu: 4500
+  threads: 8
   time: "12:00:00"
 
 deepsomatic_t_only:
-  mem_mb: 61440
-  mem_per_cpu: 6144
-  threads: 10
+  mem_mb: 36000
+  mem_per_cpu: 4500
+  threads: 8
   time: "12:00:00"
 
 fastp_pe:
-  threads: 1
-  mem_mb: 6144
-  mem_per_cpu: 6144
+  threads: 2
+  mem_mb: 9000
+  mem_per_cpu: 4500
 
 fastqc:
   threads: 2
-  mem_mb: 12288
-  mem_per_cpu: 6144
+  mem_mb: 9000
+  mem_per_cpu: 4500
 
 mosdepth_bed:
   mem_mb: 36864
