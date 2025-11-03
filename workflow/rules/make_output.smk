@@ -62,7 +62,7 @@ rule merge_mosaicforecast_phasing:
     input:
         txt=expand("Results/{sample}/{sample}.mosaicforecast.phasing", sample=get_samples(samples)),
     output:
-        txt="snv_indels/mosaicforecast/mosaicforecast.phasing),
+        txt="snv_indels/mosaicforecast/mosaicforecast.phasing",
     log:
         "snv_indels/mosaicforecast.phasing.log",
     benchmark:
@@ -88,7 +88,7 @@ rule merge_mosaicforecast_SNP:
     input:
         txt=expand("Results/{sample}/{sample}.mosaicforecast.SNP.predictions", sample=get_samples(samples)),
     output:
-        txt="Results/mosaicforecast.SNP.predictions),
+        txt="Results/mosaicforecast.SNP.predictions",
     log:
         "snv_indels/mosaicforecast.SNP.predictions.log",
     benchmark:
@@ -114,7 +114,7 @@ rule merge_mosaicforecast_DEL:
     input:
         txt=expand("Results/{sample}/{sample}.mosaicforecast.DEL.predictions", sample=get_samples(samples)),
     output:
-        txt="Results/mosaicforecast.DEL.predictions),
+        txt="Results/mosaicforecast.DEL.predictions",
     log:
         "snv_indels/mosaicforecast.DEL.predictions.log",
     benchmark:
@@ -140,7 +140,7 @@ rule merge_mosaicforecast_INS:
     input:
         txt=expand("Results/{sample}/{sample}.mosaicforecast.INS.predictions", sample=get_samples(samples)),
     output:
-        txt="Results/mosaicforecast.INS.predictions),
+        txt="Results/mosaicforecast.INS.predictions",
     log:
         "snv_indels/mosaicforecast.INS.predictions.log",
     benchmark:
@@ -166,7 +166,7 @@ rule merge_deepmosaic:
     input:
         txt=expand("Results/{sample}/{sample}.deepmosaic.txt", sample=get_samples(samples)),
     output:
-        txt="Results/deepmosaic.txt),
+        txt="Results/deepmosaic.txt",
     log:
         "snv_indels/deepmosaic.log",
     benchmark:
