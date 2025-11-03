@@ -57,12 +57,12 @@ rule merge_fourgene_filter:
     shell:
         "bcftools merge --merge both {input.vcf} -O z -o {output.vcf}"
 
-""" 
+
 rule merge_mosaicforecast_phasing:
     input:
         txt=expand("Results/{sample}/{sample}.mosaicforecast.phasing", sample=samples),
     output:
-        txt="Results/mosaicforecast.phasing),
+        txt="snv_indels/mosaicforecast/mosaicforecast.phasing),
     log:
         "snv_indels/mosaicforecast.phasing.log",
     benchmark:
@@ -83,7 +83,7 @@ rule merge_mosaicforecast_phasing:
     shell:
         "cat {input.txt} > {output.txt}"
 
-
+""" 
 rule merge_mosaicforecast_SNP:
     input:
         txt=expand("Results/{sample}/{sample}.mosaicforecast.SNP.predictions", sample=samples),
