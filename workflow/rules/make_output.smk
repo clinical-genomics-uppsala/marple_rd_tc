@@ -9,7 +9,7 @@ rule merge_fourgene:
         vcf=expand("Results/{sample}/{sample}.deepsomatic.4genes.vcf.gz", sample=samples),
         tbi=expand("Results/{sample}/{sample}.deepsomatic.4genes.vcf.gz.tbi", sample=samples),
     output:
-        vcf="Results/deepsomatic.4genes.vcf.gz),
+        vcf="snv_indels/deepsomatic/deepsomatic.4genes.vcf.gz),
     log:
         "snv_indels/deepsomatic/4genes.vcf.log",
     benchmark:
@@ -36,7 +36,7 @@ rule merge_fourgene_filter:
         vcf=expand("Results/{sample}/{sample}.deepsomatic.4genes_filter.vcf.gz", sample=samples),
         tbi=expand("Results/{sample}/{sample}.deepsomatic.4genes_filter.vcf.gz.tbi", sample=samples),
     output:
-        vcf="Results/deepsomatic.4genes_filter.vcf.gz),
+        vcf="snv_indels/deepsomatic/deepsomatic.4genes_filter.vcf.gz),
     log:
         "snv_indels/deepsomatic/4genes.vcf.log",
     benchmark:
