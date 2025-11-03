@@ -14,23 +14,23 @@ files:
 
   - name: Deepmosaic prediction txt
     input: "snv_indels/deepmosaic/{sample}_N/final_predictions.txt"
-    output: "{sample}/mosaic/{sample}.deepmosaic.txt" 
+    output: "{sample}/{sample}.deepmosaic.txt" 
 
   - name: DeepSomatic tumour only vcf
     input: "snv_indels/deepsomatic_t_only/{sample}_N_4genes.vcf.gz"
-    output: "{sample}/mosaic/{sample}.deepsomatic.4genes.vcf.gz"   
+    output: "{sample}/{sample}.deepsomatic.4genes.vcf.gz"   
 
   - name: DeepSomatic tumour only tbi
     input: "snv_indels/deepsomatic_t_only/{sample}_N_4genes.vcf.gz.tbi"
-    output: "{sample}/mosaic/{sample}.deepsomatic.4genes.vcf.gz.tbi"   
+    output: "{sample}/{sample}.deepsomatic.4genes.vcf.gz.tbi"   
 
   - name: DeepSomatic filtered vcf
     input: "snv_indels/bcftools_view/{sample}_N.ds.vcf.gz"
-    output: "{sample}/mosaic/{sample}.deepsomatic.4genes_filter.vcf.gz"   
+    output: "{sample}/{sample}.deepsomatic.4genes_filter.vcf.gz"   
 
   - name: DeepSomatic filtered tbi
     input: "snv_indels/bcftools_view/{sample}_N.ds.vcf.gz.tbi"
-    output: "{sample}/mosaic/{sample}.deepsomatic.4genes_filter.vcf.gz.tbi"   
+    output: "{sample}/{sample}.deepsomatic.4genes_filter.vcf.gz.tbi"   
 
   - name: MosaicForecast phase
     input: "snv_indels/mosaicforecast_phasing/{sample}_N/all.phasing"
@@ -47,4 +47,5 @@ files:
   - name: MosaicForecast SNP predictions
     input: "snv_indels/mosaicforecast_genotype_prediction/{sample}_N.SNP.predictions"
     output: "{sample}/mosaic/{sample}.mosaicforecast.SNP.predictions"   
+
 
