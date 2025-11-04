@@ -140,12 +140,12 @@ rule merge_mosaicforecast_phasing:
     shell:
         "cat {input.txt} > {output.txt}"
 
-""" 
+
 rule merge_mosaicforecast_SNP:
     input:
         txt=expand("Results/{sample}/{sample}.mosaicforecast.SNP.predictions", sample=get_samples(samples)),
     output:
-        txt="Results/mosaicforecast.SNP.predictions",
+        txt="snv_indels/mosaicforecast/mosaicforecast.SNP.predictions",
     log:
         "snv_indels/mosaicforecast.SNP.predictions.log",
     benchmark:
@@ -164,9 +164,9 @@ rule merge_mosaicforecast_SNP:
     message:
         "{rule}: merge all mosaicforecast SNP.predictions into one file"
     shell:
-        "bcftools merge --merge both {input.txt} -O z -o {output.txt}"
+        "cat {input.txt} > {output.txt}"
 
-
+"""
 rule merge_mosaicforecast_DEL:
     input:
         txt=expand("Results/{sample}/{sample}.mosaicforecast.DEL.predictions", sample=get_samples(samples)),
