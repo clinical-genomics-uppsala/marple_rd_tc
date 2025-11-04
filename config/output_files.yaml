@@ -68,3 +68,6 @@ files:
     input: "snv_indels/mosaicforecast/mosaicforecast.phasing"
     output: "mosaicforecast.phasing"  
 
+  - name: mosaicforecast all samples
+    input: "snv_indels/mosaicforecast/mosaicforecast.SNP.predictions"
+    output: "mosaicforecast.SNP.predictions"  
