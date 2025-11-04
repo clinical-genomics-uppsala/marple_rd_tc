@@ -17,11 +17,11 @@ files:
     output: "{sample}/{sample}.deepmosaic.txt" 
 
   - name: DeepSomatic tumour only vcf
-    input: "snv_indels/deepsomatic_t_only/{sample}_N.4genes.vcf.gz"
+    input: "snv_indels/fourgene_call/{sample}_N.4genes.vcf.gz"
     output: "{sample}/{sample}.deepsomatic.4genes.vcf.gz"   
 
   - name: DeepSomatic tumour only tbi
-    input: "snv_indels/deepsomatic_t_only/{sample}_N.4genes.vcf.gz.tbi"
+    input: "snv_indels/fourgene_call/{sample}_N.4genes.vcf.gz.tbi"
     output: "{sample}/{sample}.deepsomatic.4genes.vcf.gz.tbi"   
 
   - name: DeepSomatic filtered vcf
