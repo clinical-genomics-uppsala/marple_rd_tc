@@ -245,7 +245,8 @@ use rule deepmosaic_draw from snv_indels as snv_indels_deepmosaic_draw with:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         txt="snv_indels/deepmosaic/{sample}_{type}.input.txt",
-        vcf="snv_indels/bcftools_view/{sample}_{type}.ds.vcf.gz",
+        vcf="snv_indels/fourgene_call/{sample}_{type}.4genes.vcf.gz",
+        tbi="snv_indels/fourgene_call/{sample}_{type}.4genes.vcf.gz.tbi",
 
 
 use rule deepmosaic_input from snv_indels as snv_indels_deepmosaic_input with:
@@ -253,8 +254,8 @@ use rule deepmosaic_input from snv_indels as snv_indels_deepmosaic_input with:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
         bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
         sex="sample_sex.tsv",
-        vcf="snv_indels/bcftools_view/{sample}_{type}.ds.vcf.gz",
-
+        vcf="snv_indels/fourgene_call/{sample}_{type}.4genes.vcf.gz",
+        tbi="snv_indels/fourgene_call/{sample}_{type}.4genes.vcf.gz.tbi",
 
 use rule deepmosaic_predict from snv_indels as snv_indels_deepmosaic_predict
 
