@@ -109,46 +109,6 @@ use rule samtools_view from compression as compression_samtools_view with:
         ref=config.get("reference", {}).get("fasta", ""),
 
 
-module filtering:
-    snakefile:
-        get_module_snakefile(config, "hydra-genetics/filtering", path="workflow/Snakefile", tag=config["modules"]["filtering"])
-    config:
-        config
-
-
-use rule bcftools_view from filtering as filtering_bcftools_view_region with:
-    input:
-        vcf="snv_indels/deepsomatic_t_only/{sample}_{type}.vcf.gz",
-    output:
-        vcf="snv_indels/fourgene_call/{sample}_{type}.4genes.vcf.gz",
-    params:
-        extra=config.get("bcftools_view_fourgene", {}).get("extra", ""),
-    log:
-        "snv_indels/fourgene_call/{sample}_{type}.view_4gene.vcf.log",
-    benchmark:
-        repeat(
-            "snv_indels/fourgene_call/{sample}_{type}.view_4gene.vcf.benchmark.tsv",
-            config.get("bcftools_view", {}).get("benchmark_repeats", 1),
-        )
-
-
-use rule bcftools_view from filtering as filtering_bcftools_view_deepsomatic with:
-    input:
-        vcf="snv_indels/fourgene_call/{sample}_{type}.4genes.vcf.gz",
-        tbi="snv_indels/fourgene_call/{sample}_{type}.4genes.vcf.gz.tbi",
-    output:
-        vcf=temp("snv_indels/bcftools_view/{sample}_{type}.ds.vcf.gz"),
-    log:
-        "snv_indels/bcftools_view/{sample}_{type}.ds.vcf.log",
-    params:
-        extra=config.get("bcftools_view_deepsomatic", {}).get("extra", ""),
-    benchmark:
-        repeat(
-            "snv_indels/bcftools_view/{sample}_{type}.ds.benchmark.tsv",
-            config.get("bcftools_view", {}).get("benchmark_repeats", 1),
-        )
-
-
 module prealignment:
     snakefile:
         get_module_snakefile(
