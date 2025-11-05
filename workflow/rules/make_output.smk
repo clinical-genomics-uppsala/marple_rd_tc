@@ -138,7 +138,7 @@ rule merge_mosaicforecast_phasing:
     message:
         "{rule}: merge all mosaicforecast phasing into one file"
     shell:
-        "cat {input.txt} | awk '!x[$0]++' $1 > {output.txt}"
+        "cat {input.txt} | awk '!x[$0]++' $1 > {output.txt} &> {log}"
 
 
 rule merge_mosaicforecast_SNP:
@@ -164,7 +164,7 @@ rule merge_mosaicforecast_SNP:
     message:
         "{rule}: merge all mosaicforecast SNP.predictions into one file"
     shell:
-        "cat {input.txt} > {output.txt}"
+        "cat {input.txt} > {output.txt} &> {log}"
 
 
 rule merge_mosaicforecast_DEL:
@@ -190,7 +190,7 @@ rule merge_mosaicforecast_DEL:
     message:
         "{rule}: merge all mosaicforecast DEL.predictions into one file"
     shell:
-        "cat {input.txt} > {output.txt}"
+        "cat {input.txt} > {output.txt} &> {log}"
 
 
 rule merge_mosaicforecast_INS:
@@ -216,7 +216,7 @@ rule merge_mosaicforecast_INS:
     message:
         "{rule}: merge all mosaicforecast INS.predictions into one file"
     shell:
-        "cat {input.txt} > {output.txt}"
+        "cat {input.txt} > {output.txt} &> {log}"
 
 
 rule merge_deepmosaic:
@@ -241,6 +241,6 @@ rule merge_deepmosaic:
         config.get("merge", {}).get("container", config["default_container"])
     message:
         "{rule}: merge all deepmosaic into one file"
-    shell:
-        "cat {input.txt} > {output.txt}"
+    shell:=
+        "cat {input.txt} > {output.txt} &> {log}"
  
