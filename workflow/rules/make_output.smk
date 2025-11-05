@@ -138,7 +138,7 @@ rule merge_mosaicforecast_phasing:
     message:
         "{rule}: merge all mosaicforecast phasing into one file"
     shell:
-        "cat {input.txt} > {output.txt}"
+        "cat {input.txt} | awk '!x[$0]++' $1 > {output.txt}"
 
 
 rule merge_mosaicforecast_SNP:
@@ -166,12 +166,12 @@ rule merge_mosaicforecast_SNP:
     shell:
         "cat {input.txt} > {output.txt}"
 
-"""
+
 rule merge_mosaicforecast_DEL:
     input:
         txt=expand("Results/{sample}/{sample}.mosaicforecast.DEL.predictions", sample=get_samples(samples)),
     output:
-        txt="Results/mosaicforecast.DEL.predictions",
+        txt="snv_indels/mosaicforecast/mosaicforecast.DEL.predictions",
     log:
         "snv_indels/mosaicforecast.DEL.predictions.log",
     benchmark:
@@ -190,14 +190,14 @@ rule merge_mosaicforecast_DEL:
     message:
         "{rule}: merge all mosaicforecast DEL.predictions into one file"
     shell:
-        "bcftools merge --merge both {input.txt} -O z -o {output.txt}"
+        "cat {input.txt} > {output.txt}"
 
 
 rule merge_mosaicforecast_INS:
     input:
         txt=expand("Results/{sample}/{sample}.mosaicforecast.INS.predictions", sample=get_samples(samples)),
     output:
-        txt="Results/mosaicforecast.INS.predictions",
+        txt="snv_indels/mosaicforecast/mosaicforecast.INS.predictions",
     log:
         "snv_indels/mosaicforecast.INS.predictions.log",
     benchmark:
@@ -216,14 +216,14 @@ rule merge_mosaicforecast_INS:
     message:
         "{rule}: merge all mosaicforecast INS.predictions into one file"
     shell:
-        "bcftools merge --merge both {input.txt} -O z -o {output.txt}"
+        "cat {input.txt} > {output.txt}"
 
 
 rule merge_deepmosaic:
     input:
         txt=expand("Results/{sample}/{sample}.deepmosaic.txt", sample=get_samples(samples)),
     output:
-        txt="Results/deepmosaic.txt",
+        txt="snv_indels/deepmosaic/deepmosaic.txt",
     log:
         "snv_indels/deepmosaic.log",
     benchmark:
@@ -240,7 +240,7 @@ rule merge_deepmosaic:
     container:
         config.get("merge", {}).get("container", config["default_container"])
     message:
-        "{rule}: merge all mosaicforecast deepmosaic into one file"
+        "{rule}: merge all deepmosaic into one file"
     shell:
-        "bcftools merge --merge both {input.txt} -O z -o {output.txt}"
- """
+        "cat {input.txt} > {output.txt}"
+ 

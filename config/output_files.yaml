@@ -70,4 +70,16 @@ files:
 
   - name: mosaicforecast SNP prediction all samples
     input: "snv_indels/mosaicforecast/mosaicforecast.SNP.predictions"
-    output: "mosaicforecast.SNP.predictions"  
+    output: "mosaicforecast.SNP.predictions"
+
+  - name: mosaicforecast DEL prediction all samples
+    input: "snv_indels/mosaicforecast/mosaicforecast.DEL.predictions"
+    output: "mosaicforecast.DEL.predictions"
+
+  - name: mosaicforecast INS prediction all samples
+    input: "snv_indels/mosaicforecast/mosaicforecast.INS.predictions"
+    output: "mosaicforecast.INS.predictions"  
+
+  - name: deepmosaic all samples
+    input: "snv_indels/deepmosaic/deepmosaic.txt"
+    output: "deepmosaic.txt"  
