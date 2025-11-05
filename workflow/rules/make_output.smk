@@ -138,7 +138,7 @@ rule merge_mosaicforecast_phasing:
     message:
         "{rule}: merge all mosaicforecast phasing into one file"
     shell:
-        "cat {input.txt} | awk '!x[$0]++' $1 > {output.txt} &> {log}"
+        "(cat {input.txt} | awk '!x[$0]++' $1 > {output.txt}) &> {log}"
 
 
 rule merge_mosaicforecast_SNP:
