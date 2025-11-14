@@ -100,14 +100,6 @@ module compression:
 
 use rule * from compression as compression_*
 
-
-use rule samtools_view from compression as compression_samtools_view with:
-    input:
-        bam=lambda wildcards: get_bam_input(wildcards, use_sample_wildcard=False)[0],
-        bai=lambda wildcards: get_bam_input(wildcards, use_sample_wildcard=False)[1],
-        ref=config.get("reference", {}).get("fasta", ""),
-
-
 module filtering:
     snakefile:
         get_module_snakefile(config, "hydra-genetics/filtering", path="workflow/Snakefile", tag=config["modules"]["filtering"])
