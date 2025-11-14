@@ -1,8 +1,6 @@
 
 REFERENCE_DATA: /proj/ngi2024001/nobackup/bin/wp3_tc/design_and_ref_files
 
-APPTAINER_CACHE: /proj/ngi2024001/nobackup/bin/wp3_tc/apptainer_cache
-
 hydra_local_path: /proj/ngi2024001/nobackup/bin/wp3_tc/{{PIPELINE_VERSION}}/hydra-genetics
 
 resources: config/resources.miarka.yaml
@@ -13,7 +11,7 @@ units: config/units.tsv
 
 output: '{{PATH_TO_REPO}}/config/output_files.yaml'
 
-default_container: '{{APPTAINER_CACHE}}/hydragenetics__common_3.1.1.sif'
+default_container: 'hydragenetics__common_3.1.1.sif'
 
 
 modules:
@@ -47,7 +45,7 @@ bcftools_view_deepsomatic:
   extra: "--exclude 'QUAL<1 | FORMAT/DP<10 | FORMAT/GQ<2 | FORMAT/VAF>0.4 && FORMAT/VAF<0.6 | FORMAT/VAF<0.01 | FORMAT/VAF>0.99' " # remove gnomad of some AF threshold? -T ^/projects/wp3/nobackup/Workspace/mosaic/hardregNgnomad_hg38.bed
 
 bwa_mem:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__bwa_mem_0.7.17.sif'
+  container: 'hydragenetics__bwa_mem_0.7.17.sif'
   amb: '{{REFERENCE_DATA}}/marple/reference_grasnatter/homo_sapiens.fasta.amb'
   ann: '{{REFERENCE_DATA}}/marple/reference_grasnatter/homo_sapiens.fasta.ann'
   bwt: '{{REFERENCE_DATA}}/marple/reference_grasnatter/homo_sapiens.fasta.bwt'
@@ -55,30 +53,30 @@ bwa_mem:
   sa: '{{REFERENCE_DATA}}/marple/reference_grasnatter/homo_sapiens.fasta.sa'
 
 deepmosaic_draw:
-  container: '{{APPTAINER_CACHE}}/library_____sanglee8888__deepmosaic__deepmosaic_sha256.28b3dd3b3ab1daa63b53d627c3fba3e6b4da38447ccdb9c7abc073718ff9453e.sif'
+  container: 'library_____sanglee8888__deepmosaic__deepmosaic_sha256.28b3dd3b3ab1daa63b53d627c3fba3e6b4da38447ccdb9c7abc073718ff9453e.sif'
 
 deepmosaic_predict:
-  container: '{{APPTAINER_CACHE}}/library_____sanglee8888__deepmosaic__deepmosaic_sha256.28b3dd3b3ab1daa63b53d627c3fba3e6b4da38447ccdb9c7abc073718ff9453e.sif'
+  container: 'library_____sanglee8888__deepmosaic__deepmosaic_sha256.28b3dd3b3ab1daa63b53d627c3fba3e6b4da38447ccdb9c7abc073718ff9453e.sif'
 
 deepvariant:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__deepvariant_1.4.0.sif'
+  container: 'hydragenetics__deepvariant_1.4.0.sif'
   model_type: 'WES'
   output_gvcf: True
 
 deepsomatic_t_only:
-  container: '{{APPTAINER_CACHE}}/google__deepsomatic_1.8.0.sif'
+  container: 'google__deepsomatic_1.8.0.sif'
   extra: "--use_default_pon_filtering=true make_examples_extra_args='vsc_min_fraction_snps=0.029,vsc_min_fraction_indels=0.05' " #--use_default_pon_filtering=true or --pon_filtering='pon.vcf' --process_somatic=true or ''
   model: 'WGS_TUMOR_ONLY' # WGS,WES,PACBIO,ONT,FFPE_WGS,FFPE_WES,WGS_TUMOR_ONLY,PACBIO_TUMOR_ONLY,ONT_TUMOR_ONLY
 
 exomedepth_call:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__exomedepth_1.1.15.sif'
+  container: 'hydragenetics__exomedepth_1.1.15.sif'
   bedfile: '{{REFERENCE_DATA}}/marple/Twist_Cancer_230706_hg38_TE-98982205-wPGRS.merged_200bpwindows.bed'
   exonsfile: '{{REFERENCE_DATA}}/marple/exons_GRCh38_ensembl109.txt'
   genesfile: '{{REFERENCE_DATA}}/marple/genes_GRCh38_ensembl109.txt'
   genome_version: 'hg38'
 
 exomedepth_export:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__exomedepth_1.1.15.sif'
+  container: 'hydragenetics__exomedepth_1.1.15.sif'
 
 export_qc_bedtools_intersect:
   extra: ' -wb '
@@ -87,29 +85,29 @@ export_qc_xlsx_report:
   wanted_transcripts: '{{REFERENCE_DATA}}/marple/wanted_transcripts.txt'
 
 fastp_pe:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__fastp_0.20.1.sif'
+  container: 'hydragenetics__fastp_0.20.1.sif'
 
 fastqc:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__fastqc_0.11.9.sif'
+  container: 'hydragenetics__fastqc_0.11.9.sif'
 
 melt:
-  container: '{{APPTAINER_CACHE}}/MELT_v2.2.2.sif'
+  container: 'MELT_v2.2.2.sif'
   bed: '{{REFERENCE_DATA}}/marple/melt/Hg38.genes.bed'
   extra: ''
   mei: '{{REFERENCE_DATA}}/marple/melt/mei_list.txt'
 
 mosaicforecast_phasing:
-  container: '{{APPTAINER_CACHE}}/yanmei__mosaicforecast_hg38_0.0.1.sif'
+  container: 'yanmei__mosaicforecast_hg38_0.0.1.sif'
   f_format: 'bam' # cram/bam
   umap: '/usr/local/bin/k24.umap.wg.bw'
 
 mosaicforecast_readlevel:
-  container: '{{APPTAINER_CACHE}}/yanmei__mosaicforecast_hg38_0.0.1.sif'
+  container: 'yanmei__mosaicforecast_hg38_0.0.1.sif'
   f_format: 'bam' # cram/bam
   umap: '/usr/local/bin/k24.umap.wg.bw'
 
 mosaicforecast_genotype_prediction:
-  container: '{{APPTAINER_CACHE}}/yanmei__mosaicforecast_hg38_0.0.1.sif'
+  container: 'yanmei__mosaicforecast_hg38_0.0.1.sif'
   model_trainedSNP: '{{REFERENCE_DATA}}/marple/150xRFmodel_addRMSK_Refine.rds' # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
   model_trainedINS: '{{REFERENCE_DATA}}/marple/insertions_250x.RF.rds' # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
   model_trainedDEL: '{{REFERENCE_DATA}}/marple/deletions_250x.RF.rds' # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
@@ -117,11 +115,11 @@ mosaicforecast_genotype_prediction:
   model_typeINDEL: 'Phase'  # phase/refine
 
 mosdepth_bed:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__mosdepth_0.3.2.sif'
+  container: 'hydragenetics__mosdepth_0.3.2.sif'
   thresholds: '10,20,50'
 
 multiqc:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__multiqc_1.11.sif'
+  container: 'hydragenetics__multiqc_1.11.sif'
   reports:
     DNA:
       included_unit_types: ['T', 'N']
@@ -142,22 +140,22 @@ multiqc:
         - 'qc/mosdepth_bed/{sample}_{type}.mosdepth.global.dist.txt'
 
 picard_collect_alignment_summary_metrics:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__picard_2.25.4.sif'
+  container: 'hydragenetics__picard_2.25.4.sif'
 
 picard_collect_duplication_metrics:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__picard_2.25.4.sif'
+  container: 'hydragenetics__picard_2.25.4.sif'
 
 picard_collect_gc_bias_metrics:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__picard_2.25.4.sif'
+  container: 'hydragenetics__picard_2.25.4.sif'
 
 picard_collect_hs_metrics:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__picard_2.25.4.sif'
+  container: 'hydragenetics__picard_2.25.4.sif'
 
 picard_collect_insert_size_metrics:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__picard_2.25.4.sif'
+  container: 'hydragenetics__picard_2.25.4.sif'
 
 picard_collect_multiple_metrics:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__picard_2.25.4.sif'
+  container: 'hydragenetics__picard_2.25.4.sif'
   output_ext:
     - 'gc_bias.pdf' #collect_gc_bias
     - 'gc_bias.summary_metrics'
@@ -175,15 +173,15 @@ picard_collect_multiple_metrics:
     - 'quality_yield_metrics' # quality yield metrics
 
 picard_mark_duplicates:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__picard_2.25.4.sif'
+  container: 'hydragenetics__picard_2.25.4.sif'
 
 vep:
-  container: '{{APPTAINER_CACHE}}/ensemblorg__ensembl-vep_release_110.1.sif'
+  container: 'ensemblorg__ensembl-vep_release_110.1.sif'
   vep_cache: '{{REFERENCE_DATA}}/marple/VEP/'
   extra: "--assembly GRCh38 --check_existing --pick --variant_class --everything "
 
 vt_decompose:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__vt_2015.11.10.sif'
+  container: 'hydragenetics__vt_2015.11.10.sif'
 
 vt_normalize:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__vt_2015.11.10.sif'
+  container: 'hydragenetics__vt_2015.11.10.sif'
