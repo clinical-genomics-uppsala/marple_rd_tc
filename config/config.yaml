@@ -11,10 +11,10 @@ modules:
   annotation: "v1.2.0"
   cnv_sv: "v1.0.2"
   compression: "v2.1.0"
-  filtering: "fix_mosaicforecast"
+  filtering: "v1.1.0"
   prealignment: "v1.4.0"
   qc: "v0.6.0"
-  snv_indels: "v1.3.1"
+  snv_indels: "fix_mosaicforecast"
 
 reference:
   annovar: "/opt/ohpc/pub/annotators/annovar/2025Feb18"

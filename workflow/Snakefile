@@ -256,6 +256,7 @@ use rule deepvariant from snv_indels as snv_indels_deepvariant with:
         extra=config.get("deepvariant", {}).get("extra", ""),
 
 
+
 use rule deepsomatic_t_only from snv_indels as snv_indels_deepsomatic_t_only with:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",

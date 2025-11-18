@@ -57,11 +57,11 @@ bcftools_view_deepsomatic:
 
 bwa_mem:
   container: "docker://hydragenetics/bwa_mem:0.7.17"
-  amb: "reference/ref.fasta.amb"
-  ann: "reference/ref.fasta.ann"
-  bwt: "reference/ref.fasta.bwt"
-  pac: "reference/ref.fasta.pac"
-  sa: "reference/ref.fasta.sa"
+  amb: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.amb"
+  ann: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.ann"
+  bwt: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.bwt"
+  pac: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.pac"
+  sa: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.sa"
 
 deepmosaic_draw:
   container: "library://sanglee8888/deepmosaic/deepmosaic:sha256.28b3dd3b3ab1daa63b53d627c3fba3e6b4da38447ccdb9c7abc073718ff9453e"
