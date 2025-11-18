@@ -1,5 +1,5 @@
 ---
-resources: "resources.yaml"
+resources: "config/resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 output: "{{PATH_TO_REPO}}/marple_rd_tc/config/output_files.yaml"
