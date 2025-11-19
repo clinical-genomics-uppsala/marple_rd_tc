@@ -9,12 +9,12 @@ default_container: "docker://hydragenetics/common:3.1.1"
 modules:
   alignment: "v0.7.0"
   annotation: "v1.2.0"
-  cnv_sv: "df37296"
+  cnv_sv: "v2.0.0"
   compression: "v2.1.0"
   filtering: "v1.1.0"
   prealignment: "v1.4.0"
   qc: "v0.6.0"
-  snv_indels: "148a5de"
+  snv_indels: "v2.0.0"
 
 reference:
   annovar: "/opt/ohpc/pub/annotators/annovar/2025Feb18"
