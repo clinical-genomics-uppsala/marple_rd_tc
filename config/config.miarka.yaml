@@ -1,7 +1,7 @@
 
 REFERENCE_DATA: /proj/ngi2024001/nobackup/bin/wp3_tc/design_and_ref_files
 
-hydra_local_path: /proj/ngi2024001/nobackup/bin/wp3_tc/{{PIPELINE_VERSION}}/hydra-genetics
+hydra_local_path: /proj/ngi2024001/nobackup/bin/wp3_tc/marple_rd_tc_{{PIPELINE_VERSION}}/hydra-genetics
 
 resources: config/resources.miarka.yaml
 output: config/output_files.yaml
