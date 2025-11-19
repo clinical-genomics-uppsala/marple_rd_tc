@@ -3,17 +3,28 @@ default_resources:
   time: "12:00:00"
   mem_mb: 6144
   mem_per_cpu: 6144
-  partition: "low"
-  
+  partition: "core"
+
 bwa_mem:
+  mem_mb: 122880
+  mem_per_cpu: 6144
+  threads: 8
+
+deepvariant:
   mem_mb: 61440
   mem_per_cpu: 6144
   threads: 10
-  time: "8:00:00"
+  time: "12:00:00"
+
+deepsomatic_t_only:
+  mem_mb: 61440
+  mem_per_cpu: 6144
+  threads: 10
+  time: "12:00:00"
 
 fastp_pe:
-  threads: 5
-  mem_mb: 30720
+  threads: 1
+  mem_mb: 6144
   mem_per_cpu: 6144
 
 fastqc:
@@ -21,18 +32,21 @@ fastqc:
   mem_mb: 12288
   mem_per_cpu: 6144
 
-pbrun_deepvariant:
-  gres: "--gres=gres:gpu:4"
-  mem_mb: 655360
-  mem_per_cpu: 16384
-  partition: "GPU_hi"
-  time: "0:10:00"
-  threads: 40
+mosdepth_bed:
+  mem_mb: 36864
+  threads: 4
+
+samtools_sort:
+  mem_mb: 61440
+  mem_per_cpu: 6144
+  threads: 10
+
+samtools_view:
+  mem_mb: 61440
+  mem_per_cpu: 6144
+  threads: 10
 
 vep:
   threads: 5
-  time: "6:00:00"
   mem_mb: 30720
   mem_per_cpu: 6144
-
-

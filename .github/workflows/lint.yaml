@@ -31,4 +31,4 @@ jobs:
       - name: Linting
         working-directory: .tests/integration
         run: |
-          snakemake --lint -n -s ../../workflow/Snakefile --configfiles ../../config/config.yaml config.yaml --config sequenceid="test"
+          cp ../../config/*.yaml config/ && snakemake --lint -n -s ../../workflow/Snakefile --configfiles config/config.yaml config/config.test.yaml config/config_exomedepth.yaml --config sequenceid="test"

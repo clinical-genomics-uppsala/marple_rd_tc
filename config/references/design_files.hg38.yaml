@@ -1,0 +1,28 @@
+---
+
+  reference:
+    design_bed:
+      checksum: 3f69096941a5c39bc4931f9ffacbe79a
+      path: marple/Twist_Cancer_230608_hg38_TE-98982205-wPGRS.merged.bed
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/marple/Twist_Cancer_230608_hg38_TE-98982205-wPGRS.merged.bed
+    design_intervals:
+      checksum: 2e48c5ab9672b333b1b2ffcbaa8582d5
+      path: marple/Twist_Cancer_230608_hg38_TE-98982205-wPGRS.merged.intervals
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/marple/Twist_Cancer_230608_hg38_TE-98982205-wPGRS.merged.intervals
+    exon_bed:
+      checksum: 744b281aee5d653f343d88e42296abe3
+      path: marple/Twist_Cancer_230602_hg38_coding_exons.bed
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/marple/Twist_Cancer_230602_hg38_coding_exons.bed
+    exon_intervals:
+      checksum: b73fe561ffca32948321aa3c06becd5d
+      path: marple/Twist_Cancer_230602_hg38_coding_exons.intervals
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/marple/Twist_Cancer_230602_hg38_coding_exons.intervals
+    pgrs_bed:
+      checksum: 71abb4b1d5eef6144d7682c14be67dc7
+      path: marple/Twist_Cancer_230707_hg38_pgrs_snps.bed
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/marple/Twist_Cancer_230707_hg38_pgrs_snps.bed

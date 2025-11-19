@@ -1,0 +1,129 @@
+---
+
+  fasta_reference:
+    fasta:
+      checksum: 7f12c75dc92150534ec3c9d7fdc43522
+      path: marple/reference_grasnatter/homo_sapiens.fasta
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/marple/reference_grasnatter/homo_sapiens.fasta
+    fasta_index:
+      checksum: 7b0d658ae292f8ee17b371d387dbdc0d
+      path: marple/reference_grasnatter/homo_sapiens.fasta.fai
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/marple/reference_grasnatter/homo_sapiens.fasta.fai
+  
+  sites:
+    checksum: 8cc787a83878e4f57cb34031da7b1663
+    path: marple/reference_grasnatter/homo_sapiens.known_indels.vcf.gz
+    type: file
+    url: file:/beegfs-storage/data/ref_data/wp3/marple/reference_grasnatter/homo_sapiens.known_indels.vcf.gz
+
+  bwa:
+    amb:
+      checksum: dd29857542689725e3e75f1174d00fa7
+      path: marple/reference_grasnatter/homo_sapiens.fasta.amb
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/marple/reference_grasnatter/homo_sapiens.fasta.amb
+    ann:
+      checksum: b99a6c8ac884569801d4c6f50edd0563
+      path: marple/reference_grasnatter/homo_sapiens.fasta.ann
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/marple/reference_grasnatter/homo_sapiens.fasta.ann
+    bwt:
+      checksum: 518ffb571235b7ef969cb714397caa1a
+      path: marple/reference_grasnatter/homo_sapiens.fasta.bwt
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/marple/reference_grasnatter/homo_sapiens.fasta.bwt
+    pac:
+      checksum: 4f937552af990e5cd26b066e390d5838
+      path: marple/reference_grasnatter/homo_sapiens.fasta.pac
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/marple/reference_grasnatter/homo_sapiens.fasta.pac
+    sa:
+      checksum: faef505d9996598886a6770d349fb7f5
+      path: marple/reference_grasnatter/homo_sapiens.fasta.sa
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/marple/reference_grasnatter/homo_sapiens.fasta.sa
+
+  efficientnet_deepmosaic:
+    pth:
+      checksum: 8c363a3d0fa1cd8c48c37337ca413b62
+      path: marple/efficientnet-b4-6ed6700e.pth
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/marple/efficientnet-b4-6ed6700e.pth
+ 
+  export_qc_xlsx_report:
+    wanted_transcripts:
+      checksum: 7ef66655e0ebc621c473d8b1fc14c4aa
+      path: marple/wanted_transcripts.txt
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/marple/wanted_transcripts.txt
+
+  melt:
+    bed:
+      checksum: b7cc511549a1ee6fd5a3ba73955a10ae
+      path: marple/melt/Hg38.genes.bed
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/melt/Hg38.genes.bed
+    mei:
+      checksum: 071a34c6db33009a2b3ea3886aaf8c30
+      path: marple/melt/mei_list.txt
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/melt/mei_marple_list.txt
+    alu:
+      checksum: 8e2bf5db30c7053c640ba8aaa4ded716
+      path: marple/melt/me_refs/Hg38/ALU_MELT.zip 
+      type: folder
+      url: file:/beegfs-storage/data/ref_data/wp3/melt/me_refs/Hg38/ALU_MELT.zip 
+    hervk:
+      checksum: 8672106ec4205e5787217204e7186038 
+      path: marple/melt/me_refs/Hg38/HERVK_MELT.zip
+      type: folder
+      url: file:/beegfs-storage/data/ref_data/wp3/melt/me_refs/Hg38/HERVK_MELT.zip
+    line1:
+      checksum: d53f11c7e8e0805c8e44b42309855909 
+      path: marple/melt/me_refs/Hg38/LINE1_MELT.zip
+      type: folder
+      url: file:/beegfs-storage/data/ref_data/wp3/melt/me_refs/Hg38/LINE1_MELT.zip
+    sva:
+      checksum: 159093e9fecc796f11382fb29340d011
+      path: marple/melt/me_refs/Hg38/SVA_MELT.zip
+      type: folder
+      url: file:/beegfs-storage/data/ref_data/wp3/melt/me_refs/Hg38/SVA_MELT.zip
+
+  mosaicforecast_genotype_prediction:
+    model_trainedSNP:
+      checksum: a71a3ce2a76ccb4374a96c126c21bcaa
+      path: marple/150xRFmodel_addRMSK_Refine.rds
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/marple/150xRFmodel_addRMSK_Refine.rds
+    model_trainedINS:
+      checksum: f9414c3df89d030fabdfa891c493997e
+      path: marple/insertions_250x.RF.rds
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/marple/insertions_250x.RF.rds
+    model_trainedDEL:
+      checksum: aedaa0b0ba9f7cdb596d030c40fe0048
+      path: marple/deletions_250x.RF.rds
+      type: file
+      url: file:/beegfs-storage/data/ref_data/wp3/marple/deletions_250x.RF.rds
+
+  annovar:
+    annovar_2025Feb18:
+      compressed_checksum: d713f17ffb5d43ddd48756f6e1a28b04
+      path: marple/annovar/
+      type: folder
+      content_checksum:
+        annotate_variation.pl: d4996fe4809e44cdd09399fd676c3b03
+        coding_change.pl: 2afc56f7661d10f855d74690c5ae4b3a
+        convert2annovar.pl: 9e9d5fbffa84e48f13227160d4b868d4
+        retrieve_seq_from_fasta.pl: ec79ec9e3aa6736dfd6fe0372e104a62
+        table_annovar.pl: 41b3b0cb2f995f24d131050c60eff865
+        variants_reduction.pl: e76488cf837c79403f2af031732fef35
+        humandb/hg38_gnomad41_genome.txt: 9b140e4a94c875bad1e3f97d8298cd59
+        humandb/hg38_gnomad41_genome.txt.idx: d4cc6fec5c78d8e85c80cf1ccc43a584
+        humandb/hg38_refGene.txt: 77af23e0a7f318fca6ecf517d4296e05
+        humandb/hg39_refGeneMrna.fa: d41d8cd98f00b204e9800998ecf8427e
+      url: file:/beegfs-storage/data/ref_data/wp3/annovar/annovar.tar.gz
+
+  

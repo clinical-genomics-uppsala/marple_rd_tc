@@ -10,18 +10,14 @@ include: "rules/add_ref_to_vcf.smk"
 include: "rules/exomedepth_export.smk"
 include: "rules/export_qc.smk"
 include: "rules/sample_order_multiqc.smk"
+include: "rules/sample_prep.smk"
 include: "rules/tsv2vcf.smk"
 
 
 report: "report/workflow.rst"
 
 
-ruleorder: _copy_alignment_bam_file > alignment_samtools_sort
-ruleorder: _copy_alignment_bai_file > alignment_samtools_index
-ruleorder: _copy_annotated_vcf_tbi_file > snv_indels_tabix
-ruleorder: _copy_genome_vcf_file_no_normalize > snv_indels_bgzip
-ruleorder: _copy_genome_vcf_index_file_no_normalize > snv_indels_tabix
-ruleorder: _copy_exomedepth_vcf_tbi > snv_indels_tabix
+ruleorder: _copy_alignment_crai_file > compression_samtools_index
 
 
 # 'All' rule, must be specified before any other modules are
@@ -34,10 +30,11 @@ rule all:
 # Include modules
 module alignment:
     snakefile:
-        github(
+        get_module_snakefile(
+            config,
             "hydra-genetics/alignment",
             path="workflow/Snakefile",
-            tag="v0.4.0",
+            tag=config["modules"]["alignment"],
         )
     config:
         config
@@ -48,24 +45,26 @@ use rule * from alignment as alignment_*
 
 module annotation:
     snakefile:
-        github(
+        get_module_snakefile(
+            config,
             "hydra-genetics/annotation",
             path="workflow/Snakefile",
-            tag="v0.3.0",
+            tag=config["modules"]["annotation"],
         )
     config:
         config
 
 
-use rule * from annotation as annotation_*
+use rule vep from annotation as annotation_vep
 
 
 module cnv_sv:
     snakefile:
-        github(
+        get_module_snakefile(
+            config,
             "hydra-genetics/cnv_sv",
             path="workflow/Snakefile",
-            tag="78f270c",
+            tag=config["modules"]["cnv_sv"],
         )
     config:
         config
@@ -84,12 +83,55 @@ use rule exomedepth_call from cnv_sv as cnv_sv_exomedepth_call with:
         exons=config.get("exomedepth_call", {}).get("exonsfile", ""),
 
 
+use rule melt from cnv_sv as cnv_sv_melt
+
+
+module compression:
+    snakefile:
+        get_module_snakefile(
+            config,
+            "hydra-genetics/compression",
+            path="workflow/Snakefile",
+            tag=config["modules"]["compression"],
+        )
+    config:
+        config
+
+
+use rule * from compression as compression_*
+
+
+module filtering:
+    snakefile:
+        get_module_snakefile(config, "hydra-genetics/filtering", path="workflow/Snakefile", tag=config["modules"]["filtering"])
+    config:
+        config
+
+
+use rule bcftools_view from filtering as filtering_bcftools_view_deepsomatic with:
+    input:
+        vcf="snv_indels/deepsomatic_t_only/{sample}_{type}.vcf.gz",
+        tbi="snv_indels/deepsomatic_t_only/{sample}_{type}.vcf.gz.tbi",
+    output:
+        vcf=temp("snv_indels/bcftools_view/{sample}_{type}.ds.vcf.gz"),
+    log:
+        "snv_indels/bcftools_view/{sample}_{type}.ds.vcf.log",
+    params:
+        extra=config.get("bcftools_view_deepsomatic", {}).get("extra", ""),
+    benchmark:
+        repeat(
+            "snv_indels/bcftools_view/{sample}_{type}.ds.benchmark.tsv",
+            config.get("bcftools_view", {}).get("benchmark_repeats", 1),
+        )
+
+
 module prealignment:
     snakefile:
-        github(
+        get_module_snakefile(
+            config,
             "hydra-genetics/prealignment",
             path="workflow/Snakefile",
-            tag="v1.0.0",
+            tag=config["modules"]["prealignment"],
         )
     config:
         config
@@ -98,55 +140,13 @@ module prealignment:
 use rule * from prealignment as prealignment_*
 
 
-module snv_indels:
-    snakefile:
-        github(
-            "hydra-genetics/snv_indels",
-            path="workflow/Snakefile",
-            tag="3935ecf",
-        )
-    config:
-        config
-
-
-use rule * from snv_indels as snv_indels_*
-
-
-use rule deepvariant from snv_indels as snv_indels_deepvariant with:
-    input:
-        bam="alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam",
-        bai="alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam.bai",
-        ref=config.get("reference", {}).get("fasta", ""),
-        bed="snv_indels/bed_split/design_bedfile_{chr}.bed",
-    params:
-        model_type=config.get("deepvariant", {}).get("model_type", ""),
-        output_gvcf=lambda wildcards: get_gvcf_output(wildcards, "deepvariant"),
-        int_res=lambda wildcards: f"snv_indels/deepvariant/{wildcards.sample}_{wildcards.type}_{wildcards.chr}",
-        regions=lambda wildcards, input: f" --regions {input.bed} ",
-        extra=config.get("deepvariant", {}).get("extra", ""),
-
-
-use rule fix_af from snv_indels as snv_indels_fix_af_g with:
-    input:
-        vcf="snv_indels/deepvariant/{sample}_{type}.merged.g.vcf.gz",
-        tbi="snv_indels/deepvariant/{sample}_{type}.merged.g.vcf.gz.tbi",
-    output:
-        vcf=temp("snv_indels/deepvariant/{sample}_{type}.g.fix_af.vcf"),
-    log:
-        "snv_indels/deepvariant/{sample}_{type}.g.fix_af.vcf.log",
-    benchmark:
-        repeat(
-            "snv_indels/deepvariant/{sample}_{type}.fix_af.g.vcf.benchmark.tsv",
-            config.get("fix_af", {}).get("benchmark_repeats", 1),
-        )
-
-
 module qc:
     snakefile:
-        github(
+        get_module_snakefile(
+            config,
             "hydra-genetics/qc",
             path="workflow/Snakefile",
-            tag="ca947b1",
+            tag=config["modules"]["qc"],
         )
     config:
         config
@@ -210,3 +210,70 @@ use rule multiqc from qc as qc_multiqc with:
         + input.sample_order
         + " -c "
         + input.config,
+
+
+module snv_indels:
+    snakefile:
+        get_module_snakefile(config, "hydra-genetics/snv_indels", path="workflow/Snakefile", tag=config["modules"]["snv_indels"])
+    config:
+        config
+
+
+use rule * from snv_indels as snv_indels_*
+
+
+use rule deepmosaic_draw from snv_indels as snv_indels_deepmosaic_draw with:
+    input:
+        annovar=config.get("reference", {}).get("annovar", ""),
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        txt="snv_indels/deepmosaic/{sample}_{type}.input.txt",
+        vcf="snv_indels/bcftools_view/{sample}_{type}.ds.vcf.gz",
+
+
+use rule deepmosaic_input from snv_indels as snv_indels_deepmosaic_input with:
+    input:
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        sex="sample_sex.tsv",
+        vcf="snv_indels/bcftools_view/{sample}_{type}.ds.vcf.gz",
+
+
+use rule deepmosaic_predict from snv_indels as snv_indels_deepmosaic_predict
+
+
+use rule deepvariant from snv_indels as snv_indels_deepvariant with:
+    input:
+        bam="alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam",
+        bai="alignment/picard_mark_duplicates/{sample}_{type}_{chr}.bam.bai",
+        ref=config.get("reference", {}).get("fasta", ""),
+        bed="snv_indels/bed_split/design_bedfile_{chr}.bed",
+    params:
+        model_type=config.get("deepvariant", {}).get("model_type", ""),
+        output_gvcf=lambda wildcards: get_gvcf_output(wildcards, "deepvariant"),
+        int_res=lambda wildcards: f"snv_indels/deepvariant/{wildcards.sample}_{wildcards.type}_{wildcards.chr}",
+        regions=lambda wildcards, input: f" --regions {input.bed} ",
+        extra=config.get("deepvariant", {}).get("extra", ""),
+
+
+use rule deepsomatic_t_only from snv_indels as snv_indels_deepsomatic_t_only with:
+    input:
+        bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
+        bai="alignment/samtools_merge_bam/{sample}_{type}.bam.bai",
+        ref=config.get("reference", {}).get("fasta", ""),
+        bed=config.get("reference", {}).get("design_bed", ""),
+
+
+use rule fix_af from snv_indels as snv_indels_fix_af_g with:
+    input:
+        vcf="snv_indels/deepvariant/{sample}_{type}.merged.g.vcf.gz",
+        tbi="snv_indels/deepvariant/{sample}_{type}.merged.g.vcf.gz.tbi",
+    output:
+        vcf=temp("snv_indels/deepvariant/{sample}_{type}.g.fix_af.vcf"),
+    log:
+        "snv_indels/deepvariant/{sample}_{type}.g.fix_af.vcf.log",
+    benchmark:
+        repeat(
+            "snv_indels/deepvariant/{sample}_{type}.fix_af.g.vcf.benchmark.tsv",
+            config.get("fix_af", {}).get("benchmark_repeats", 1),
+        )

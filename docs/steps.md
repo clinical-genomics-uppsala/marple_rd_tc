@@ -3,7 +3,7 @@ To go into details of the pipeline we dived the pipeline into modules similar to
 
 ---
 ## Prealignment
-See the **Prealignment** hydra-genetics module documentation on [ReadTheDoc](https://hydra-genetics-prealignment.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/prealignment/tree/v1.0.0) documentation for more details on the softwares. 
+See the **Prealignment** hydra-genetics module documentation on [ReadTheDoc](https://hydra-genetics-prealignment.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/prealignment/tree/v1.4.0) documentation for more details on the softwares. 
 
 ![dag plot](includes/images/prealignment.png){: style="height:30%;width:30%"}
 
@@ -18,14 +18,14 @@ Merging of fastq files belonging to the same sample are performed by simply conc
 
 ---
 ## Alignment
-See **Alignment** hydra-genetics module on [ReadTheDocs](https://hydra-genetics-alignment.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/alignment/tree/v0.4.0) for more information and documentation on the softwares used in the alignment steps. 
+See **Alignment** hydra-genetics module on [ReadTheDocs](https://hydra-genetics-alignment.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/alignment/tree/v0.7.0) for more information and documentation on the softwares used in the alignment steps. 
 
 ![dag plot](includes/images/alignment.png){: style="height:100%;width:100%"}
 
 ### Pipeline output files:
 
-* `Results/{sample}_{sequenceid}/{sample}_{sequenceid}.bam`
-* `Results/{sample}_{sequenceid}/{sample}_{sequenceid}.bam.bai`
+* `Results/{sample}/{sample}.cram`
+* `Results/{sample}/{sample}.cram.crai`
 
 ### Alignment with BWA-mem
 Alignment of fastq files into bam files is performed by **[bwa-mem](https://github.com/lh3/bwa)** v0.7.17 using the trimmed fastq files. This make it possible to speed up alignment by utilizing parallelization and also make it possible to analyze qc for lanes separately. Bamfiles are then directly sorted by **[samtools sort](http://www.htslib.org/doc/samtools-sort.html)** v1.15.
@@ -63,18 +63,24 @@ Bamfile indexing is performed by **[samtools index](http://www.htslib.org/doc/sa
 
 ---
 ## SNV indels
-SNV and indels are called using the **SNV_indels** ([ReadTheDoc](https://hydra-genetics-snv-indels.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/snv_indels/tree/3935ecf)) module. Annotation is then done with **Annotation** module ([ReadTheDocs](https://hydra-genetics-annotation.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/annotation/tree/v0.3.0)).
+SNV and indels are called using the **SNV_indels** ([ReadTheDoc](https://hydra-genetics-snv-indels.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/snv_indels/tree/v1.3.0)) module. Annotation is then done with **Annotation** module ([ReadTheDocs](https://hydra-genetics-annotation.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/annotation/tree/v1.2.0)).
 
 ![dag plot](includes/images/snv_indels.png){: style="height:100%;width:100%"}
 
 
 ### Pipeline output files
 
-* `Results/{sample}_{sequenceid}/{sample}_{sequenceid}.vcf.gz`
-* `Results/{sample}_{sequenceid}/{sample}_{sequenceid}.genome.vcf.gz`
+* `Results/{sample}/{sample}.hard-filtered.vcf.gz`
+* `Results/{sample}/{sample}.genome.vcf.gz`
+* `Results/{sample}/mosaic/{sample}.deepmosaic.txt`
+* `Results/{sample}/mosaic/{sample}.deepsomatic.vcf.gz`
+* `Results/{sample}/mosaic/{sample}.mosaicforecast.phasing`
+* `Results/{sample}/mosaic/{sample}.mosaicforecast.DEL.predictions`
+* `Results/{sample}/mosaic/{sample}.mosaicforecast.INS.predictions`
+* `Results/{sample}/mosaic/{sample}.mosaicforecast.SNP.predictions`
 
 ### SNV calling
-Variants are called using [Deepvariant](https://github.com/google/deepvariant). Deepvariant is run per chromosome over the regions defined in `config["references"]["design_bed"]`. The model type is set to "WES" and `--output_gvcf` is used to ensure that both genome vcf as well as a standard vcf is produced. The AF field is added to the `INFO` column in the vcf:s using the `fix_af.py`. The vcf header in the standard vcf is also updated to include a reference line using the `add_ref_to_vcf.py` to ensure that programs such as Alissa acknowledge the use of Hg38.
+Variants are called using [DeepVariant](https://github.com/google/deepvariant). Deepvariant is run per chromosome over the regions defined in `config["references"]["design_bed"]`. The model type is set to "WES" and `--output_gvcf` is used to ensure that both genome vcf as well as a standard vcf is produced. The AF field is added to the `INFO` column in the vcf:s using the `fix_af.py`. The vcf header in the standard vcf is also updated to include a reference line using the `add_ref_to_vcf.py` to ensure that programs such as Alissa acknowledge the use of Hg38.
 
 ### Normalizing
 The standard vcf files is decomposed with [**vt decompose**](https://genome.sph.umich.edu/wiki/Vt#Decompose) followed by [**vt decompose_blocksub**](https://genome.sph.umich.edu/wiki/Vt#Decompose_biallelic_block_substitutions) v2015.11.10. The decomposed vcf files are then normalized by [**vt normalize**](https://genome.sph.umich.edu/wiki/Vt#Normalization) v2015.11.10.
@@ -83,6 +89,10 @@ The standard vcf files is decomposed with [**vt decompose**](https://genome.sph.
 The normalized standard VCF files are then annotated using **[VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)** v109.3. Vep is run with the extra parameters `--assembly GRCh38 --check_existing --pick --variant_class --everything`.
 
 See the [annotation hydra-genetics module](https://hydra-genetics-annotation.readthedocs.io/en/latest/) for additional information.
+
+### Mosaic variant calling
+Possible mosaic variants is called by [DeepSomatic](https://github.com/google/deepsomatic) which are then predicted to be real or not with [MosaicForecast](https://github.com/parklab/MosaicForecast) and [DeepMosaic](https://github.com/XiaoxuYangLab/DeepMosaic).
+
 
 ---
 ## CNV
@@ -95,9 +105,17 @@ CNVs are called using the Hydra-Genetics **CNV_SV** module ([ReadTheDocs](https:
 
 * `Results/{sample}_{sequenceid}/{sample}_{sequenceid}_exomedepth_SV.txt`
 * `Results/{sample}_{sequenceid}/{sample}_{sequenceid}_exomedepth.aed`
+* `Results/{sample}/{sample}.cnv.vcf.gz`
+* `Results/{sample}/mobile_elements/{sample}.ALU.vcf.gz`
+* `Results/{sample}/mobile_elements/{sample}.LINE1.vcf.gz`
+* `Results/{sample}/mobile_elements/{sample}.HERVK.vcf.gz`
+* `Results/{sample}/mobile_elements/{sample}.SVA.vcf.gz`
 
 ### Exomedepth
 To call larger structural variants **[Exomedepth](https://cran.r-project.org/web/packages/ExomeDepth/index.html)** v1.1.15 is used. Exomedepth does **not** use a window approach but evaluates each row in the bedfile as a segment, therefor the bedfile need to be split into appropriate large windows (e.g. using `bedtools makewindows`). Exomedepth also need a `RData` file containing the normal pool, this can be created using the [Marple - references workflow](/running_ref). Lines with no-change calls (`reads.ratio == 1`) are removed from the output for Alissa compatibility. Since no sex-chromosome are included in the design Exomedepth is run with the same normalpool irregardless of the sample's biological sex. Marple is designed on HG38 therefor a genes and exonfile are also needed for annotation. 
+
+### Mobile elements
+To find mobile elements, like ALU, HERVK, LINE1 and SVA, [MELT](https://melt.igs.umaryland.edu/index.php) is used. It is free to use for academic purposes and you can buy a licence if used in other cases, like for this pipeline as part of the clinical workflow at the hospital. Since you should ask to use MELT, the singularity we use are local.
 
 ---
 ## QC
