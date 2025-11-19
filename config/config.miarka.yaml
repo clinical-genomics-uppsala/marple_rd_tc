@@ -1,9 +1,10 @@
 
 REFERENCE_DATA: /proj/ngi2024001/nobackup/bin/wp3_tc/design_and_ref_files
 
-hydra_local_path: /proj/ngi2024001/nobackup/bin/wp3_tc/{{PIPELINE_VERSION}}/hydra-genetics
+hydra_local_path: /proj/ngi2024001/nobackup/bin/wp3_tc/marple_rd_tc_{{PIPELINE_VERSION}}/hydra-genetics
 
 resources: config/resources.miarka.yaml
+output: config/output_files.yaml
 
 default_container: 'hydragenetics__common_3.1.1.sif'
 
@@ -81,6 +82,9 @@ mosdepth_bed:
 
 multiqc:
   container: 'hydragenetics__multiqc_1.11.sif'
+  reports:
+    DNA:
+      config: "config/multiqc_config.yaml"
 
 picard_collect_alignment_summary_metrics:
   container: 'hydragenetics__picard_2.25.4.sif'
