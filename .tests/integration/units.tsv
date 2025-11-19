@@ -1,2 +1,2 @@
-sample	type	platform	machine	flowcell	lane	barcode	fastq1	fastq2	adapter
-NA12878
+sample	type	machine	platform	flowcell	lane	barcode	fastq1	fastq2	adapter
+NA12878	N	NDX590	MiSeq	123	L001	AAAA+TTTT	input/R1.fastq.gz	input/R2.fastq.gz	ACGT,ATGC

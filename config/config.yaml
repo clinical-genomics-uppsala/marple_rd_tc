@@ -1,5 +1,5 @@
 ---
-resources: "resources.yaml"
+resources: "config/resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 output: "{{PATH_TO_REPO}}/marple_rd_tc/config/output_files.yaml"
@@ -9,12 +9,12 @@ default_container: "docker://hydragenetics/common:3.1.1"
 modules:
   alignment: "v0.7.0"
   annotation: "v1.2.0"
-  cnv_sv: "v1.0.2"
+  cnv_sv: "v2.0.0"
   compression: "v2.1.0"
   filtering: "v1.1.0"
   prealignment: "v1.4.0"
   qc: "v0.6.0"
-  snv_indels: "v1.3.1"
+  snv_indels: "v2.0.0"
 
 reference:
   annovar: "/opt/ohpc/pub/annotators/annovar/2025Feb18"
@@ -88,6 +88,9 @@ melt:
   extra: ""
   mei: "/projects/wp3/Software/MELTv2.2.2/mei_list.txt"
 
+mosaicforecast_input:
+  bcftools_filter: "--exclude 'FILTER!=\"PASS\" || FORMAT/DP<8'"
+
 mosaicforecast_phasing:
   container: "docker://yanmei/mosaicforecast_hg38:0.0.1"
   f_format: "bam" # cram/bam
@@ -100,12 +103,13 @@ mosaicforecast_readlevel:
 
 mosaicforecast_genotype_prediction:
   container: "docker://yanmei/mosaicforecast_hg38:0.0.1"
-  model_trainedSNP: "/data/ref_data/wp3/mosaicforecast/150xRFmodel_addRMSK_Refine.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
-  model_trainedINS: "/data/ref_data/wp3/mosaicforecast/insertions_250x.RF.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
-  model_trainedDEL: "/data/ref_data/wp3/mosaicforecast/deletions_250x.RF.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
-  model_typeSNP: "Refine"  # phase/refine
-  model_typeINDEL: "Phase"  # phase/refine
-
+  model_trained_SNP: "/data/ref_data/wp3/mosaicforecast/150xRFmodel_addRMSK_Refine.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
+  model_trained_INS: "/data/ref_data/wp3/mosaicforecast/insertions_250x.RF.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
+  model_trained_DEL: "/data/ref_data/wp3/mosaicforecast/deletions_250x.RF.rds" # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
+  model_type_SNP: "Refine"  # phase/refine
+  model_type_INS: "Phase"  # phase/refine
+  model_type_DEL: "Phase"  # phase/refine
+        
 mosdepth_bed:
   container: "docker://hydragenetics/mosdepth:0.3.2"
   thresholds: "10,20,50"
@@ -168,7 +172,7 @@ picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.4"
 
 vep:
-  container: "docker://ensemblorg/ensembl-vep:release_109.3" # "docker://hydragenetics/vep:109"
+  container: "docker://ensemblorg/ensembl-vep:release_110.1"
   vep_cache: "/data/ref_genomes/VEP"
   extra: "--assembly GRCh38 --check_existing --pick --variant_class --everything"
 

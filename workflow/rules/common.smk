@@ -101,21 +101,6 @@ for fq1, fq2 in zip(units["fastq1"].values, units["fastq2"].values):
         sys.exit(f"fastq file not found: {fq2}\ncontrol the paths in {config['units']}")
 
 
-### get bam input for compression_samtools_view
-def get_bam_input(wildcards, use_sample_wildcard=True, use_type_wildcard=True, by_chr=False):
-    if use_sample_wildcard and use_type_wildcard is True:
-        sample_str = "{}_{}".format(wildcards.sample, wildcards.type)
-    elif use_sample_wildcard and use_type_wildcard is not True:
-        sample_str = "{}_{}".format(wildcards.sample, "N")
-    else:
-        sample_str = wildcards.file
-
-    bam_input = "alignment/samtools_merge_bam/{}.bam".format(sample_str)
-    bai_input = "{}.bai".format(bam_input)
-
-    return (bam_input, bai_input)
-
-
 ### get gvcf output for deepvariant
 def get_gvcf_output(wildcards, name):
     if config.get(name, {}).get("output_gvcf", False):

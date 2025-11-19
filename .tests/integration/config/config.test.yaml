@@ -1,0 +1,53 @@
+
+resources: config/resources.test.yaml
+output: "config/output_files.yaml"
+
+reference:
+  annovar: "reference/annovar"
+  fasta: "reference/ref.fasta"
+  fai: "reference/ref.fasta.fai"
+  sites: "reference/design.bed"
+  design_bed: "reference/design.bed"
+  design_intervals: "reference/design.intervals"
+  exon_bed: "reference/design.bed"
+  exon_intervals: "reference/design.intervals"
+  pgrs_bed: "reference/design.pgrs.bed"
+
+
+trimmer_software: fastp_pe
+
+bwa_mem:
+  amb: "reference/ref.fasta.amb"
+  ann: "reference/ref.fasta.ann"
+  bwt: "reference/ref.fasta.bwt"
+  pac: "reference/ref.fasta.pac"
+  sa: "reference/ref.fasta.sa"
+
+
+exomedepth_call:
+  bedfile: "reference/design.bed"
+  exonsfile: "reference/exons.txt"
+  genesfile: "reference/genes.txt"
+
+export_qc_xlsx_report:
+  wanted_transcripts: 'reference/wanted_transcripts.txt'
+
+melt:
+  bed: 'reference/Hg38.genes.bed'
+  mei: 'reference/mei_list.txt'
+
+mosaicforecast_genotype_prediction:
+  model_trainedSNP: 'reference/150xRFmodel_addRMSK_Refine.rds' # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
+  model_trainedINS: 'reference/insertions_250x.RF.rds' # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
+  model_trainedDEL: 'reference/deletions_250x.RF.rds' # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
+
+multiqc:
+  container: "docker://hydragenetics/multiqc:1.11"
+  reports:
+    DNA:
+      config: "config/multiqc_config.yaml"
+
+vep:
+  vep_cache: 'reference/vep_cache/'
+
+

@@ -1,30 +1,12 @@
 
 REFERENCE_DATA: /proj/ngi2024001/nobackup/bin/wp3_tc/design_and_ref_files
 
-APPTAINER_CACHE: /proj/ngi2024001/nobackup/bin/wp3_tc/apptainer_cache
-
 hydra_local_path: /proj/ngi2024001/nobackup/bin/wp3_tc/{{PIPELINE_VERSION}}/hydra-genetics
 
 resources: config/resources.miarka.yaml
 
-samples: config/samples.tsv
+default_container: 'hydragenetics__common_3.1.1.sif'
 
-units: config/units.tsv
-
-output: '{{PATH_TO_REPO}}/config/output_files.yaml'
-
-default_container: '{{APPTAINER_CACHE}}/hydragenetics__common_3.1.1.sif'
-
-
-modules:
-  alignment: v0.7.0
-  annotation: v1.2.0
-  cnv_sv: v1.0.2
-  compression: v2.1.0
-  filtering: v1.1.0
-  prealignment: v1.4.0
-  qc: v0.6.0
-  snv_indels: v1.3.1
 
 reference:
   annovar: '{{REFERENCE_DATA}}/marple/annovar/'
@@ -36,18 +18,11 @@ reference:
   exon_bed: '{{REFERENCE_DATA}}/marple/Twist_Cancer_230602_hg38_coding_exons.bed'
   exon_intervals: '{{REFERENCE_DATA}}/marple/Twist_Cancer_230602_hg38_coding_exons.intervals'
   pgrs_bed: '{{REFERENCE_DATA}}/marple/Twist_Cancer_230707_hg38_pgrs_snps.bed'
-  skip_chrs:
-    - 'chrX'
-    - 'chrY'
-    - 'chrM'
 
 trimmer_software: fastp_pe
 
-bcftools_view_deepsomatic:
-  extra: "--exclude 'QUAL<1 | FORMAT/DP<10 | FORMAT/GQ<2 | FORMAT/VAF>0.4 && FORMAT/VAF<0.6 | FORMAT/VAF<0.01 | FORMAT/VAF>0.99' " # remove gnomad of some AF threshold? -T ^/projects/wp3/nobackup/Workspace/mosaic/hardregNgnomad_hg38.bed
-
 bwa_mem:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__bwa_mem_0.7.17.sif'
+  container: 'hydragenetics__bwa_mem_0.7.17.sif'
   amb: '{{REFERENCE_DATA}}/marple/reference_grasnatter/homo_sapiens.fasta.amb'
   ann: '{{REFERENCE_DATA}}/marple/reference_grasnatter/homo_sapiens.fasta.ann'
   bwt: '{{REFERENCE_DATA}}/marple/reference_grasnatter/homo_sapiens.fasta.bwt'
@@ -55,135 +30,85 @@ bwa_mem:
   sa: '{{REFERENCE_DATA}}/marple/reference_grasnatter/homo_sapiens.fasta.sa'
 
 deepmosaic_draw:
-  container: '{{APPTAINER_CACHE}}/library_____sanglee8888__deepmosaic__deepmosaic_sha256.28b3dd3b3ab1daa63b53d627c3fba3e6b4da38447ccdb9c7abc073718ff9453e.sif'
+  container: 'library_____sanglee8888__deepmosaic__deepmosaic_sha256.28b3dd3b3ab1daa63b53d627c3fba3e6b4da38447ccdb9c7abc073718ff9453e.sif'
 
 deepmosaic_predict:
-  container: '{{APPTAINER_CACHE}}/library_____sanglee8888__deepmosaic__deepmosaic_sha256.28b3dd3b3ab1daa63b53d627c3fba3e6b4da38447ccdb9c7abc073718ff9453e.sif'
+  container: 'library_____sanglee8888__deepmosaic__deepmosaic_sha256.28b3dd3b3ab1daa63b53d627c3fba3e6b4da38447ccdb9c7abc073718ff9453e.sif'
 
 deepvariant:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__deepvariant_1.4.0.sif'
-  model_type: 'WES'
-  output_gvcf: True
+  container: 'hydragenetics__deepvariant_1.4.0.sif'
 
 deepsomatic_t_only:
-  container: '{{APPTAINER_CACHE}}/google__deepsomatic_1.8.0.sif'
-  extra: "--use_default_pon_filtering=true make_examples_extra_args='vsc_min_fraction_snps=0.029,vsc_min_fraction_indels=0.05' " #--use_default_pon_filtering=true or --pon_filtering='pon.vcf' --process_somatic=true or ''
-  model: 'WGS_TUMOR_ONLY' # WGS,WES,PACBIO,ONT,FFPE_WGS,FFPE_WES,WGS_TUMOR_ONLY,PACBIO_TUMOR_ONLY,ONT_TUMOR_ONLY
+  container: 'google__deepsomatic_1.8.0.sif'
 
 exomedepth_call:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__exomedepth_1.1.15.sif'
+  container: 'hydragenetics__exomedepth_1.1.15.sif'
   bedfile: '{{REFERENCE_DATA}}/marple/Twist_Cancer_230706_hg38_TE-98982205-wPGRS.merged_200bpwindows.bed'
   exonsfile: '{{REFERENCE_DATA}}/marple/exons_GRCh38_ensembl109.txt'
   genesfile: '{{REFERENCE_DATA}}/marple/genes_GRCh38_ensembl109.txt'
-  genome_version: 'hg38'
 
 exomedepth_export:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__exomedepth_1.1.15.sif'
-
-export_qc_bedtools_intersect:
-  extra: ' -wb '
+  container: 'hydragenetics__exomedepth_1.1.15.sif'
 
 export_qc_xlsx_report:
   wanted_transcripts: '{{REFERENCE_DATA}}/marple/wanted_transcripts.txt'
 
 fastp_pe:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__fastp_0.20.1.sif'
+  container: 'hydragenetics__fastp_0.20.1.sif'
 
 fastqc:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__fastqc_0.11.9.sif'
+  container: 'hydragenetics__fastqc_0.11.9.sif'
 
 melt:
-  container: '{{APPTAINER_CACHE}}/MELT_v2.2.2.sif'
+  container: 'MELT_v2.2.2.sif'
   bed: '{{REFERENCE_DATA}}/marple/melt/Hg38.genes.bed'
-  extra: ''
   mei: '{{REFERENCE_DATA}}/marple/melt/mei_list.txt'
 
 mosaicforecast_phasing:
-  container: '{{APPTAINER_CACHE}}/yanmei__mosaicforecast_hg38_0.0.1.sif'
-  f_format: 'bam' # cram/bam
-  umap: '/usr/local/bin/k24.umap.wg.bw'
+  container: 'yanmei__mosaicforecast_hg38_0.0.1.sif'
 
 mosaicforecast_readlevel:
-  container: '{{APPTAINER_CACHE}}/yanmei__mosaicforecast_hg38_0.0.1.sif'
-  f_format: 'bam' # cram/bam
-  umap: '/usr/local/bin/k24.umap.wg.bw'
+  container: 'yanmei__mosaicforecast_hg38_0.0.1.sif'
 
 mosaicforecast_genotype_prediction:
-  container: '{{APPTAINER_CACHE}}/yanmei__mosaicforecast_hg38_0.0.1.sif'
+  container: 'yanmei__mosaicforecast_hg38_0.0.1.sif'
   model_trainedSNP: '{{REFERENCE_DATA}}/marple/150xRFmodel_addRMSK_Refine.rds' # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
   model_trainedINS: '{{REFERENCE_DATA}}/marple/insertions_250x.RF.rds' # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
   model_trainedDEL: '{{REFERENCE_DATA}}/marple/deletions_250x.RF.rds' # 200xRFmodel_addRMSK_Refine.rds or deletions_250x.RF.rds(phase) or insertions_250x.RF.rds(phase)
-  model_typeSNP: 'Refine'  # phase/refine
-  model_typeINDEL: 'Phase'  # phase/refine
 
 mosdepth_bed:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__mosdepth_0.3.2.sif'
-  thresholds: '10,20,50'
+  container: 'hydragenetics__mosdepth_0.3.2.sif'
 
 multiqc:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__multiqc_1.11.sif'
-  reports:
-    DNA:
-      included_unit_types: ['T', 'N']
-      config: '{{PATH_TO_REPO}}/config/multiqc_config.yaml'
-      qc_files:
-        - 'prealignment/fastp_pe/{sample}_{type}_{flowcell}_{lane}_{barcode}_fastp.json'
-        - 'qc/fastqc/{sample}_{type}_{flowcell}_{lane}_{barcode}_{read}_fastqc.zip'
-        - 'qc/picard_collect_alignment_summary_metrics/{sample}_{type}.alignment_summary_metrics.txt'
-        - 'qc/picard_collect_duplication_metrics/{sample}_{type}.duplication_metrics.txt'
-        - 'qc/picard_collect_gc_bias_metrics/{sample}_{type}.gc_bias.summary_metrics'
-        - 'qc/picard_collect_hs_metrics/{sample}_{type}.HsMetrics.txt'
-        - 'qc/picard_collect_insert_size_metrics/{sample}_{type}.insert_size_metrics.txt'
-        - 'qc/picard_collect_multiple_metrics/{sample}_{type}.{ext}'
-        - 'qc/samtools_stats/{sample}_{type}.samtools-stats.txt'
-        - 'qc/mosdepth_bed/{sample}_{type}.mosdepth.summary.txt'
-        - 'qc/mosdepth_bed/{sample}_{type}.per-base.bed.gz'
-        - 'qc/mosdepth_bed/{sample}_{type}.mosdepth.region.dist.txt'
-        - 'qc/mosdepth_bed/{sample}_{type}.mosdepth.global.dist.txt'
+  container: 'hydragenetics__multiqc_1.11.sif'
 
 picard_collect_alignment_summary_metrics:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__picard_2.25.4.sif'
+  container: 'hydragenetics__picard_2.25.4.sif'
 
 picard_collect_duplication_metrics:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__picard_2.25.4.sif'
+  container: 'hydragenetics__picard_2.25.4.sif'
 
 picard_collect_gc_bias_metrics:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__picard_2.25.4.sif'
+  container: 'hydragenetics__picard_2.25.4.sif'
 
 picard_collect_hs_metrics:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__picard_2.25.4.sif'
+  container: 'hydragenetics__picard_2.25.4.sif'
 
 picard_collect_insert_size_metrics:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__picard_2.25.4.sif'
+  container: 'hydragenetics__picard_2.25.4.sif'
 
 picard_collect_multiple_metrics:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__picard_2.25.4.sif'
-  output_ext:
-    - 'gc_bias.pdf' #collect_gc_bias
-    - 'gc_bias.summary_metrics'
-    - 'gc_bias.detail_metrics'
-    - 'alignment_summary_metrics' # collect_alignment_summary
-    - 'insert_size_metrics' # collect_insert_size
-    - 'insert_size_histogram.pdf'
-    - 'error_summary_metrics' # collect_sequencing_artefact
-    - 'bait_bias_detail_metrics'
-    - 'bait_bias_summary_metrics'
-    - 'pre_adapter_detail_metrics'
-    - 'pre_adapter_summary_metrics'
-    - 'quality_distribution_metrics' # quality_score_distribution
-    - 'quality_distribution.pdf'
-    - 'quality_yield_metrics' # quality yield metrics
+  container: 'hydragenetics__picard_2.25.4.sif'
 
 picard_mark_duplicates:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__picard_2.25.4.sif'
+  container: 'hydragenetics__picard_2.25.4.sif'
 
 vep:
-  container: '{{APPTAINER_CACHE}}/ensemblorg__ensembl-vep_release_110.1.sif'
+  container: 'ensemblorg__ensembl-vep_release_110.1.sif'
   vep_cache: '{{REFERENCE_DATA}}/marple/VEP/'
-  extra: "--assembly GRCh38 --check_existing --pick --variant_class --everything "
 
 vt_decompose:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__vt_2015.11.10.sif'
+  container: 'hydragenetics__vt_2015.11.10.sif'
 
 vt_normalize:
-  container: '{{APPTAINER_CACHE}}/hydragenetics__vt_2015.11.10.sif'
+  container: 'hydragenetics__vt_2015.11.10.sif'

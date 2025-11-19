@@ -101,13 +101,6 @@ module compression:
 use rule * from compression as compression_*
 
 
-use rule samtools_view from compression as compression_samtools_view with:
-    input:
-        bam=lambda wildcards: get_bam_input(wildcards, use_sample_wildcard=False)[0],
-        bai=lambda wildcards: get_bam_input(wildcards, use_sample_wildcard=False)[1],
-        ref=config.get("reference", {}).get("fasta", ""),
-
-
 module filtering:
     snakefile:
         get_module_snakefile(config, "hydra-genetics/filtering", path="workflow/Snakefile", tag=config["modules"]["filtering"])
@@ -284,53 +277,3 @@ use rule fix_af from snv_indels as snv_indels_fix_af_g with:
             "snv_indels/deepvariant/{sample}_{type}.fix_af.g.vcf.benchmark.tsv",
             config.get("fix_af", {}).get("benchmark_repeats", 1),
         )
-
-
-use rule mosaicforecast_input from snv_indels as snv_indels_mosaicforecast_input with:
-    input:
-        vcf="snv_indels/bcftools_view/{sample}_{type}.ds.vcf.gz",
-
-
-use rule mosaicforecast_genotype_prediction from snv_indels as snv_indels_mosaicforecast_genotype_prediction with:
-    params:
-        extra=config.get("mosaicforecast_genotype_prediction", {}).get("extra", ""),
-        model_trained=config.get("mosaicforecast_genotype_prediction", {}).get("model_trainedSNP", ""),
-        model_type=config.get("mosaicforecast_genotype_prediction", {}).get("model_typeSNP", ""),
-
-
-use rule mosaicforecast_genotype_prediction from snv_indels as snv_indels_mosaicforecast_genotype_predictionINS with:
-    output:
-        predict="snv_indels/mosaicforecast/{sample}_{type}/INS.predictions",
-    params:
-        extra=config.get("mosaicforecast_genotype_prediction", {}).get("extra", ""),
-        model_trained=config.get("mosaicforecast_genotype_prediction", {}).get("model_trainedINS", ""),
-        model_type=config.get("mosaicforecast_genotype_prediction", {}).get("model_typeINDEL", ""),
-    log:
-        "snv_indels/mosaicforecast/{sample}_{type}.mosaicforecast_genotype_predictionINS.log",
-    benchmark:
-        repeat(
-            "snv_indels/mosaicforecast/{sample}_{type}.mosaicforecast_genotype_predictionINS.benchmark.tsv",
-            config.get("mosaicforecast_genotype_prediction", {}).get("benchmark_repeats", 1),
-        )
-
-
-use rule mosaicforecast_genotype_prediction from snv_indels as snv_indels_mosaicforecast_genotype_predictionDEL with:
-    output:
-        predict="snv_indels/mosaicforecast/{sample}_{type}/DEL.predictions",
-    params:
-        extra=config.get("mosaicforecast_genotype_prediction", {}).get("extra", ""),
-        model_trained=config.get("mosaicforecast_genotype_prediction", {}).get("model_trainedDEL", ""),
-        model_type=config.get("mosaicforecast_genotype_prediction", {}).get("model_typeINDEL", ""),
-    log:
-        "snv_indels/mosaicforecast/{sample}_{type}.mosaicforecast_genotype_predictionDEL.log",
-    benchmark:
-        repeat(
-            "snv_indels/mosaicforecast/{sample}_{type}.mosaicforecast_genotype_predictionDEL.benchmark.tsv",
-            config.get("mosaicforecast_genotype_prediction", {}).get("benchmark_repeats", 1),
-        )
-
-
-use rule mosaicforecast_phasing from snv_indels as snv_indels_mosaicforecast_phasing
-
-
-use rule mosaicforecast_readlevel from snv_indels as snv_indels_mosaicforecast_readlevel
