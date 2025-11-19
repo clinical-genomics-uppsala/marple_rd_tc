@@ -256,7 +256,6 @@ use rule deepvariant from snv_indels as snv_indels_deepvariant with:
         extra=config.get("deepvariant", {}).get("extra", ""),
 
 
-
 use rule deepsomatic_t_only from snv_indels as snv_indels_deepsomatic_t_only with:
     input:
         bam="alignment/samtools_merge_bam/{sample}_{type}.bam",
@@ -278,4 +277,3 @@ use rule fix_af from snv_indels as snv_indels_fix_af_g with:
             "snv_indels/deepvariant/{sample}_{type}.fix_af.g.vcf.benchmark.tsv",
             config.get("fix_af", {}).get("benchmark_repeats", 1),
         )
-
