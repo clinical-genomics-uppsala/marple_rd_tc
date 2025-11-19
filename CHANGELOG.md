@@ -1,5 +1,49 @@
 # Changelog
 
+## [0.6.0](https://github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.5.0...v0.6.0) (2025-11-19)
+
+
+### Features
+
+* add mosaic calling ([91d792b](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/91d792b3db277a7e902d9d988ac6082217a21dc1))
+* changes to be able to run on miarka ([9f3a817](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/9f3a8175bbe9aacbd4ec3a0e608dd31b8cd04c1b))
+* preparing for miarka ([e58615d](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/e58615d0e0ff763e7c774017c7c6465f3260812b))
+* update build script ([4ae13c5](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/4ae13c5c1820c71696263e778dd9add012ccebc6))
+* update hydra-genetics version ([242dac8](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/242dac8fc9c664fa513e2266f86717db84cb0194))
+* update snv_indels for mosaicforecast changes ([3a426ca](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/3a426ca53d263e2fc0b61b7a520a893f91f7f73c))
+* update snv_indels v2.0.0 and cnv_sv to v2.0.0 ([9f18e1b](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/9f18e1b35d917f442548d955787ab3e9ba0b39a0))
+* update vep version to 110 ([1040530](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/1040530ef04747f498798ef1b68aea236ec880db))
+
+
+### Bug Fixes
+
+* cnv_sv version ([80ffd77](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/80ffd770cc3babac3b3df9ff47f73255f6e9a3c0))
+* how to get modules ([8fedb98](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/8fedb98c3432d392cf4a5822cc9d1cff8fd370e7))
+* move fmelt files for wp3 data ([458407b](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/458407b4e4264e42109e7732aa9e25eb28ea1e80))
+* new snv_indels tag, bam path from input in mosaicforecast ([f36324a](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/f36324a8c047b9e76c10a274dce6d5f3591b5e12))
+* new version of VEP, comment about melt, more resources for deepsomatic ([3273025](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/32730253f33bdbdb1eace3a178fba0ee72c4bee8))
+* no folder config in marvin analysis dir ([37daa5b](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/37daa5bdc74815ad177de4412e8aca1dbd23ebeb))
+* not change ref yet ([0b8bdb4](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/0b8bdb4bc61bd8ad03cca34e570520568b8d75da))
+* not hard coded path to melt ([b74eca0](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/b74eca0b4b6d4a9f6333a759268a0a67d8c0b873))
+* not hardcoded pipeline version in miraka config ([f71156a](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/f71156a54a7a07494643e9028fec3b8365b6ebf8))
+* remove the get_input_bam function ([67f9aed](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/67f9aed89847950eb60b8af812f986b64e468b89))
+* rm hardcodeed in MELT rule and  efficientnet.pth in path ([02d9e31](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/02d9e310ef1601d7d6eca5f2b8861a127d0c2c3e))
+* sample_prep ([9bc4266](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/9bc42660b2e9e23250046271ad9c0372ccc803bb))
+* small changes to make it work on miarka ([4f1809a](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/4f1809ab4411040582d8fb166a0d4e879d847c8b))
+* specify resources for deepsomatic ([c5d0f7c](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/c5d0f7c76d290980f6df53be4670758aa8bb1980))
+* to make snakemake dry-run work ([b1c74cd](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/b1c74cdd7b1bff67ef2517c6b14187fd458cd4a7))
+* Update singularity and wrapper prefixes in profile ([2bbb717](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/2bbb717734e9de5443cedffcb2cff6326cbc8f28))
+
+
+### Performance Improvements
+
+* newer versions of release-please and modules ([c91c98e](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/c91c98ef872de6d4c39fe000216854fc93313d6d))
+
+
+### Documentation
+
+* updating README.md and ReadTheDocs ([d71c019](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/d71c0190d5d09deed131a1e74aab7b67dc3e5459))
+
 ## [0.5.0](https://www.github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.4.0...v0.5.0) (2025-09-09)
 
 
