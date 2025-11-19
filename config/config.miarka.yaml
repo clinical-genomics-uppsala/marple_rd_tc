@@ -82,6 +82,9 @@ mosdepth_bed:
 
 multiqc:
   container: 'hydragenetics__multiqc_1.11.sif'
+  reports:
+    DNA:
+      config: "config/multiqc_config.yaml"
 
 picard_collect_alignment_summary_metrics:
   container: 'hydragenetics__picard_2.25.4.sif'
