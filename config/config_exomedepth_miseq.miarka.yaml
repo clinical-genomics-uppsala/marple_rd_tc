@@ -1,3 +1,0 @@
-
-exomedepth_call:
-  ref_count: "{{REFERENCE_DATA}}/marple/Exomedepth_refCount_230706.Rdata"

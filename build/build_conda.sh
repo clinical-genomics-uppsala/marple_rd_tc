@@ -23,18 +23,21 @@ download_pipeline() {
     # Clone the required version of the pipeline
     echo "Cloning pipeline from ${PIPELINE_GITHUB_REPO} (branch: ${TAG_OR_BRANCH})"
     git clone --branch ${TAG_OR_BRANCH} ${PIPELINE_GITHUB_REPO} ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}
-
-    envsubst < ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/profiles/${PROFILE_NAME}/config.yaml > ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/profiles/${PROFILE_NAME}/config.yaml.sub
-    mv ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/profiles/${PROFILE_NAME}/config.yaml.sub ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/profiles/${PROFILE_NAME}/config.yaml
     
+
     # Install the requirements for the pipeline
     echo "Installing pipeline requirements"
-    export PYTHONNOUSERSITE=1 # stops pip looking in ˙$HOME/.local for packages
-    ./${PIPELINE_NAME}_${TAG_OR_BRANCH}_env/bin/pip3 install -r ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/requirements.txt
+    ./${PIPELINE_NAME}_${TAG_OR_BRANCH}_env/bin/pip3 install -I -r ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/requirements.txt
     
     # Pack the environment with the requirements installed
     echo "Packing conda environment"
     conda pack --prefix ./${PIPELINE_NAME}_${TAG_OR_BRANCH}_env -o ${PIPELINE_NAME}_${TAG_OR_BRANCH}/env.tar.gz
+
+    # Update config.yaml with the path to the apptainer cache
+    echo "Updating config.yaml with path to apptainer cache"
+    cp ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/config/config.yaml ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/config/config.yaml.copy
+    hydra-genetics prepare-environment container-path-update -c ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/config/config.yaml.copy -n ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/config/config.yaml -p ${PATH_TO_APPTAINER_CACHE}
+    rm ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/config/config.yaml.copy
     
     # Clone snakemake-wrappers and hydra-genetics modules
     echo "Cloning snakemake-wrappers and hydra-genetics modules"
@@ -73,8 +76,8 @@ download_pipeline() {
     tar -zcvf ${PIPELINE_NAME}_${TAG_OR_BRANCH}.tar.gz ${PIPELINE_NAME}_${TAG_OR_BRANCH}
     
     # Download the config files from the config repo
-    # echo "Downloading config files from ${CONFIG_GITHUB_REPO} (version: ${CONFIG_VERSION})"
-    # git clone --branch ${CONFIG_VERSION} ${CONFIG_GITHUB_REPO} hastings_config/
+    echo "Downloading config files from ${CONFIG_GITHUB_REPO} (version: ${CONFIG_VERSION})"
+    git clone --branch ${CONFIG_VERSION} ${CONFIG_GITHUB_REPO} marple_config/
     
     echo "Pipeline download completed successfully"
 }
@@ -82,22 +85,17 @@ download_pipeline() {
 # Function to download containers
 download_containers() {
     echo "=== Downloading Containers ==="
-
-    # Check if config directory exists, if not download it
-    # if [ ! -d hastings_config ]; then
-    #     echo "Config directory not found, downloading config files"
-    #     git clone --branch ${CONFIG_VERSION} ${CONFIG_GITHUB_REPO} hastings_config/
-    # fi
     
-    if [ ! -d ${PIPELINE_NAME}_${TAG_OR_BRANCH} ]; then
-        echo "Cloning pipeline from ${PIPELINE_GITHUB_REPO} (branch: ${TAG_OR_BRANCH})"
+    # Check if pipeline directory exists, if not download it
+    if [ ! -d ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME} ]; then
+        echo "Pipelinedirectory not found, downloading pipeline files"
         git clone --branch ${TAG_OR_BRANCH} ${PIPELINE_GITHUB_REPO} ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}
     fi
     
     # Download containers using hydra-genetics
     echo "Creating singularity files using hydra-genetics"
     hydra-genetics prepare-environment create-singularity-files -c ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}/config/config.yaml -o apptainer_cache
-    
+
     # Copy additional container (MELT)
     echo "Copying MELT container"
     cp /projects/wp3/Software/MELTv2.2.2/MELT_v2.2.2.sif apptainer_cache
@@ -120,15 +118,10 @@ download_design_and_reference_files() {
     fi
     
     # Check if config directory exists, if not download it
-    # if [ ! -d hastings_config ]; then
-    #     echo "Config directory not found, downloading config files"
-    #     git clone --branch ${CONFIG_VERSION} ${CONFIG_GITHUB_REPO} hastings_config/
-    # fi
-    if [ ! -d ${PIPELINE_NAME}_${TAG_OR_BRANCH} ]; then
-        echo "Cloning pipeline from ${PIPELINE_GITHUB_REPO} (branch: ${TAG_OR_BRANCH})"
-        git clone --branch ${TAG_OR_BRANCH} ${PIPELINE_GITHUB_REPO} ${PIPELINE_NAME}_${TAG_OR_BRANCH}/${PIPELINE_NAME}
+    if [ ! -d marple_config ]; then
+        echo "Config directory not found, downloading config files"
+        git clone --branch ${CONFIG_VERSION} ${CONFIG_GITHUB_REPO} marple_config/
     fi
-
     
     # Download references for each provided config file
     for reference_config in "$@"; do
@@ -150,30 +143,29 @@ download_design_and_reference_files() {
     fi
 }
 
-# # Function to download only config files
-# download_config() {
-#     echo "=== Downloading Config Files ==="
+# Function to download only config files
+download_config() {
+    echo "=== Downloading Config Files ==="
     
-#     # Clean up existing config directory if it exists
-#     if [ -d hastings_config ]; then
-#         echo "Removing existing config directory: hastings_config"
-#         rm -fr hastings_config
-#     fi
+    # Clean up existing config directory if it exists
+    if [ -d marple_config ]; then
+        echo "Removing existing config directory: marple_config"
+        rm -fr marple_config
+    fi
     
-#     # Download the config files from the config repo
-#     echo "Downloading config files from ${CONFIG_GITHUB_REPO} (version: ${CONFIG_VERSION})"
-#     git clone --branch ${CONFIG_VERSION} ${CONFIG_GITHUB_REPO} poirot_config_${CONFIG_VERSION}
+    # Download the config files from the config repo
+    echo "Downloading config files from ${CONFIG_GITHUB_REPO} (version: ${CONFIG_VERSION})"
+    git clone --branch ${CONFIG_VERSION} ${CONFIG_GITHUB_REPO} marple_config_${CONFIG_VERSION}/
     
-#     ## add the pipeline version to the profiles config files
-#     envsubst < poirot_config_${CONFIG_VERSION}/profiles/${PROFILE_NAME}/config.yaml > poirot_config_${CONFIG_VERSION}/profiles/${PROFILE_NAME}/config.yaml.sub
-#     mv poirot_config_${CONFIG_VERSION}/profiles/${PROFILE_NAME}/config.yaml.sub poirot_config_${CONFIG_VERSION}/profiles/${PROFILE_NAME}/config.yaml
+    ## add the pipeline version to the profiles config files
+    sed -i -E "s/TAG_OR_BRANCH/${TAG_OR_BRANCH}/g" ./marple_config_${CONFIG_VERSION}/profiles/*/config.yaml
 
-#     # Create config archive with version number
-#     echo "Creating config archive: poirot_config_${CONFIG_VERSION}.tar.gz"
-#     tar -czvf poirot_config_${CONFIG_VERSION}.tar.gz poirot_config_${CONFIG_VERSION}
+    # Create config archive with version number
+    echo "Creating config archive: marple_config_${CONFIG_VERSION}.tar.gz"
+    tar -czvf marple_config_${CONFIG_VERSION}.tar.gz marple_config_${CONFIG_VERSION}/
     
-#     echo "Config files download completed successfully"
-# }
+    echo "Config files download completed successfully"
+}
 
 # Function to clean up temporary directories and files
 cleanup() {
@@ -192,11 +184,11 @@ cleanup() {
         fi
     fi
     
-    # # Clean config directory (shared between containers, references, and config-only)
-    # if [ -d hastings_config ]; then
-    #     echo "Removing temporary config directory: hastings_config"
-    #     rm -fr hastings_config
-    # fi
+    # Clean config directory (shared between containers, references, and config-only)
+    if [ -d marple_config ]; then
+        echo "Removing temporary config directory: marple_config"
+        rm -fr marple_config
+    fi
     
     # Clean container-related files
     if [ "$DOWNLOAD_CONTAINERS" = true ]; then
@@ -219,8 +211,7 @@ cleanup() {
 
 # Function to validate required environment variables
 validate_environment() {
-    #local required_vars=("TAG_OR_BRANCH" "CONFIG_VERSION" "PIPELINE_NAME" "PYTHON_VERSION" "PIPELINE_GITHUB_REPO" "CONFIG_GITHUB_REPO")
-    local required_vars=("TAG_OR_BRANCH" "PIPELINE_NAME" "PYTHON_VERSION" "PIPELINE_GITHUB_REPO")
+    local required_vars=("TAG_OR_BRANCH" "CONFIG_VERSION" "PIPELINE_NAME" "PYTHON_VERSION" "PIPELINE_GITHUB_REPO" "CONFIG_GITHUB_REPO")
     local missing_vars=()
     
     for var in "${required_vars[@]}"; do
@@ -235,9 +226,9 @@ validate_environment() {
         echo ""
         echo "Please set all required variables before running this script."
         echo "Example usage:"
-        echo 'TAG_OR_BRANCH="v0.8.0" CONFIG_VERSION="v0.10.0" PIPELINE_NAME="marple_rd_tc" \\'
-        echo 'PYTHON_VERSION="3.9" PIPELINE_GITHUB_REPO="https://github.com/clinical-genomics-uppsala/marple_rd_tc.git" \\'
-        #echo 'CONFIG_GITHUB_REPO="https://github.com/clinical-genomics-uppsala/hastings_config.git" \\'
+        echo 'TAG_OR_BRANCH="v0.8.0" CONFIG_VERSION="v0.10.0" PIPELINE_NAME="poirot_rd_wgs" \\'
+        echo 'PYTHON_VERSION="3.9" PIPELINE_GITHUB_REPO="https://github.com/clinical-genomics-uppsala/poirot_rd_wgs.git" \\'
+        echo 'CONFIG_GITHUB_REPO="https://github.com/clinical-genomics-uppsala/marple_config.git" \\'
         echo 'bash build_conda.sh config1.yaml config2.yaml ...'
         exit 1
     fi
@@ -249,7 +240,7 @@ usage() {
 Usage: $0 [OPTIONS] [reference_config1.yaml] [reference_config2.yaml] ...
 
 This script builds a complete pipeline package including:
-  1. Pipeline code and conda environmentles
+  1. Pipeline code and conda environment
   2. Container images (Singularity/Apptainer)
   3. Design and reference files
 
@@ -258,22 +249,26 @@ OPTIONS:
   -p, --pipeline-only     Download only the pipeline (step 1)
   -c, --containers-only   Download only the containers (step 2)
   -r, --references-only   Download only the design and reference files (step 3)
+  -g, --config-only       Download only the config files
   -a, --all              Download all components (default behavior)
 
 If no options are specified, all components will be downloaded.
 
 Required environment variables:
   - TAG_OR_BRANCH: Git tag or branch of the pipeline to build
+  - CONFIG_VERSION: Version of the configuration repository
   - PIPELINE_NAME: Name of the pipeline
   - PYTHON_VERSION: Python version for conda environment
   - PIPELINE_GITHUB_REPO: URL of the pipeline repository
+  - CONFIG_GITHUB_REPO: URL of the configuration repository
 
 Examples:
   # Download all components (default)
-  TAG_OR_BRANCH="v0.7.0" PIPELINE_NAME="marple_rd_tc" \\
+  TAG_OR_BRANCH="v0.8.0" CONFIG_VERSION="v0.10.0" PIPELINE_NAME="poirot_rd_wgs" \\
   PYTHON_VERSION="3.9" \\
-  PIPELINE_GITHUB_REPO="https://github.com/clinical-genomics-uppsala/marple_rd_tc.git" \\
-  bash $0 hastings_config/config/references/design_files.hg38.yaml
+  PIPELINE_GITHUB_REPO="https://github.com/clinical-genomics-uppsala/poirot_rd_wgs.git" \\
+  CONFIG_GITHUB_REPO="https://github.com/clinical-genomics-uppsala/marple_config.git" \\
+  bash $0 marple_config/config/references/gene_panels.hg38.yaml
 
   # Download only the pipeline
   bash $0 --pipeline-only
@@ -285,7 +280,8 @@ Examples:
   bash $0 --config-only
 
   # Download only reference files
-  bash $0 --references-only hastings_config/config/references/design_files.hg38.yaml \\
+  bash $0 --references-only marple_config/config/references/gene_panels.hg38.yaml \\
+                            marple_config/config/references/mito_refs.hg38.yaml
 
 EOF
 }
@@ -295,7 +291,7 @@ parse_arguments() {
     DOWNLOAD_PIPELINE=false
     DOWNLOAD_CONTAINERS=false
     DOWNLOAD_REFERENCES=false
-    # DOWNLOAD_CONFIG=false
+    DOWNLOAD_CONFIG=false
     REFERENCE_CONFIGS=()
     
     # If no arguments, download all components (except config-only)
@@ -324,10 +320,10 @@ parse_arguments() {
                 DOWNLOAD_REFERENCES=true
                 shift
                 ;;
-            # -g|--config-only)
-            #     DOWNLOAD_CONFIG=true
-            #     shift
-            #     ;;
+            -g|--config-only)
+                DOWNLOAD_CONFIG=true
+                shift
+                ;;
             -a|--all)
                 DOWNLOAD_PIPELINE=true
                 DOWNLOAD_CONTAINERS=true
@@ -347,7 +343,7 @@ parse_arguments() {
     done
     
     # If no specific component selected, download all (except config-only)
-    if [ "$DOWNLOAD_PIPELINE" = false ] && [ "$DOWNLOAD_CONTAINERS" = false ] && [ "$DOWNLOAD_REFERENCES" = false ]; then
+    if [ "$DOWNLOAD_PIPELINE" = false ] && [ "$DOWNLOAD_CONTAINERS" = false ] && [ "$DOWNLOAD_REFERENCES" = false ] && [ "$DOWNLOAD_CONFIG" = false ]; then
         DOWNLOAD_PIPELINE=true
         DOWNLOAD_CONTAINERS=true
         DOWNLOAD_REFERENCES=true
@@ -371,12 +367,15 @@ main() {
     
     echo "Starting build process for ${PIPELINE_NAME} ${TAG_OR_BRANCH}"
     echo "Python version: ${PYTHON_VERSION}"
+    echo "Config version: ${CONFIG_VERSION}"
     echo "Pipeline repo: ${PIPELINE_GITHUB_REPO}"
+    echo "Config repo: ${CONFIG_GITHUB_REPO}"
     echo ""
     echo "Components to download:"
     echo "  - Pipeline: $DOWNLOAD_PIPELINE"
     echo "  - Containers: $DOWNLOAD_CONTAINERS"  
     echo "  - References: $DOWNLOAD_REFERENCES"
+    echo "  - Config: $DOWNLOAD_CONFIG"
     if [ ${#REFERENCE_CONFIGS[@]} -gt 0 ]; then
         echo "  - Reference configs: ${REFERENCE_CONFIGS[*]}"
     fi
@@ -395,9 +394,9 @@ main() {
         download_design_and_reference_files "${REFERENCE_CONFIGS[@]}"
     fi
     
-    # if [ "$DOWNLOAD_CONFIG" = true ]; then
-    #     download_config
-    # fi
+    if [ "$DOWNLOAD_CONFIG" = true ]; then
+        download_config
+    fi
     
     # Clean up temporary files
     cleanup
@@ -410,18 +409,18 @@ main() {
     echo ""
     echo "Build process completed successfully!"
     echo "Generated files:"
-    if [ "$DOWNLOAD_PIPELINE" = true ]; then
-        echo "  - ${PIPELINE_NAME}_${TAG_OR_BRANCH}.tar.gz (pipeline)"
-    fi
     if [ "$DOWNLOAD_CONTAINERS" = true ]; then
         echo "  - apptainer_cache.tar.gz (containers)"
+    fi
+    if [ "$DOWNLOAD_PIPELINE" = true ]; then
+        echo "  - ${PIPELINE_NAME}_${TAG_OR_BRANCH}.tar.gz (pipeline)"
     fi
     if [ "$DOWNLOAD_REFERENCES" = true ] && [ ${#REFERENCE_CONFIGS[@]} -gt 0 ]; then
         echo "  - design_and_ref_files.tar.gz (reference files)"
     fi
-    # if [ "$DOWNLOAD_CONFIG" = true ]; then
-    #     echo "  - poirot_config_${CONFIG_VERSION}.tar.gz (config files)"
-    # fi
+    if [ "$DOWNLOAD_CONFIG" = true ]; then
+        echo "  - marple_config_${CONFIG_VERSION}.tar.gz (config files)"
+    fi
 }
 
 # Run main function with all provided arguments

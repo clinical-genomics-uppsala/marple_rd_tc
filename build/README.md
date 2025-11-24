@@ -7,16 +7,19 @@ When succesfully run the script will generate four compressed tar archives:
 * design_and_ref_files.tar.gz
 * marple_rd_tc_${PIPELINE_VERSION}.tar.gz
 * apptainer_cache.tar.gz
+* marple_config_${CONFIG_VERSION}.tar.gz
 
 The requirments listed in requirements.txt are packaged using conda-pack in a .tar.gz in the marple_rd_tc_${PIPELINE_VERSION}.tar.gz. The snakemake-wrappers github repo and all hydra-genetics modules required by the pipeline are cloned and packaged in marple_rd_tc_${PIPELINE_VERSION}.tar.gz.
 
 ```bash
 export TAG_OR_BRANCH="v0.6.0"
+export CONFIG_VERSION="v0.1.0"
 export PIPELINE_NAME="marple_rd_tc"
 export PROFILE_NAME="miarka"
 export PYTHON_VERSION="3.9"
 export PIPELINE_GITHUB_REPO="https://github.com/clinical-genomics-uppsala/marple_rd_tc.git"
-
+export CONFIG_GITHUB_REPO="https://github.com/clinical-genomics-uppsala/marple_config.git"
+export PATH_TO_APPTAINER_CACHE=/path/to/.sif
 ```
 
 Download only pipeline files
