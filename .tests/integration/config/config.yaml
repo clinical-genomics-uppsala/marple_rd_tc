@@ -186,6 +186,10 @@ picard_collect_multiple_metrics:
 picard_mark_duplicates:
   container: "docker://hydragenetics/picard:2.25.4"
 
+seqtk_subsample:
+  container: "docker://hydragenetics/seqtk:1.4"
+  nr_reads: 7000000
+
 vep:
   container: "docker://ensemblorg/ensembl-vep:release_109.3" # "docker://hydragenetics/vep:109"
   vep_cache: "reference/vep_cache"
