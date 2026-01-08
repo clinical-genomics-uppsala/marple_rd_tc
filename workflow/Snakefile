@@ -108,10 +108,26 @@ module filtering:
         config
 
 
-use rule bcftools_view from filtering as filtering_bcftools_view_deepsomatic with:
+use rule bcftools_view from filtering as filtering_bcftools_view_region with:
     input:
         vcf="snv_indels/deepsomatic_t_only/{sample}_{type}.vcf.gz",
-        tbi="snv_indels/deepsomatic_t_only/{sample}_{type}.vcf.gz.tbi",
+    output:
+        vcf="snv_indels/deepsomatic_t_only/{sample}_{type}_4genes.vcf.gz",
+    params:
+        extra=config.get("bcftools_view_fourgene", {}).get("extra", ""),
+    log:
+        "cnv_sv/fourgene_call/{sample}_{type}.view_4gene.vcf.log",
+    benchmark:
+        repeat(
+            "cnv_sv/fourgene_call/{sample}_{type}.view_4gene.vcf.benchmark.tsv",
+            config.get("bcftools_view_fourgene", {}).get("benchmark_repeats", 1),
+        )
+
+
+use rule bcftools_view from filtering as filtering_bcftools_view_deepsomatic with:
+    input:
+        vcf="snv_indels/deepsomatic_t_only/{sample}_{type}_4genes.vcf.gz",
+        tbi="snv_indels/deepsomatic_t_only/{sample}_{type}_4genes.vcf.gz.tbi",
     output:
         vcf=temp("snv_indels/bcftools_view/{sample}_{type}.ds.vcf.gz"),
     log:

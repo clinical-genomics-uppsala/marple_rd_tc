@@ -1,13 +1,5 @@
 directory: ./Results
 files:
-  - name: MultiQC
-    input: qc/multiqc/multiqc_DNA.html
-    output: "multiqc_DNA.html"
-
-  - name: QC xlsx-report
-    input: qc/xlsx_report/{sample}_N.xlsx
-    output: "{sample}/{sample}_{sequenceid}.xlsx"
-
   - name: Alignment cram file
     input: compression/samtools_view/{sample}_N.cram
     output: "{sample}/{sample}_N.cram"
@@ -15,14 +7,6 @@ files:
   - name: Alignment crai file
     input: compression/samtools_view/{sample}_N.cram.crai
     output: "{sample}/{sample}_N.cram.crai"
-
-  - name: Annotated vcf file
-    input: snv_indels/deepvariant/{sample}_N.normalized.sorted.vep_annotated.ref.vcf.gz
-    output: "{sample}/{sample}.hard-filtered.vcf.gz"
-
-  - name: Annotated vcf tbi file
-    input: snv_indels/deepvariant/{sample}_N.normalized.sorted.vep_annotated.ref.vcf.gz.tbi
-    output: "{sample}/{sample}.hard-filtered.vcf.gz.tbi"
 
   - name: Config-file
     input: config/config.yaml
@@ -39,50 +23,14 @@ files:
   - name: DeepSomatic tumour only tbi
     input: "snv_indels/deepsomatic_t_only/{sample}_N.vcf.gz.tbi"
     output: "{sample}/mosaic/{sample}.deepsomatic.vcf.gz.tbi"   
-  
-  - name: Exomedepth nexus
-    input: cnv_sv/exomedepth_call/{sample}_N_SV.txt
-    output: "{sample}/{sample}_exomedepth_SV.txt"
 
-  - name: Exomedepth aed
-    input: cnv_sv/exomedepth_call/{sample}_N.aed
-    output: "{sample}/{sample}_exomedepth.aed"
+  - name: DeepSomatic filtered vcf
+    input: "snv_indels/bcftools_view/{sample}_N.ds.vcf.gz"
+    output: "{sample}/mosaic/{sample}.deepsomatic.4genes_filter.vcf.gz"   
 
-  - name: Exomedepth-Config-file
-    input: config/config_exomedepth.yaml
-    output: "{sequenceid}_config_exomedepth.yaml"
-  
-  - name: Exomedepth vcf
-    input: "cnv_sv/exomedepth_call/{sample}_N.vcf.gz"
-    output: "{sample}/{sample}.cnv.vcf.gz"
-
-  - name: Exomedepth vcf tbi
-    input: "cnv_sv/exomedepth_call/{sample}_N.vcf.gz.tbi"
-    output: "{sample}/{sample}.cnv.vcf.gz.tbi" 
-
-  - name: Genome vcf file no normalize
-    input: snv_indels/deepvariant/{sample}_N.g.fix_af.vcf.gz
-    output: "{sample}/{sample}.genome.vcf.gz"
-
-  - name: Genome vcf index file no normalize
-    input: snv_indels/deepvariant/{sample}_N.g.fix_af.vcf.gz.tbi
-    output: "{sample}/{sample}.genome.vcf.gz.tbi"
-
-  - name: MELT ALU
-    input: "cnv_sv/melt/{sample}_N.ALU.final_comp.vcf.gz"
-    output: "{sample}/mobile_elements/{sample}.ALU.vcf.gz"  
-
-  - name: MELT LINE1
-    input: "cnv_sv/melt/{sample}_N.LINE1.final_comp.vcf.gz"
-    output: "{sample}/mobile_elements/{sample}.LINE1.vcf.gz"  
-
-  - name: MELT HERVK
-    input: "cnv_sv/melt/{sample}_N.HERVK.final_comp.vcf.gz"
-    output: "{sample}/mobile_elements/{sample}.HERVK.vcf.gz"  
-
-  - name: MELT SVA
-    input: "cnv_sv/melt/{sample}_N.SVA.final_comp.vcf.gz"
-    output: "{sample}/mobile_elements/{sample}.SVA.vcf.gz"   
+  - name: DeepSomatic filtered tbi
+    input: "snv_indels/bcftools_view/{sample}_N.ds.vcf.gz.tbi"
+    output: "{sample}/mosaic/{sample}.deepsomatic.4genes_filter.vcf.gz.tbi"   
 
   - name: MosaicForecast phase
     input: "snv_indels/mosaicforecast_phasing/{sample}_N/all.phasing"
