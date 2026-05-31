@@ -102,6 +102,16 @@ for fq1, fq2 in zip(units["fastq1"].values, units["fastq2"].values):
 
 
 ### get gvcf output for deepvariant
+def rule_resource(rule_name, resource_name):
+    """Return a rule-specific resource value with the pipeline default fallback."""
+    return config.get(rule_name, {}).get(resource_name, config["default_resources"][resource_name])
+
+
+def rule_container(rule_name):
+    """Return a rule-specific container with the pipeline default fallback."""
+    return config.get(rule_name, {}).get("container", config["default_container"])
+
+
 def get_gvcf_output(wildcards, name):
     if config.get(name, {}).get("output_gvcf", False):
         return f" --output_gvcf snv_indels/deepvariant/{wildcards.sample}_{wildcards.type}_{wildcards.chr}.g.vcf.gz "
