@@ -1,7 +1,6 @@
 #!/bin/python3
 
 import sys
-import subprocess
 import gzip
 from datetime import date
 import xlsxwriter
@@ -13,11 +12,32 @@ min_cov = int(snakemake.params.coverage_thresholds.strip().split(",")[0])
 med_cov = int(snakemake.params.coverage_thresholds.strip().split(",")[1])
 max_cov = int(snakemake.params.coverage_thresholds.strip().split(",")[2])
 
-cmd_avg_cov = "grep total_region " + snakemake.input.mosdepth_summary + " | awk '{print $4}'"
-avg_coverage = subprocess.run(cmd_avg_cov, stdout=subprocess.PIPE, shell="TRUE").stdout.decode("utf-8").strip()
+def parse_mosdepth_mean_coverage(mosdepth_summary_file):
+    try:
+        with open(mosdepth_summary_file, 'r') as f:
+            for line in f:
+                parts = line.strip().split('\t')
+                if len(parts) >= 4 and parts[0] == 'total_region':
+                    return parts[3]
+    except Exception:
+        pass
+    return "0.0"
 
-cmd_duplication = "grep -A1 PERCENT " + snakemake.input.picard_dup + " |tail -1 | cut -f9"
-duplication = float(subprocess.run(cmd_duplication, stdout=subprocess.PIPE, shell="TRUE").stdout.decode("utf-8").strip()) * 100
+def parse_picard_duplication(picard_file):
+    try:
+        with open(picard_file, 'r') as f:
+            for line in f:
+                if line.startswith("LIBRARY\tUNPAIRED_READS_EXAMINED") or "PERCENT_DUPLICATION" in line:
+                    header = line.strip().split('\t')
+                    values = next(f).strip().split('\t')
+                    metrics = dict(zip(header, values))
+                    return float(metrics.get("PERCENT_DUPLICATION", 0.0))
+    except Exception:
+        pass
+    return 0.0
+
+avg_coverage = parse_mosdepth_mean_coverage(snakemake.input.mosdepth_summary)
+duplication = parse_picard_duplication(snakemake.input.picard_dup) * 100
 
 wanted_transcripts = []
 with open(snakemake.input.wanted_transcripts) as wanted_file:
