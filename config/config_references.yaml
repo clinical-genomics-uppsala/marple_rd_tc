@@ -4,6 +4,9 @@ resources: "resources.yaml"
 
 default_container: "docker://hydragenetics/common:1.8.1"
 
+modules:
+  references: "907d302"
+
 reference:
   design_bed: "/projects/wp3/nobackup/TwistCancer/Bedfiles/Twist_Cancer_230706_hg38_TE-98982205-wPGRS.merged_200bpwindows.bed"
 

@@ -3,8 +3,8 @@ __copyright__ = "Copyright 2023, Arielle R. Munters"
 __email__ = "arielle.munters@scilifelab.uu.se"
 __license__ = "GPL-3"
 
-
-# Include pipeline specific rules
+# Workflow structure is documented in workflow/manifest.yaml. Keep local rule
+# includes grouped here and load reusable hydra modules below rule all.
 include: "rules/common.smk"
 include: "rules/add_ref_to_vcf.smk"
 include: "rules/exomedepth_export.smk"
@@ -20,14 +20,15 @@ report: "report/workflow.rst"
 ruleorder: _copy_alignment_crai_file > compression_samtools_index
 
 
-# 'All' rule, must be specified before any other modules are
-# included, since they also contain 'All' rule
+# rule all must stay before module imports, since imported modules also define
+# rule all.
 rule all:
     input:
         compile_output_file_list,
 
 
-# Include modules
+# Reusable hydra modules. Module versions are pinned in config.modules and can
+# be resolved from a packed local hydra-genetics tree by get_module_snakefile.
 module alignment:
     snakefile:
         get_module_snakefile(
