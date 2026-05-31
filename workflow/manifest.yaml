@@ -1,0 +1,58 @@
+---
+pipeline:
+  id: wp3_tc
+  name: marple_rd_tc
+  assay: rd_tc
+  genome_build: GRCh38
+
+entrypoints:
+  analysis: workflow/Snakefile
+  references: workflow/Snakefile_references
+
+layout:
+  local_rules_dir: workflow/rules
+  local_scripts_dir: workflow/scripts
+  schemas_dir: workflow/schemas
+  report: report/workflow.rst
+
+rule_groups:
+  common: workflow/rules/common.smk
+  reference_common: workflow/rules/common_references.smk
+  variant_annotation: workflow/rules/add_ref_to_vcf.smk
+  cnv_export: workflow/rules/exomedepth_export.smk
+  qc_export: workflow/rules/export_qc.smk
+  multiqc_order: workflow/rules/sample_order_multiqc.smk
+  sample_prep: workflow/rules/sample_prep.smk
+  vcf_export: workflow/rules/tsv2vcf.smk
+
+hydra_modules:
+  source: config.modules
+  loader: hydra_genetics.utils.misc.get_module_snakefile
+  local_module_root_config_key: hydra_local_path
+  modules:
+    - alignment
+    - annotation
+    - cnv_sv
+    - compression
+    - filtering
+    - prealignment
+    - qc
+    - references
+    - snv_indels
+
+scripts:
+  pipeline_specific:
+    - workflow/scripts/export_qc_xlsx_report.py
+    - workflow/scripts/sample_order_multiqc.py
+  shared_tool_candidates:
+    - workflow/scripts/add_ref_to_vcf.py
+    - workflow/scripts/exomedepth_export.R
+    - workflow/scripts/tsv2vcf.sh
+  cleanup_candidates:
+    - workflow/scripts/dummy.py
+    - workflow/scripts/test_dummy.py
+
+harmonization_notes:
+  - Reference workflow should use the same module loader as analysis workflow; direct github() calls block offline installs.
+  - Keep site config minimal: parent installation path and runtime resources only.
+  - Export/report scripts should be reviewed for migration into hydra-genetics/report.
