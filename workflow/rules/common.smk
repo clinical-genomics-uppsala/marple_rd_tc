@@ -112,6 +112,8 @@ def rule_container(rule_name):
     return config.get(rule_name, {}).get("container", config["default_container"])
 
 
+# Shared helpers above keep the local rules compact and make resource/container
+# fallbacks easy to scan across pipelines.
 def get_gvcf_output(wildcards, name):
     if config.get(name, {}).get("output_gvcf", False):
         return f" --output_gvcf snv_indels/deepvariant/{wildcards.sample}_{wildcards.type}_{wildcards.chr}.g.vcf.gz "

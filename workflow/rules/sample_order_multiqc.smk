@@ -14,15 +14,15 @@ rule sample_order_multiqc:
         "qc/multiqc/sample_order.tsv.log",
     benchmark:
         repeat("qc/multiqc/sample_order.tsv.benchmark.tsv", config.get("sample_order_multiqc", {}).get("benchmark_repeats", 1))
-    threads: config.get("sample_order_multiqc", {}).get("threads", config["default_resources"]["threads"])
+    threads: rule_resource("sample_order_multiqc", "threads")
     resources:
-        mem_mb=config.get("sample_order_multiqc", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("sample_order_multiqc", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("sample_order_multiqc", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("sample_order_multiqc", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("sample_order_multiqc", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=rule_resource("sample_order_multiqc", "mem_mb"),
+        mem_per_cpu=rule_resource("sample_order_multiqc", "mem_per_cpu"),
+        partition=rule_resource("sample_order_multiqc", "partition"),
+        threads=rule_resource("sample_order_multiqc", "threads"),
+        time=rule_resource("sample_order_multiqc", "time"),
     container:
-        config.get("sample_order_multiqc", {}).get("container", config["default_container"])
+        rule_container("sample_order_multiqc")
     message:
         "{rule}: Create a sample order tsv based on S_index in {params.filelist} for multiqc"
     script:
