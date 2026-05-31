@@ -11,15 +11,15 @@ rule sample_prep:
         sex=temp("sample_sex.tsv"),
     log:
         temp("config/sample_prep.tsv.log"),
-    threads: config.get("sample_prep", {}).get("threads", config["default_resources"]["threads"])
+    threads: rule_resource("sample_prep", "threads")
     resources:
-        mem_mb=config.get("sample_prep", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("sample_prep", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("sample_prep", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("sample_prep", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("sample_prep", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=rule_resource("sample_prep", "mem_mb"),
+        mem_per_cpu=rule_resource("sample_prep", "mem_per_cpu"),
+        partition=rule_resource("sample_prep", "partition"),
+        threads=rule_resource("sample_prep", "threads"),
+        time=rule_resource("sample_prep", "time"),
     container:
-        config.get("sample_prep", {}).get("container", config["default_container"])
+        rule_container("sample_prep")
     message:
         "{rule}: Create tsv with sample and column with sex (all female) to run deepmosaic"
     shell:

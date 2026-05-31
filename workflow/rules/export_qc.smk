@@ -20,15 +20,15 @@ rule export_qc_bedtools_intersect:
             "qc/mosdepth_bed/{sample}_{type}.mosdepth.per-base.exon_bed.benchmark.tsv",
             config.get("export_qc_bedtools_intersect", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("export_qc_bedtools_intersect", {}).get("threads", config["default_resources"]["threads"])
+    threads: rule_resource("export_qc_bedtools_intersect", "threads")
     resources:
-        mem_mb=config.get("export_qc_bedtools_intersect", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("export_qc_bedtools_intersect", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("export_qc_bedtools_intersect", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("export_qc_bedtools_intersect", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("export_qc_bedtools_intersect", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=rule_resource("export_qc_bedtools_intersect", "mem_mb"),
+        mem_per_cpu=rule_resource("export_qc_bedtools_intersect", "mem_per_cpu"),
+        partition=rule_resource("export_qc_bedtools_intersect", "partition"),
+        threads=rule_resource("export_qc_bedtools_intersect", "threads"),
+        time=rule_resource("export_qc_bedtools_intersect", "time"),
     container:
-        config.get("export_qc_bedtools_intersect", {}).get("container", config["default_container"])
+        rule_container("export_qc_bedtools_intersect")
     message:
         "{rule}: export low cov regions from {input.left} based on {input.right}"
     wrapper:
@@ -51,15 +51,15 @@ rule export_qc_bedtools_intersect_pgrs:
             "qc/mosdepth_bed/{sample}_{type}.mosdepth.pgrs_cov.benchmark.tsv",
             config.get("export_qc_bedtools_intersect", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("export_qc_bedtools_intersect", {}).get("threads", config["default_resources"]["threads"])
+    threads: rule_resource("export_qc_bedtools_intersect", "threads")
     resources:
-        mem_mb=config.get("export_qc_bedtools_intersect", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("export_qc_bedtools_intersect", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("export_qc_bedtools_intersect", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("export_qc_bedtools_intersect", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("export_qc_bedtools_intersect", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=rule_resource("export_qc_bedtools_intersect", "mem_mb"),
+        mem_per_cpu=rule_resource("export_qc_bedtools_intersect", "mem_per_cpu"),
+        partition=rule_resource("export_qc_bedtools_intersect", "partition"),
+        threads=rule_resource("export_qc_bedtools_intersect", "threads"),
+        time=rule_resource("export_qc_bedtools_intersect", "time"),
     container:
-        config.get("export_qc_bedtools_intersect", {}).get("container", config["default_container"])
+        rule_container("export_qc_bedtools_intersect")
     message:
         "{rule}: export low cov regions from {input.left} based on {input.right}"
     wrapper:
@@ -89,15 +89,15 @@ rule export_qc_xlsx_report:
             "qc/xlsx_report/{sample}_{type}.xlsx.benchmark.tsv",
             config.get("export_qc_xlsx_report", {}).get("benchmark_repeats", 1),
         )
-    threads: config.get("export_qc_xlsx_report", {}).get("threads", config["default_resources"]["threads"])
+    threads: rule_resource("export_qc_xlsx_report", "threads")
     resources:
-        mem_mb=config.get("export_qc_xlsx_report", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("export_qc_xlsx_report", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
-        partition=config.get("export_qc_xlsx_report", {}).get("partition", config["default_resources"]["partition"]),
-        threads=config.get("export_qc_xlsx_report", {}).get("threads", config["default_resources"]["threads"]),
-        time=config.get("export_qc_xlsx_report", {}).get("time", config["default_resources"]["time"]),
+        mem_mb=rule_resource("export_qc_xlsx_report", "mem_mb"),
+        mem_per_cpu=rule_resource("export_qc_xlsx_report", "mem_per_cpu"),
+        partition=rule_resource("export_qc_xlsx_report", "partition"),
+        threads=rule_resource("export_qc_xlsx_report", "threads"),
+        time=rule_resource("export_qc_xlsx_report", "time"),
     container:
-        config.get("export_qc_xlsx_report", {}).get("container", config["default_container"])
+        rule_container("export_qc_xlsx_report")
     message:
         "{rule}: collecting qc values into {output}"
     # localrule: True
