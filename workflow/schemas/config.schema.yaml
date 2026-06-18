@@ -590,3 +590,6 @@ required:
   - vep
   - vt_decompose
   - vt_normalize
+  - bcftools_hardfilter_exomedepth
+  - bcftools_softfilter_melt
+  - bcftools_softfilter_scramble
