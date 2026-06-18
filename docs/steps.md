@@ -96,26 +96,33 @@ Possible mosaic variants is called by [DeepSomatic](https://github.com/google/de
 
 ---
 ## CNV
-CNVs are called using the Hydra-Genetics **CNV_SV** module ([ReadTheDocs](https://hydra-genetics-cnv-sv.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/cnv_sv/tree/78f270c)).
+CNVs and structural variants are called using the Hydra-Genetics **CNV_SV** module v3.2.0 ([ReadTheDocs](https://hydra-genetics-cnv-sv.readthedocs.io/en/latest/) or [github](https://github.com/hydra-genetics/cnv_sv/tree/v3.2.0)).
 <br />
 
 ![dag plot](includes/images/cnv_sv.png){: style="height:60%;width:60%"}
 
 ### Pipeline output files
 
-* `Results/{sample}_{sequenceid}/{sample}_{sequenceid}_exomedepth_SV.txt`
-* `Results/{sample}_{sequenceid}/{sample}_{sequenceid}_exomedepth.aed`
-* `Results/{sample}/{sample}.cnv.vcf.gz`
-* `Results/{sample}/mobile_elements/{sample}.ALU.vcf.gz`
-* `Results/{sample}/mobile_elements/{sample}.LINE1.vcf.gz`
-* `Results/{sample}/mobile_elements/{sample}.HERVK.vcf.gz`
-* `Results/{sample}/mobile_elements/{sample}.SVA.vcf.gz`
+* `Results/{sample}/cnv_sv/{sample}_exomedepth.aed` - Exomedepth analysis file
+* `Results/{sample}/cnv_sv/{sample}.cnv.vcf.gz` - Exomedepth CNV calls
+* `Results/{sample}/cnv_sv/{sample}.cnv.vcf.gz.tbi` - Index for Exomedepth CNV calls
+* `Results/{sample}/cnv_sv/{sample}.melt.softfiltered.vcf.gz` - MELT mobile element calls (softfiltered)
+* `Results/{sample}/cnv_sv/{sample}.melt.softfiltered.vcf.gz.tbi` - Index for MELT calls
+* `Results/{sample}/cnv_sv/{sample}.scramble.softfiltered.vcf.gz` - SCRAMBLE mobile element calls (softfiltered)
+* `Results/{sample}/cnv_sv/{sample}.scramble.softfiltered.vcf.gz.tbi` - Index for SCRAMBLE calls
+* `Results/{sample}/cnv_sv/{sample}.cnv_sv.vcf.gz` - Merged and filtered CNV/SV calls from Exomedepth, MELT, and SCRAMBLE
+* `Results/{sample}/cnv_sv/{sample}.cnv_sv.vcf.gz.tbi` - Index for merged CNV/SV calls
 
 ### Exomedepth
 To call larger structural variants **[Exomedepth](https://cran.r-project.org/web/packages/ExomeDepth/index.html)** v1.1.15 is used. Exomedepth does **not** use a window approach but evaluates each row in the bedfile as a segment, therefor the bedfile need to be split into appropriate large windows (e.g. using `bedtools makewindows`). Exomedepth also need a `RData` file containing the normal pool, this can be created using the [Marple - references workflow](/running_ref). Lines with no-change calls (`reads.ratio == 1`) are removed from the output for Alissa compatibility. Since no sex-chromosome are included in the design Exomedepth is run with the same normalpool irregardless of the sample's biological sex. Marple is designed on HG38 therefor a genes and exonfile are also needed for annotation. 
 
 ### Mobile elements
-To find mobile elements, like ALU, HERVK, LINE1 and SVA, [MELT](https://melt.igs.umaryland.edu/index.php) is used. It is free to use for academic purposes and you can buy a licence if used in other cases, like for this pipeline as part of the clinical workflow at the hospital. Since you should ask to use MELT, the singularity we use are local.
+Mobile elements (ALU, HERVK, LINE1, and SVA) are detected using two complementary tools:
+
+- **[MELT](https://melt.igs.umaryland.edu/index.php)** - Free for academic use, requires license for clinical use. MELT detects mobile element insertions with high sensitivity.
+- **[SCRAMBLE](https://github.com/GeneDx/scramble)** - Open source tool for detecting mobile element insertions from WGS and WES data. Provides independent validation of mobile element calls.
+
+Both tools' calls are filtered and merged with Exomedepth CNV calls using **[SVDB](https://github.com/J35P312/SVDB)** to produce a unified CNV/SV VCF file.
 
 ---
 ## QC

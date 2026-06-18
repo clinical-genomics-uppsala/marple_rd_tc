@@ -40,13 +40,9 @@ files:
     input: "snv_indels/deepsomatic_t_only/{sample}_N.vcf.gz.tbi"
     output: "{sample}/mosaic/{sample}.deepsomatic.vcf.gz.tbi"   
   
-  - name: Exomedepth nexus
-    input: cnv_sv/exomedepth_call/{sample}_N_SV.txt
-    output: "{sample}/{sample}_exomedepth_SV.txt"
-
   - name: Exomedepth aed
     input: cnv_sv/exomedepth_call/{sample}_N.aed
-    output: "{sample}/{sample}_exomedepth.aed"
+    output: "{sample}/cnv_sv/{sample}_exomedepth.aed"
 
   - name: Exomedepth-Config-file
     input: config/config_exomedepth.yaml
@@ -54,11 +50,11 @@ files:
   
   - name: Exomedepth vcf
     input: "cnv_sv/exomedepth_call/{sample}_N.vcf.gz"
-    output: "{sample}/{sample}.cnv.vcf.gz"
+    output: "{sample}/cnv_sv/{sample}.cnv.vcf.gz"
 
   - name: Exomedepth vcf tbi
     input: "cnv_sv/exomedepth_call/{sample}_N.vcf.gz.tbi"
-    output: "{sample}/{sample}.cnv.vcf.gz.tbi" 
+    output: "{sample}/cnv_sv/{sample}.cnv.vcf.gz.tbi" 
 
   - name: Genome vcf file no normalize
     input: snv_indels/deepvariant/{sample}_N.g.fix_af.vcf.gz
@@ -67,22 +63,6 @@ files:
   - name: Genome vcf index file no normalize
     input: snv_indels/deepvariant/{sample}_N.g.fix_af.vcf.gz.tbi
     output: "{sample}/{sample}.genome.vcf.gz.tbi"
-
-  - name: MELT ALU
-    input: "cnv_sv/melt/{sample}_N.ALU.final_comp.vcf.gz"
-    output: "{sample}/mobile_elements/{sample}.ALU.vcf.gz"  
-
-  - name: MELT LINE1
-    input: "cnv_sv/melt/{sample}_N.LINE1.final_comp.vcf.gz"
-    output: "{sample}/mobile_elements/{sample}.LINE1.vcf.gz"  
-
-  - name: MELT HERVK
-    input: "cnv_sv/melt/{sample}_N.HERVK.final_comp.vcf.gz"
-    output: "{sample}/mobile_elements/{sample}.HERVK.vcf.gz"  
-
-  - name: MELT SVA
-    input: "cnv_sv/melt/{sample}_N.SVA.final_comp.vcf.gz"
-    output: "{sample}/mobile_elements/{sample}.SVA.vcf.gz"   
 
   - name: MosaicForecast phase
     input: "snv_indels/mosaicforecast_phasing/{sample}_N/all.phasing"
@@ -98,5 +78,29 @@ files:
 
   - name: MosaicForecast SNP predictions
     input: "snv_indels/mosaicforecast_genotype_prediction/{sample}_N.SNP.predictions"
-    output: "{sample}/mosaic/{sample}.mosaicforecast.SNP.predictions"   
+    output: "{sample}/mosaic/{sample}.mosaicforecast.SNP.predictions"
+
+  - name: MELT softfiltered vcf
+    input: "cnv_sv/melt/{sample}_N.softfiltered.vcf.gz"
+    output: "{sample}/cnv_sv/{sample}.melt.softfiltered.vcf.gz"
+
+  - name: MELT softfiltered tbi
+    input: "cnv_sv/melt/{sample}_N.softfiltered.vcf.gz.tbi"
+    output: "{sample}/cnv_sv/{sample}.melt.softfiltered.vcf.gz.tbi"
+
+  - name: SCRAMBLE softfiltered vcf
+    input: "cnv_sv/scramble_vcf/{sample}_N.softfiltered.vcf.gz"
+    output: "{sample}/cnv_sv/{sample}.scramble.softfiltered.vcf.gz"
+
+  - name: SCRAMBLE softfiltered tbi
+    input: "cnv_sv/scramble_vcf/{sample}_N.softfiltered.vcf.gz.tbi"
+    output: "{sample}/cnv_sv/{sample}.scramble.softfiltered.vcf.gz.tbi"
+
+  - name: CNV SV merged vcf
+    input: "cnv_sv/svdb_merge/{sample}_N.merged.filtered.vcf.gz"
+    output: "{sample}/cnv_sv/{sample}.cnv_sv.vcf.gz"
+
+  - name: CNV SV merged tbi
+    input: "cnv_sv/svdb_merge/{sample}_N.merged.filtered.vcf.gz.tbi"
+    output: "{sample}/cnv_sv/{sample}.cnv_sv.vcf.gz.tbi"
 
