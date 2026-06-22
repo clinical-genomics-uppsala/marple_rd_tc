@@ -102,6 +102,9 @@ bcftools_softfilter_scramble:
 bcftools_view_svdb:
   extra: "-f 'PASS'"
 
+samtools_merge_bam:
+  extra: "-c -p"
+
 scramble_cluster_identifier:
   container: "docker://hydragenetics/scramble:1.0.2"
 
