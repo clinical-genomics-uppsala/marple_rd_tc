@@ -448,6 +448,120 @@ properties:
     required:
       - container
 
+  scramble_cluster_identifier:
+    type: object
+    description: configuration for scramble cluster identifier
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters
+
+  scramble_cluster_analysis:
+    type: object
+    description: configuration for scramble cluster analysis
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      install_dir:
+        type: string
+        description: path to scramble install dir in the container
+      mei_refs:
+        type: string
+        description: path to MEI reference sequences in the container
+      extra:
+        type: string
+        description: extra parameters
+
+  scramble_vcf:
+    type: object
+    description: configuration for scramble vcf conversion
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters
+
+  scramble_sort:
+    type: object
+    description: configuration for scramble vcf sort
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters
+
+  svdb_merge:
+    type: object
+    description: configuration for svdb merge
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      overlap:
+        type: number
+        description: reciprocal overlap to merge variants
+      priority:
+        type: string
+        description: comma-separated caller priority order
+      extra:
+        type: string
+        description: extra parameters
+
+  bcftools_hardfilter_exomedepth:
+    type: object
+    description: configuration for bcftools hard filter of exomedepth calls
+    properties:
+      exclude:
+        type: string
+        description: bcftools filter expression to exclude variants
+      extra:
+        type: string
+        description: extra parameters
+    required:
+      - exclude
+
+  bcftools_softfilter_melt:
+    type: object
+    description: configuration for bcftools soft filter of MELT calls
+    properties:
+      exclude:
+        type: string
+        description: bcftools filter expression to exclude variants
+      extra:
+        type: string
+        description: extra parameters
+    required:
+      - exclude
+
+  bcftools_softfilter_scramble:
+    type: object
+    description: configuration for bcftools soft filter of SCRAMble calls
+    properties:
+      exclude:
+        type: string
+        description: bcftools filter expression to exclude variants
+      extra:
+        type: string
+        description: extra parameters
+    required:
+      - exclude
+
+  bcftools_view_svdb:
+    type: object
+    description: configuration for bcftools view filter of SVDB merged VCF
+    properties:
+      extra:
+        type: string
+        description: extra parameters for bcftools view
+
 required:
   - samples
   - units
@@ -476,3 +590,6 @@ required:
   - vep
   - vt_decompose
   - vt_normalize
+  - bcftools_hardfilter_exomedepth
+  - bcftools_softfilter_melt
+  - bcftools_softfilter_scramble

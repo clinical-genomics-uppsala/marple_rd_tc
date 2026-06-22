@@ -115,6 +115,18 @@ wildcard_constraints:
     type="N|T|R",
 
 
+def get_vcfs_for_svdb_merge(wildcards, input):
+    """
+    Construct a list of VCF file paths with their corresponding input names
+    as suffixes for SVDB merge. Returns a list of strings in the format
+    'path:name' for each input item, e.g., 'file.vcf.gz:exomedepth'.
+    """
+    vcfs_with_suffix = []
+    for name, path in input.items():
+        vcfs_with_suffix.append(f"{path}:{name}")
+    return vcfs_with_suffix
+
+
 def compile_output_file_list(wildcards):
     outdir = pathlib.Path(output_spec.get("directory", "./"))
     output_files = []

@@ -64,12 +64,15 @@ The following output files are located in `Results/`-folder:
 |`{sample}/{sample}.genome.vcf.gz.tbi`| tbi | Index for genome VCF-file |
 |`{sample}/{sample}_exomedepth_SV.txt`| txt | Nexus SV text file with structural variants from ExomeDepth |
 |`{sample}/{sample}_exomedepth.aed`| aed | aed text file with structural variants from ExomeDepth |
-|`{sample}/{sample}.cnv.vcf.gz`| vcf.gz | Compressed VCF-file with structural variants from ExomeDepth |
-|`{sample}/{sample}.cnv.vcf.gz.tbi`| tbi | Index for variant file from ExomeDepth |
-|`{sample}/mobile_elements/{sample}.ALU.vcf.gz`| vcf.gz | Compressed VCF-file with predicted ALU elements |
-|`{sample}/mobile_elements/{sample}.LINE1.vcf.gz`| vcf.gz | Compressed VCF-file with predicted LINE1 elements |
-|`{sample}/mobile_elements/{sample}.HERVK.vcf.gz`| vcf.gz | Compressed VCF-file with predicted HERVK elements |
-|`{sample}/mobile_elements/{sample}.SVA.vcf.gz`| vcf.gz | Compressed VCF-file with predicted SVA elements |
+|`{sample}/cnv_sv/{sample}_exomedepth.aed`| aed | Exomedepth analysis file with CNV calls |
+|`{sample}/cnv_sv/{sample}.cnv.vcf.gz`| vcf.gz | Compressed VCF-file with Exomedepth CNV calls |
+|`{sample}/cnv_sv/{sample}.cnv.vcf.gz.tbi`| tbi | Index for Exomedepth CNV VCF |
+|`{sample}/cnv_sv/{sample}.melt.softfiltered.vcf.gz`| vcf.gz | Soft-filtered VCF-file with mobile element insertions from MELT (ALU, LINE1, HERVK, SVA) |
+|`{sample}/cnv_sv/{sample}.melt.softfiltered.vcf.gz.tbi`| tbi | Index for MELT mobile element calls |
+|`{sample}/cnv_sv/{sample}.scramble.softfiltered.vcf.gz`| vcf.gz | Soft-filtered VCF-file with mobile element insertions from SCRAMBLE |
+|`{sample}/cnv_sv/{sample}.scramble.softfiltered.vcf.gz.tbi`| tbi | Index for SCRAMBLE mobile element calls |
+|`{sample}/cnv_sv/{sample}.cnv_sv.vcf.gz`| vcf.gz | Compressed VCF-file with merged CNV and SV calls from Exomedepth, MELT, and SCRAMBLE |
+|`{sample}/cnv_sv/{sample}.cnv_sv.vcf.gz.tbi`| tbi | Index for merged CNV/SV variant file |
 |`{sample}/mosaic/{sample}.deepmosaic.txt`| tsv | Candidate variants and their predictions from DeepMosaic |
 |`{sample}/mosaic/{sample}.deepsomatic.vcf.gz`| vcf.gz | Compressed VCF-file from DeepSomatic where PASS are possible mosaic variants|
 |`{sample}/mosaic/{sample}.deepsomatic.vcf.gz.tbi`| vcf.gz | Index for genome VCF-file |
