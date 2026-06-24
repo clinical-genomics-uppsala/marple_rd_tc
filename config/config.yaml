@@ -9,7 +9,7 @@ default_container: "docker://hydragenetics/common:3.1.1"
 modules:
   alignment: "v0.7.0"
   annotation: "v1.2.0"
-  cnv_sv: "v3.2.0"
+  cnv_sv: "v3.2.1"
   compression: "v2.1.0"
   filtering: "v1.1.0"
   prealignment: "v1.4.0"
@@ -17,7 +17,7 @@ modules:
   snv_indels: "v2.0.0"
 
 reference:
-  annovar: "/opt/ohpc/pub/annotators/annovar/2025Feb18"
+  annovar: "/data/ref_data/annovar/2025Feb18/"
   fasta: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta"
   fai: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.fai"
   sites: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.known_indels.vcf.gz" #Needed?
@@ -92,7 +92,7 @@ bcftools_hardfilter_exomedepth:
   exclude: "'BF<=0'"
 
 bcftools_softfilter_melt:
-  exclude: "'FILTER=\"ac0\" '"
+  exclude: "'FILTER~\"ac0\" '"
   extra: "-s LowQual"
 
 bcftools_softfilter_scramble:
@@ -100,7 +100,7 @@ bcftools_softfilter_scramble:
   extra: "-s LowQual"
 
 bcftools_view_svdb:
-  extra: "-f 'PASS'"
+  extra: "-e 'FILTER~\"LowQual\"'"
 
 samtools_merge_bam:
   extra: "-c -p"
@@ -111,13 +111,7 @@ scramble_cluster_identifier:
 scramble_cluster_analysis:
   container: "docker://hydragenetics/scramble:1.0.2"
   install_dir: "/opt/scramble/cluster_analysis/bin"
-  mei_refs: "/opt/scramble/resources/MEI_consensus_seqs.fa"
-
-scramble_vcf:
-  container: "docker://hydragenetics/scramble:1.0.2"
-
-scramble_sort:
-  container: "docker://hydragenetics/scramble:1.0.2"
+  mei_refs: "/opt/scramble/cluster_analysis/resources/MEI_consensus_seqs.fa"
 
 svdb_merge:
   container: "docker://hydragenetics/svdb:2.10.2"
