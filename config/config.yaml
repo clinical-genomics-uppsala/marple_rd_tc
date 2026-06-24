@@ -100,7 +100,7 @@ bcftools_softfilter_scramble:
   extra: "-s LowQual"
 
 bcftools_view_svdb:
-  extra: "-f 'PASS'"
+  extra: "-e 'FILTER~\"LowQual\"'"
 
 samtools_merge_bam:
   extra: "-c -p"
