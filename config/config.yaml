@@ -113,9 +113,6 @@ scramble_cluster_analysis:
   install_dir: "/opt/scramble/cluster_analysis/bin"
   mei_refs: "/opt/scramble/cluster_analysis/resources/MEI_consensus_seqs.fa"
 
-scramble_vcf:
-  container: "docker://hydragenetics/scramble:1.0.2"
-
 scramble_sort:
   container: "docker://hydragenetics/scramble:1.0.2"
 
