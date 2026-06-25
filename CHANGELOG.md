@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.7.0](https://github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.6.0...v0.7.0) (2026-06-25)
+
+
+### Features
+
+* add -c -p to samtools merge ([e64877b](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/e64877bee0f0f3587f237c8d8d1c0561c65d9ff5))
+* add scramble and melt mei callers ([8d0c405](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/8d0c4053d3a4408e13d5521d71ad1e53b8d7e814))
+
+
+### Bug Fixes
+
+* add wrapper-prefix ([c1ed661](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/c1ed6611dae574625fe966aa9c85571d6baf3fde))
+* filter melt records that contain ac0 in filter field, not just those that have ac0 ([c975593](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/c97559393fdc5b753df812ee34917b82947d49ed))
+* Reduce bwa_mem memory allocation from 122880 to 49152 ([0d2e81a](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/0d2e81aa574415df0ac0615f426b452643ae9369))
+* Reduce bwa_mem memory allocation to 49152 MB ([139d90a](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/139d90a66bd370d0fd363e08617dd458c70ab922))
+* scramble_vcf uses the common container ([0074357](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/00743577f542aebfb8dc6de904cc6c4d5ec8a626))
+* **scramble:** fix typos in path for scramble cluster analysis ([0e5424b](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/0e5424b41330563c9ef1b26c3f7f46288986657a))
+* update cnv_sv module ([85efbcd](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/85efbcd6bfdd53580f17db3262906720c61a9316))
+* update cnv_sv module to the version with the melt fix ([d797dad](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/d797dadfde1b6d7fee1a721f3ab83ad0a5f46e0c))
+
 ## [0.6.0](https://github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.5.0...v0.6.0) (2025-11-19)
 
 
