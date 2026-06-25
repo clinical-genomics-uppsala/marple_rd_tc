@@ -6,7 +6,7 @@ default_resources:
   partition: "core"
 
 bwa_mem:
-  mem_mb: 122880
+  mem_mb: 49152
   mem_per_cpu: 6144
   threads: 8
 
@@ -31,6 +31,11 @@ fastqc:
   threads: 2
   mem_mb: 12288
   mem_per_cpu: 6144
+
+melt:
+  mem_mb: 49152
+  mem_per_cpu: 6144
+  threads: 8
 
 mosdepth_bed:
   mem_mb: 36864

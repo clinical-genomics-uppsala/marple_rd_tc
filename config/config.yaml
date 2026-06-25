@@ -9,7 +9,7 @@ default_container: "docker://hydragenetics/common:3.1.1"
 modules:
   alignment: "v0.7.0"
   annotation: "v1.2.0"
-  cnv_sv: "v2.0.0"
+  cnv_sv: "v3.2.1"
   compression: "v2.1.0"
   filtering: "v1.1.0"
   prealignment: "v1.4.0"
@@ -17,7 +17,7 @@ modules:
   snv_indels: "v2.0.0"
 
 reference:
-  annovar: "/opt/ohpc/pub/annotators/annovar/2025Feb18"
+  annovar: "/data/ref_data/annovar/2025Feb18/"
   fasta: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta"
   fai: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.fasta.fai"
   sites: "/data/ref_genomes/GRCh38/reference_grasnatter/homo_sapiens.known_indels.vcf.gz" #Needed?
@@ -85,8 +85,39 @@ fastqc:
 melt:
   container: "/projects/wp3/Software/MELTv2.2.2/MELT_v2.2.2.sif"
   bed: "/projects/wp3/Software/MELTv2.2.2/add_bed_files/Hg38/Hg38.genes.bed"
-  extra: ""
+  extra: "-r 150 -exome"
   mei: "/projects/wp3/Software/MELTv2.2.2/mei_list.txt"
+
+bcftools_hardfilter_exomedepth:
+  exclude: "'BF<=0'"
+
+bcftools_softfilter_melt:
+  exclude: "'FILTER~\"ac0\" '"
+  extra: "-s LowQual"
+
+bcftools_softfilter_scramble:
+  exclude: "'INFO/Clipped_Reads_In_Cluster<5 || INFO/Alignment_Score<60 || INFO/Alignment_Percent_Length<90 || INFO/Alignment_Percent_Identity<90'"
+  extra: "-s LowQual"
+
+bcftools_view_svdb:
+  extra: "-e 'FILTER~\"LowQual\"'"
+
+samtools_merge_bam:
+  extra: "-c -p"
+
+scramble_cluster_identifier:
+  container: "docker://hydragenetics/scramble:1.0.2"
+
+scramble_cluster_analysis:
+  container: "docker://hydragenetics/scramble:1.0.2"
+  install_dir: "/opt/scramble/cluster_analysis/bin"
+  mei_refs: "/opt/scramble/cluster_analysis/resources/MEI_consensus_seqs.fa"
+
+svdb_merge:
+  container: "docker://hydragenetics/svdb:2.10.2"
+  overlap: 0.6
+  priority: "exomedepth,melt,scramble"
+  extra: "--pass_only --no_intra"
 
 mosaicforecast_input:
   bcftools_filter: "--exclude 'FILTER!=\"PASS\" || FORMAT/DP<8'"
