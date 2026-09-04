@@ -32,7 +32,7 @@ bash build_conda.sh --containers-only
 Download only reference and design files
 
 ```bash
-bash build_conda.sh --references-only marple_rd_tc_${TAG_OR_BRANCH}/config/references/design_files.hg38.yaml marple_rd_tc_${TAG_OR_BRANCH}/config/exomdepth_files.hg38.yaml marple_rd_tc_${TAG_OR_BRANCH}/config/config/references/references.hg38.yaml marple_rd_tc_${TAG_OR_BRANCH}/config/vep_cache.hg38.yaml
+bash build_conda.sh --references-only  marple_rd_tc_${TAG_OR_BRANCH}/marple_rd_tc/config/references/design_files.hg38.yaml  marple_rd_tc_${TAG_OR_BRANCH}/marple_rd_tc/config/references/exomdepth_files.hg38.yaml  marple_rd_tc_${TAG_OR_BRANCH}/marple_rd_tc/config/config/references/references.hg38.yaml   marple_rd_tc_${TAG_OR_BRANCH}/marple_rd_tc/config/references/vep_cache.hg38.yaml
 ```
 
 Download design files
