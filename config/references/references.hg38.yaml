@@ -54,10 +54,10 @@
  
   export_qc_xlsx_report:
     wanted_transcripts:
-      checksum: 7ef66655e0ebc621c473d8b1fc14c4aa
-      path: marple/wanted_transcripts.txt
+      checksum: ecf0f1017e85454848aaee2efbe7ab9c 
+      path: marple/wanted_transcripts_v5.1.txt
       type: file
-      url: file:/beegfs-storage/data/ref_data/wp3/marple/wanted_transcripts.txt
+      url: file:/projects/wp3/nobackup/TwistCancer/TCv5-1/Bedfiles/wanted_transcripts_v5.1
 
   melt:
     bed:

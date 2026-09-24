@@ -1,9 +1,9 @@
 exomedepth:
   bedfile:
-    checksum: c478054d0e60fb7c8d0142486b630f4a
-    path: marple/Twist_Cancer_230706_hg38_TE-98982205-wPGRS.merged_200bpwindows.bed
+    checksum: b3306819a11936d94abe2a26f26dc0d9
+    path: marple/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38_200bpwindows.bed
     type: file
-    url: file:/beegfs-storage/data/ref_data/wp3/marple/Twist_Cancer_230706_hg38_TE-98982205-wPGRS.merged_200bpwindows.bed
+    url: file:/projects/wp3/nobackup/TwistCancer/TCv5-1/Bedfiles/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38_200bpwindows.bed
   exonsfile:
     checksum: f3ed2cb6706065422ef72d307d82452f
     path: marple/exons_GRCh38_ensembl109.txt
