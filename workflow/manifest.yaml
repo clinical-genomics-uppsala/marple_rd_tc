@@ -54,5 +54,5 @@ scripts:
 
 harmonization_notes:
   - Reference workflow should use the same module loader as analysis workflow; direct github() calls block offline installs.
-  - Keep site config minimal: parent installation path and runtime resources only.
+  - 'Keep site config minimal: parent installation path and runtime resources only.'
   - Export/report scripts should be reviewed for migration into hydra-genetics/report.
