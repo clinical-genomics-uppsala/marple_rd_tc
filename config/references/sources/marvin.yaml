@@ -80,7 +80,7 @@ melt:
     type: file
     url: file:/data/ref_data/wp3/melt/Hg38.genes.bed
   mei:
-    checksum: null
+    checksum: 47eefadac3d3ed1a3fa433fad22e2080
     path: pipelines/marple/misc/mei_list.txt
     type: file
     url: file:/projects/wp3/Software/MELTv2.2.2/mei_list.txt
@@ -136,7 +136,7 @@ sites:
   type: file
   url: file:/data/ref_data/wp3/marple/reference_grasnatter/homo_sapiens.known_indels.vcf.gz
 sites_tbi:
-  checksum: null
+  checksum: eef92064c7c4bb4257d397a1136be414
   path: GRCh38/annotation/known_indels/homo_sapiens.known_indels.vcf.gz.tbi
   type: file
   url: file:/data/ref_data/wp3/marple/reference_grasnatter/homo_sapiens.known_indels.vcf.gz.tbi
