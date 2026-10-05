@@ -5,24 +5,24 @@
       checksum: b5f7f2ca6277ca603be4c1bf645f7d4a
       path: marple/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38.bed
       type: file
-      url: file:/projects/wp3/nobackup/TwistCancer/TCv5-1/Bedfiles/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38.bed
+      url: file:/projects/wp3/nobackup/TwistCancer/Bedfiles/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38.bed
     design_intervals:
       checksum: 06c0fb9b110a3f992ac8427c98e5193d
       path: marple/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38.intervals
       type: file
-      url: file:/projects/wp3/nobackup/TwistCancer/TCv5-1/Bedfiles/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38.intervals 
+      url: file:/projects/wp3/nobackup/TwistCancer/Bedfiles/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38.intervals 
     exon_bed:
       checksum: 5430550dd427351d0c3ec500c5b288e2
       path: marple/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38_coding_exons.bed
       type: file
-      url: file:/projects/wp3/nobackup/TwistCancer/TCv5-1/Bedfiles/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38_coding_exons.bed
+      url: file:/projects/wp3/nobackup/TwistCancer/Bedfiles/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38_coding_exons.bed
     exon_intervals:
       checksum: 972797e3952e2035357e47fcf720d5d8
       path: marple/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38_coding_exons.intervals
       type: file
-      url: file:/projects/wp3/nobackup/TwistCancer/TCv5-1/Bedfiles/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38_coding_exons.intervals
+      url: file:/projects/wp3/nobackup/TwistCancer/Bedfiles/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38_coding_exons.intervals
     pgrs_bed:
       checksum: bbab47614617ed3d2a8163db907ec743
       path: marple/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38_pgrs_snps.bed
       type: file
-      url: file:/projects/wp3/nobackup/TwistCancer/TCv5-1/Bedfiles/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38_pgrs_snps.bed
+      url: file:/projects/wp3/nobackup/TwistCancer/Bedfiles/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38_pgrs_snps.bed

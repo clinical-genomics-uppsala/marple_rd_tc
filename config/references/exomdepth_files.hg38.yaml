@@ -3,7 +3,7 @@ exomedepth:
     checksum: 6411b1ce45514312285ccb9fe7776fe4
     path: marple/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38_200bpwindows.bed
     type: file
-    url: file:/projects/wp3/nobackup/TwistCancer/TCv5-1/Bedfiles/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38_200bpwindows.bed
+    url: file:/projects/wp3/nobackup/TwistCancer/Bedfiles/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38_200bpwindows.bed
   exonsfile:
     checksum: f3ed2cb6706065422ef72d307d82452f
     path: marple/exons_GRCh38_ensembl109.txt
@@ -24,4 +24,4 @@ exomedepth:
       checksum: b1124edf94c71b613ee0a8bc6f798464
       path: marple/Exomedepth_refCount_NovaSeq_261002.Rdata
       type: file
-      url: file:/projects/wp3/nobackup/TwistCancer/TCv5-1/Bedfiles/Exomedepth_refCount_NovaSeq_261002.Rdata
+      url: file:/projects/wp3/nobackup/TwistCancer/Bedfiles/Exomedepth_refCount_NovaSeq_261002.Rdata

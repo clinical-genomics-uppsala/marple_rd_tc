@@ -5,7 +5,7 @@ resources: "resources.yaml"
 default_container: "docker://hydragenetics/common:1.8.1"
 
 reference:
-  design_bed: "/projects/wp3/nobackup/TwistCancer/TCv5-1/Bedfiles/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38_200bpwindows.bed"
+  design_bed: "/projects/wp3/nobackup/TwistCancer/Bedfiles/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38_200bpwindows.bed"
 
 exomedepth_reference:
   container: "docker://hydragenetics/exomedepth:1.1.15"
