@@ -1,6 +1,6 @@
 exomedepth:
   bedfile:
-    checksum: b3306819a11936d94abe2a26f26dc0d9
+    checksum: 6411b1ce45514312285ccb9fe7776fe4
     path: marple/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38_200bpwindows.bed
     type: file
     url: file:/projects/wp3/nobackup/TwistCancer/TCv5-1/Bedfiles/TwistCancer_Probes_merged_ok_combined_Uppsala_InheritedCancer_v5_SR_TE-96855960_hg38_200bpwindows.bed
@@ -21,7 +21,7 @@ exomedepth:
       type: file
       url: file:/beegfs-storage/data/ref_data/wp3/marple/Exomedepth_refCount_230706.Rdata
     novaseqX:
-      checksum: b52ef521a2668398ce9ae2fd464237f5
-      path: marple/Exomedepth_refCount_NovaSeq_250120.Rdata
+      checksum: b1124edf94c71b613ee0a8bc6f798464
+      path: marple/Exomedepth_refCount_NovaSeq_261002.Rdata
       type: file
-      url: file:/beegfs-storage/data/ref_data/wp3/marple/Exomedepth_refCount_NovaSeq_250120.Rdata
+      url: file:/projects/wp3/nobackup/TwistCancer/TCv5-1/Bedfiles/Exomedepth_refCount_NovaSeq_261002.Rdata
