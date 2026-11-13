@@ -1,0 +1,52 @@
+default_resources:
+  threads: 1
+  time: "12:00:00"
+  mem_mb: 6144
+  mem_per_cpu: 6144
+  partition: "core"
+  
+bwa_mem:
+  mem_mb: 122880
+  mem_per_cpu: 6144
+  threads: 8
+
+deepvariant:
+  mem_mb: 61440
+  mem_per_cpu: 6144
+  threads: 10
+  time: "12:00:00"
+
+deepsomatic_t_only:
+  mem_mb: 61440
+  mem_per_cpu: 6144
+  threads: 10
+  time: "12:00:00"
+
+fastp_pe:
+  threads: 1
+  mem_mb: 6144
+  mem_per_cpu: 6144
+
+fastqc:
+  threads: 2
+  mem_mb: 12288
+  mem_per_cpu: 6144
+
+mosdepth_bed:
+  mem_mb: 36864
+  threads: 4
+
+samtools_sort:
+  mem_mb: 61440
+  mem_per_cpu: 6144
+  threads: 10
+
+samtools_view:
+  mem_mb: 61440
+  mem_per_cpu: 6144
+  threads: 10
+
+vep:
+  threads: 5
+  mem_mb: 30720
+  mem_per_cpu: 6144

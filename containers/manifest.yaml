@@ -12,6 +12,9 @@ containers:
   common_3_1_1:
     source: docker://hydragenetics/common:3.1.1
     sif: hydragenetics__common_3.1.1.sif
+  deepmosaic:
+    source: library://sanglee8888/deepmosaic/deepmosaic:sha256.28b3dd3b3ab1daa63b53d627c3fba3e6b4da38447ccdb9c7abc073718ff9453e
+    sif: sanglee8888__deepmosaic__deepmosaic_sha256-28b3dd3b3ab1.sif
   deepsomatic:
     source: docker://google/deepsomatic:1.8.0
     sif: google__deepsomatic_1.8.0.sif

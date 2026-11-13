@@ -1,0 +1,20 @@
+# ---------------------------------------------------------------------------
+#  Site-config - Marvin
+#
+#  Laggs sist. Allt som beror pa klustret men inte pa assayen.
+# ---------------------------------------------------------------------------
+
+# Containerbiblioteket. Fylls av tools/build_containers.sh vid installation.
+CONTAINER_DIR: /projects/cgu/library/containers
+
+resources: "config/resources.yaml"
+output: "{{PATH_TO_REPO}}/marple_rd_tc/config/output_files.yaml"
+
+# Modulerna laggs lokalt vid installation (tagg maste finnas, klona med --tags).
+# PIPELINE_VERSION skickas med --config av startscriptet.
+hydra_local_path: /projects/bin/wp3_tc/marple_rd_tc/{{PIPELINE_VERSION}}/hydra-genetics
+
+multiqc:
+  reports:
+    DNA:
+      config: "{{PATH_TO_REPO}}/marple_rd_tc/config/multiqc_config.yaml"

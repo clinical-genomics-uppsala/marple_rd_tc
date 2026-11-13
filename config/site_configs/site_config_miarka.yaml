@@ -1,0 +1,15 @@
+# ---------------------------------------------------------------------------
+#  Site-config - Miarka
+#
+#  Laggs sist. Allt som beror pa klustret men inte pa assayen.
+# ---------------------------------------------------------------------------
+
+# Containerbiblioteket. Fylls av tools/build_containers.sh vid installation.
+CONTAINER_DIR: /proj/ngi2024001/nobackup/cgu/library/containers
+
+resources: "config/resources_miarka.yaml"
+output: "config/output_files.yaml"
+
+# Modulerna laggs lokalt vid installation (tagg maste finnas, klona med --tags).
+# PIPELINE_VERSION skickas med --config av startscriptet.
+hydra_local_path: /proj/ngi2024001/nobackup/bin/wp3_tc/marple_rd_tc_{{PIPELINE_VERSION}}/hydra-genetics

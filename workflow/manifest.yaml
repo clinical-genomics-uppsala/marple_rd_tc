@@ -13,7 +13,17 @@ layout:
   local_rules_dir: workflow/rules
   local_scripts_dir: workflow/scripts
   schemas_dir: workflow/schemas
+  output_spec: config/output_files.yaml
+  container_manifest: containers/manifest.yaml
   report: report/workflow.rst
+
+site:
+  sites:
+    - marvin
+    - miarka
+  site_config_pattern: config/site_configs/site_config_{site}.yaml
+  reference_files_pattern: config/reference_files/reference_files_{site}.yaml
+  profile_pattern: profiles/{site}
 
 rule_groups:
   common: workflow/rules/common.smk
@@ -56,3 +66,5 @@ harmonization_notes:
   - Reference workflow should use the same module loader as analysis workflow; direct github() calls block offline installs.
   - 'Keep site config minimal: parent installation path and runtime resources only.'
   - Export/report scripts should be reviewed for migration into hydra-genetics/report.
+  - config/config.yaml is the one config for both clusters. The Miarka overlay from marple_config v0.2.1 is merged in (reference_files_miarka.yaml, site_config_miarka.yaml, resources_miarka.yaml); marple_config is no longer needed to run.
+  - Offline (phase 2) is done; references still use legacy per-site paths until the D14 library is built (phase 3).
