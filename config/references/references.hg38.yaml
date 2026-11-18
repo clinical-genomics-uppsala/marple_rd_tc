@@ -54,7 +54,7 @@
  
   export_qc_xlsx_report:
     wanted_transcripts:
-      checksum: ecf0f1017e85454848aaee2efbe7ab9c 
+      checksum: ecf0f1017e85454848aaee2efbe7ab9c
       path: marple/wanted_transcripts_v5.txt
       type: file
       url: file:/projects/wp3/nobackup/TwistCancer/Bedfiles/wanted_transcripts_v5.txt
