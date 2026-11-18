@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.0.0](https://github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.7.0...v1.0.0) (2026-11-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* bed files new panel
+
+### Features
+
+* bed files new panel ([043954b](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/043954bd2839286e97b51a1f856dac7783f8da6c))
+* new panel bed files ([267964f](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/267964f3ce440b693df6f914cc3679aece4310d5))
+* new panel bed files ([4eacafb](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/4eacafb8a565a47a4d7b6d38e46f0b63ea7188f9))
+
+
+### Bug Fixes
+
+* fix ubuntu version ([737a8d5](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/737a8d5967c7cf24ec83c238ef6b6c82bf9b9990))
+* fix ubuntu version ([8471931](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/84719312f42ba00a2723e129371bc28ebc301d34))
+* update to v4 ([94aa1cd](https://github.com/clinical-genomics-uppsala/marple_rd_tc/commit/94aa1cdddf74563e22ac8cbb81106cca5561e4c5))
+
 ## [0.7.0](https://github.com/clinical-genomics-uppsala/marple_rd_tc/compare/v0.6.0...v0.7.0) (2026-06-25)
 
 
